@@ -5,7 +5,7 @@
 	"sources": [
 		"themes/LoveIt/assets/css/style.scss",
 		"themes/LoveIt/assets/lib/normalize/normalize.css",
-		"themes/LoveIt/assets/css/_variables.scss",
+		"assets/css/_variables.scss",
 		"themes/LoveIt/assets/css/_override.scss",
 		"themes/LoveIt/assets/css/_core/_variables.scss",
 		"themes/LoveIt/assets/css/_mixin/_index.scss",

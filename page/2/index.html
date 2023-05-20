@@ -99,34 +99,22 @@
         alt="/avatar.png"
         title="/avatar.png" /></a></div><div class="home-subtitle"><div id="id-1" class="typeit"></div></div><div class="links"><a href="https://github.com/https://github.com/f1aming007" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="https://twitter.com/xxxx" title="Twitter" target="_blank" rel="noopener noreffer me"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="https://www.instagram.com/xxxx" title="Instagram" target="_blank" rel="noopener noreffer me"><i class="fab fa-instagram fa-fw" aria-hidden="true"></i></a><a href="https://facebook.com/xxxx" title="facebook" target="_blank" rel="noopener noreffer me"><i class="fab fa-facebook fa-fw" aria-hidden="true"></i></a><a href="https://t.me/xxxx" title="Telegram" target="_blank" rel="noopener noreffer me"><i class="fab fa-telegram-plane fa-fw" aria-hidden="true"></i></a><a href="mailto:xxxx@xxxx.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/sc-pv-pvc/">Kubernets-Sc&Pv&Pvc</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-20">2023-05-20</time></span></div><div class="content">PV、PVC、StorageClass Kubernetes 处理容器持久化存储的核心原理 PV： 持久化存储数据卷 pv 一般有运维人员事先创建之后使用， 定义一个NFS类</div><div class="post-footer">
-        <a href="/sc-pv-pvc/">Read More</a></div>
+        <a href="/daemonset/">Kubernets-DaemonSet</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-20">2023-05-20</time></span></div><div class="content">DaemonSet 主要作用 在kubernetes集群里， 运行一个Daemon Pod， 所以， 这个Pod有如下三个特征 这个Pod运载kubernetes集群里的</div><div class="post-footer">
+        <a href="/daemonset/">Read More</a></div>
 </article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/operator/">Kubernets-Operator</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-20">2023-05-20</time></span></div><div class="content">Operator 工作原理解读 operator的工作原理和编写方法 第一步，将这个 Operator 的代码 Clone 到本地： 1 git clone https://github.com/coreos/etcd-operator 第二步，将这个 Etcd Operator 部署在 Kubernetes 集群里 1 example/rbac/create_role.sh 这个脚本为 Etcd Operator</div><div class="post-footer">
-        <a href="/operator/">Read More</a></div>
+        <a href="/deployment/">Kubernets-Deployment</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-20">2023-05-20</time></span></div><div class="content">Deployment Deployment Pod 的 “水平扩展、收缩” ReplicaSet 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 apiVersion: apps/v1 kind: ReplicaSet metadata: name: nginx-set labels: app: nginx spec: replicas: 3 selector: matchLabels: app: nginx template: metadata: labels: app: nginx spec: containers: - name: nginx image: nginx:1.7.9 一个Replic</div><div class="post-footer">
+        <a href="/deployment/">Read More</a></div>
 </article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/rbac/">Kubernets-Rbac</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-20">2023-05-20</time></span></div><div class="content">基于角色的权限控制：RBAC 在kubernetes项目中 负责完成授权的（Authorization）工作的记住， 就是RBAC， 基于角色的访问</div><div class="post-footer">
-        <a href="/rbac/">Read More</a></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/">Kubernets-声明式API</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-20">2023-05-20</time></span></div><div class="content">声明式API与Kubernetes编码范式 kubectl create 再replace的操作， 称为命令式配置文件操作 声明式API https://hugbz2.51cg3.co/archives/25451 /https://hugbz2.51cg3.co/archives/4081/ kuberctl apply 命令就是 声明式API apply 与 re</div><div class="post-footer">
-        <a href="/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/">Read More</a></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/job_cronjob/">Kubernets-Job_Cronjob</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-20">2023-05-20</time></span></div><div class="content">Job 与 CronJob Job API 1 2 3 4 5 6 7 8 9 10 11 12 13 apiVersion: batch/v1 kind: Job metadata: name: pi spec: template: spec: containers: - name: pi image: resouer/ubuntu-bc command: [&#34;sh&#34;, &#34;-c&#34;, &#34;echo &#39;scale=10000; 4*a(1)&#39; | bc -l &#34;] restartPolicy: Never backoffLimit: 4 计算π值的容器。而通过 scale=10000</div><div class="post-footer">
-        <a href="/job_cronjob/">Read More</a></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/stateful/">Kubernets-StatefulSet</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-20">2023-05-20</time></span></div><div class="content">StatefulSet 概念 StatefulSet 的设计其实非常容器理解， 它把真实世界里的应用状态， 抽象为两个情况 拓扑状态：这种情况意味着， 应用的多个实例之间不是完全对等的关系， 这些</div><div class="post-footer">
-        <a href="/stateful/">Read More</a></div>
-</article><ul class="pagination"><li class="page-item active">
+        <a href="/pod/">Kubernets-Pod</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-17">2023-05-17</time></span></div><div class="content">pod pod 的属性 凡是调度、网络、存储、以及安全相关的属性， 都是pod级别的 NodeSelector 用户将Pod 与Node进行绑定的字段 1 2 3 4 5 6 apiVersion: v1 kind: Pod ... spec: nodeSelector: disktype: ssd NodeName 一</div><div class="post-footer">
+        <a href="/pod/">Read More</a></div>
+</article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
                     </span>
-                </li><li class="page-item ">
+                </li><li class="page-item active">
                     <span class="page-link">
                         <a href="/page/2/">2</a>
                     </span>

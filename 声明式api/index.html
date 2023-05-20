@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Kubernets-声明式API - Flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Kubernets-声明式API" />
+<meta property="og:description" content="声明式API与Kubernetes编码范式 kubectl create 再replace的操作， 称为命令式配置文件操作 声明式API https://hugbz2.51cg3.co/archives/25451 /https://hugbz2.51cg3.co/archives/4081/ kuberctl apply 命令就是 声明式API apply 与 re" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/" /><meta property="og:image" content="https://f1aming007.github.io/food-cookie.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-20T11:27:18+08:00" />
+<meta property="article:modified_time" content="2023-05-20T11:27:18+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/food-cookie.png"/>
+
+<meta name="twitter:title" content="Kubernets-声明式API"/>
+<meta name="twitter:description" content="声明式API与Kubernetes编码范式 kubectl create 再replace的操作， 称为命令式配置文件操作 声明式API https://hugbz2.51cg3.co/archives/25451 /https://hugbz2.51cg3.co/archives/4081/ kuberctl apply 命令就是 声明式API apply 与 re"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/" /><link rel="prev" href="https://f1aming007.github.io/job_cronjob/" /><link rel="next" href="https://f1aming007.github.io/rbac/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kubernets-声明式API",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi\/"
+        },"genre": "posts","wordcount":  2015 ,
+        "url": "https:\/\/f1aming007.github.io\/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi\/","datePublished": "2023-05-20T11:27:18+08:00","dateModified": "2023-05-20T11:27:18+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Flamingo"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Flamingo"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kubernets-声明式API</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-20">2023-05-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2015 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#apply-与-replace命令的本质区别">apply 与 replace命令的本质区别</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#istio项目使用的-是kubernetes中一个非常重要的功能dynamic-adminssion-control">Istio项目使用的， 是kubernetes中一个非常重要的功能Dynamic Adminssion Control</a></li>
+      </ul>
+    </li>
+    <li><a href="#kubernetes-声明式api的独到之处">kubernetes “声明式API”的独到之处</a></li>
+    <li><a href="#kubernetes-编程范式">Kubernetes 编程范式</a></li>
+    <li><a href="#为-network-这个自定义-api-对象编写一个自定义控制器custom-controller">为 Network 这个自定义 API 对象编写一个自定义控制器（Custom Controller）</a></li>
+    <li><a href="#自定义控制器的原理">自定义控制器的原理</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="声明式api与kubernetes编码范式">声明式API与Kubernetes编码范式</h1>
+<p>kubectl create 再replace的操作， 称为命令式配置文件操作</p>
+<h1 id="声明式api">声明式API</h1>
+<p><a href="https://hugbz2.51cg3.co/archives/25451/" target="_blank" rel="noopener noreffer ">https://hugbz2.51cg3.co/archives/25451</a></p>
+<p><a href="https://hugbz2.51cg3.co/archives/25451/" target="_blank" rel="noopener noreffer ">/</a><a href="https://hugbz2.51cg3.co/archives/4081/" target="_blank" rel="noopener noreffer ">https://hugbz2.51cg3.co/archives/4081/</a></p>
+<p>kuberctl apply 命令就是 声明式API</p>
+<h3 id="apply-与-replace命令的本质区别">apply 与 replace命令的本质区别</h3>
+<ul>
+<li>replace： 是使用新的YAML文件中的API对象，替换原来的API对象</li>
+<li>apply： 执行了一个对原有的API对象的PATCH操作</li>
+</ul>
+<p>对于kube-apiserver在响应命令式请求的时候</p>
+<ul>
+<li>replace： 只能处理一个写请求， 否则会有产生冲突的可能</li>
+<li>apply：    <strong>一次能处理多个写操作， 并且具备Merge能力</strong></li>
+</ul>
+<h1 id="istio">Istio</h1>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/16845537847763.jpg"
+        data-srcset="media/16845537847763.jpg, media/16845537847763.jpg 1.5x, media/16845537847763.jpg 2x"
+        data-sizes="auto"
+        alt="media/16845537847763.jpg"
+        title="media/16845537847763.jpg" /></p>
+<p>Istio最根本的组件， 是运行在每一个应用Pod里的Envoy容器</p>
+<p>Istio项目， 代理服务以sidecar容器的方式， 运行在每一个被治理的应用Pod中，</p>
+<p>Envoy容器就能够通过配置Pod里的iptables规则， 把整个Pod的进出流量接管下来</p>
+<p>Istio 的控制层里的Pilot组件，就能够调用每个Envoy容器的API， 对这个Envoy代理进行配置， 从而实现微服务治理。</p>
+<h3 id="istio项目使用的-是kubernetes中一个非常重要的功能dynamic-adminssion-control">Istio项目使用的， 是kubernetes中一个非常重要的功能Dynamic Adminssion Control</h3>
+<p>Kubernetes 项目为我们额外提供了一种“热插拔”式的 Admission 机制，它就是 Dynamic Admission Control，也叫作：Initializer。</p>
+<p>现在，我给你举个例子。比如，我有如下所示的一个应用 Pod：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Pod</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">myapp-pod</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">myapp</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">myapp-container</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">busybox</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;sh&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;-c&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;echo Hello Kubernetes! &amp;&amp; sleep 3600&#39;</span><span class="p">]</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Istio项目要做的， 就是在这个Pod Yaml被提交给kubernetes之后， 它对应的API对象字段加上Envoy容器的配置，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Pod</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">myapp-pod</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">myapp</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">myapp-container</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">busybox</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;sh&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;-c&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;echo Hello Kubernetes! &amp;&amp; sleep 3600&#39;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">envoy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">lyft/envoy:845747b88f102c0fd262ab234308e9e22f693a1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;/usr/local/bin/envoy&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="l">...</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Istio 要做的，就是编写一个用来为 Pod“自动注入”Envoy 容器的 Initializer。</p>
+<p>首先， Istio会将这个Envoy容器本身的定义， 以ConfigMap方式保存在Kubernetes当前</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ConfigMap</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">envoy-initializer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">data</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">    containers:
+</span></span></span><span class="line"><span class="cl"><span class="sd">      - name: envoy
+</span></span></span><span class="line"><span class="cl"><span class="sd">        image: lyft/envoy:845747db88f102c0fd262ab234308e9e22f693a1
+</span></span></span><span class="line"><span class="cl"><span class="sd">        command: [&#34;/usr/local/bin/envoy&#34;]
+</span></span></span><span class="line"><span class="cl"><span class="sd">        args:
+</span></span></span><span class="line"><span class="cl"><span class="sd">          - &#34;--concurrency 4&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sd">          - &#34;--config-path /etc/envoy/envoy.json&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sd">          - &#34;--mode serve&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sd">        ports:
+</span></span></span><span class="line"><span class="cl"><span class="sd">          - containerPort: 80
+</span></span></span><span class="line"><span class="cl"><span class="sd">            protocol: TCP
+</span></span></span><span class="line"><span class="cl"><span class="sd">        resources:
+</span></span></span><span class="line"><span class="cl"><span class="sd">          limits:
+</span></span></span><span class="line"><span class="cl"><span class="sd">            cpu: &#34;1000m&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sd">            memory: &#34;512Mi&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sd">          requests:
+</span></span></span><span class="line"><span class="cl"><span class="sd">            cpu: &#34;100m&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sd">            memory: &#34;64Mi&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sd">        volumeMounts:
+</span></span></span><span class="line"><span class="cl"><span class="sd">          - name: envoy-conf
+</span></span></span><span class="line"><span class="cl"><span class="sd">            mountPath: /etc/envoy
+</span></span></span><span class="line"><span class="cl"><span class="sd">    volumes:
+</span></span></span><span class="line"><span class="cl"><span class="sd">      - name: envoy-conf
+</span></span></span><span class="line"><span class="cl"><span class="sd">        configMap:
+</span></span></span><span class="line"><span class="cl"><span class="sd">          name: envoy</span><span class="w">    
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Initializer 更新用户的P大对象的时候， 必须使用PATCH API 来完成， 而这种PATCH API 正式声明式API的主要能力</p>
+<p>Istio 将一个编写好的Initializer， 作为一个Pod部署在kubernetes中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Pod</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">envoy-initializer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">envoy-initializer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">envoy-initializer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">envoy-initializer:0.0.1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">Always</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>不断获取“实际状态”， 然后“期望状态”做对比</p>
+<p>initializer的控制器，</p>
+<ul>
+<li>不断获取的“实际状态”用户新创建的Pod</li>
+<li>“期望状态” 就是破的被添加的Envoy容器的定义</li>
+</ul>
+<p><strong>有了这个 TwoWayMergePatch 之后，Initializer 的代码就可以使用这个 patch 的数据，调用 Kubernetes 的 Client，发起一个 PATCH 请求</strong></p>
+<p>Istio项目的核心， 就是由无数个运行在应用Pod中的Envoy容器组成的服务代理网格。</p>
+<h2 id="kubernetes-声明式api的独到之处">kubernetes “声明式API”的独到之处</h2>
+<hr>
+<ul>
+<li>首先， 所谓“声明式”， 我们定义个定义好的API对象来“声明”， 所期望的状态是什么样子的</li>
+<li>其次， “声明式API”允许有多个API写端， 以PATCH的方式对API对象进行修改，而无需关心本地原始的YAML文件的内容</li>
+<li>最后， Kubernetes项目才可以基于对API对象的增、删、该、查， 在完全无需外界干扰的情况下， 完成对“实际状态”和“期望状态”的协调过程</li>
+</ul>
+<h2 id="kubernetes-编程范式">Kubernetes 编程范式</h2>
+<blockquote>
+<p><strong>如何使用控制器模式，同Kubernetes里API对象“增、删、改、查”进行协作，完成用户业务逻辑的编写过程</strong></p>
+</blockquote>
+<h2 id="为-network-这个自定义-api-对象编写一个自定义控制器custom-controller">为 Network 这个自定义 API 对象编写一个自定义控制器（Custom Controller）</h2>
+<p>你好， 监控看到15、16、17这三台机器资源使用率和负载都太不高。</p>
+<p>目前现在我们这边资源需求较多，计划3月8号（下周三）回收这3台GPU机器。请知悉。</p>
+<h2 id="自定义控制器的原理">自定义控制器的原理</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/16845538063447.jpg"
+        data-srcset="media/16845538063447.jpg, media/16845538063447.jpg 1.5x, media/16845538063447.jpg 2x"
+        data-sizes="auto"
+        alt="media/16845538063447.jpg"
+        title="media/16845538063447.jpg" /></p>
+<p><strong>控制器的工作流程</strong></p>
+<ol>
+<li>从kubernetes的APISerer里获取它所关心的对象， 就是自定义的Network</li>
+<li>informer与API 对象时——对应的， 所以我传递给自定义控制器的， 是Network对象informer</li>
+<li>Network Informer跟APIServer建立连接， 是informer所使用的Reflector包</li>
+<li>Reflector 使用的ListAndWatch的方法，来“获取”并“监听”这些Network对象实例的变化</li>
+<li>在ListAndWatch机制下， 一旦APIServer端有新的Network实例被创建、删除或者更新Reflector都会收到“事件通知”， 会放进一个Delta FIFO Queue（增量先进先出队列）中</li>
+<li>informe会不断从这个Delta FIFO Queue 读取增量，  每拿到一个增量， informer 判断这个增量的事件类型。 然后创建或者更新本地对象的缓存。（这个缓存在kubernetes里叫Store）</li>
+</ol>
+<p><strong>informer职责</strong></p>
+<ol>
+<li>同步本地缓存的工作</li>
+<li>根据这些事件的类型，触发事先注册号的<strong>ResourceEventHandler</strong></li>
+</ol>
+<p>informer 是一个钓友本地缓存和索引机制的 可以注册的EventHandler的client</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-05-20</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/" data-title="Kubernets-声明式API" data-via="xxxx"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/" data-title="Kubernets-声明式API"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/" data-title="Kubernets-声明式API"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/" data-title="Kubernets-声明式API"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/job_cronjob/" class="prev" rel="prev" title="Kubernets-Job_Cronjob"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Kubernets-Job_Cronjob</a>
+            <a href="/rbac/" class="next" rel="next" title="Kubernets-Rbac">Kubernets-Rbac<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
