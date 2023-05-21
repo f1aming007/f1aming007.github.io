@@ -1,9 +1,11 @@
 # Kubernets-Sc&Pv&Pvc
 
 
+{{< figure src="/images/featured-image.jpg" title="Lighthouse (figure)" >}}
 # **PV、PVC、StorageClass**
 
 Kubernetes 处理容器持久化存储的核心原理
+
 
 # PV： 持久化存储数据卷
 
@@ -146,6 +148,8 @@ parameters:
   #The value of "clusterNamespace" MUST be the same as the one in which your rook cluster exist
   clusterNamespace: rook-ceph
 ```
+
+{{< figure src="/images/16845536761329.jpg" title="Lighthouse (figure)" >}}
 
 ![](media/16845536761329.jpg)
 

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Docker Command - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Docker Command" />
+<meta property="og:description" content="docker常用命令整理 docker images docker image pull ：下载镜像 docker image ls：列出本地存储的镜像,参数 &ndash;digests查看镜像的SHA26签名 docker image ins" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/docker-command/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-21T11:39:44+08:00" />
+<meta property="article:modified_time" content="2023-05-21T11:39:44+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="Docker Command"/>
+<meta name="twitter:description" content="docker常用命令整理 docker images docker image pull ：下载镜像 docker image ls：列出本地存储的镜像,参数 &ndash;digests查看镜像的SHA26签名 docker image ins"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/docker-command/" /><link rel="prev" href="https://f1aming007.github.io/sc-pv-pvc/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Docker Command",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/docker-command\/"
+        },"genre": "posts","keywords": "docker","wordcount":  2017 ,
+        "url": "https:\/\/f1aming007.github.io\/docker-command\/","datePublished": "2023-05-21T11:39:44+08:00","dateModified": "2023-05-21T11:39:44+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Docker Command</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-21">2023-05-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2017 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#docker-images">docker images</a>
+      <ul>
+        <li><a href="#docker支持的过滤方式">docker支持的过滤方式</a></li>
+        <li><a href="#通过cli方式搜索docker-hub">通过CLI方式搜索Docker Hub</a></li>
+      </ul>
+    </li>
+    <li><a href="#docker-container">docker container</a></li>
+    <li><a href="#docker应用容器化">docker应用容器化</a></li>
+    <li><a href="#docker-compose">Docker Compose</a></li>
+    <li><a href="#docker-swarm">docker Swarm</a></li>
+    <li><a href="#docker-network">docker network</a></li>
+    <li><a href="#docker-volume">docker volume</a></li>
+    <li><a href="#docker-stack">Docker Stack</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="docker常用命令整理">docker常用命令整理</h1>
+<h2 id="docker-images">docker images</h2>
+<ul>
+<li>
+<p>docker image pull ：下载镜像</p>
+</li>
+<li>
+<p>docker image ls：列出本地存储的镜像,参数 &ndash;digests查看镜像的SHA26签名</p>
+</li>
+<li>
+<p>docker image inspect:展示镜像细节。包括镜像层数据和元数据。</p>
+</li>
+<li>
+<p>docker image rm：删除镜像。</p>
+</li>
+<li>
+<p>docker提供参数 &ndash;filter 来过滤docker image ls 命令返回镜像列表的内容</p>
+</li>
+<li>
+<p>返回悬虚(dangling)镜像</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lhf@lhf-virtual-machine:~$ docker image ls --filter <span class="nv">dangling</span><span class="o">=</span><span class="nb">true</span>
+</span></span><span class="line"><span class="cl">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+</span></span><span class="line"><span class="cl">&lt;none&gt;  &lt;none&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>没有标签的镜像称为悬虚镜像，列表显示<none>:<none></li>
+<li>使用docker image prune 移除全部悬虚镜像。加-a参数，Docker会额外移除没有被使用的镜像。</li>
+</ul>
+<h3 id="docker支持的过滤方式">docker支持的过滤方式</h3>
+<ol>
+<li>dangling： 可以指定true或false，返回悬虚镜像(true)和非悬虚镜像(false).</li>
+<li>before: 需要镜像名称和ID作为参数，返回在之前被创建的镜像</li>
+<li>since: before类似，返回需要指定镜像之后创建的全部镜像</li>
+<li>label: 根据备注（label）的名称或者值</li>
+<li>reference: 过滤标签lastest镜像</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lhf@lhf-virtual-machine:~$ docker image ls --filter<span class="o">=</span><span class="nv">reference</span><span class="o">=</span><span class="s2">&#34;*:latest&#34;</span>
+</span></span><span class="line"><span class="cl">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+</span></span><span class="line"><span class="cl"><span class="nb">test</span>                latest              e63fd667d16a        <span class="m">2</span> days ago          71.4MB
+</span></span><span class="line"><span class="cl">alpine              latest              965ea09ff2eb        <span class="m">4</span> days ago          5.55MB
+</span></span><span class="line"><span class="cl">ubuntu              latest              cf0f3ca922e0        <span class="m">7</span> days ago          64.2MB
+</span></span><span class="line"><span class="cl">centos              latest              0f3e07c0138f        <span class="m">3</span> weeks ago         220MB
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>通过&ndash;format 参数来通过go模板对输出内容格式化</li>
+<li>只返回docker主机上镜像的大小属性</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lhf@lhf-virtual-machine:~$ docker image ls --format <span class="s2">&#34;{{.Size}}&#34;</span>
+</span></span><span class="line"><span class="cl">71.4MB
+</span></span><span class="line"><span class="cl">5.55MB
+</span></span><span class="line"><span class="cl">64.2MB
+</span></span><span class="line"><span class="cl">220MB
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>只返回显示仓库、标签和大小的信息</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lhf@lhf-virtual-machine:~$ docker image ls --format <span class="s2">&#34;{{.Repository}}:{{.Tag}}:{{.Size}}&#34;</span>
+</span></span><span class="line"><span class="cl">test:latest:71.4MB
+</span></span><span class="line"><span class="cl">alpine:latest:5.55MB
+</span></span><span class="line"><span class="cl">ubuntu:latest:64.2MB
+</span></span><span class="line"><span class="cl">centos:latest:220MB
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="通过cli方式搜索docker-hub">通过CLI方式搜索Docker Hub</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lhf@lhf-virtual-machine:~$ docker search alpine
+</span></span><span class="line"><span class="cl">NAME                                   DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
+</span></span><span class="line"><span class="cl">alpine                                 A minimal Docker image based on Alpine Linux…   <span class="m">5757</span>                <span class="o">[</span>OK<span class="o">]</span>                
+</span></span><span class="line"><span class="cl">mhart/alpine-node                      Minimal Node.js built on Alpine Linux           <span class="m">444</span>                                     
+</span></span><span class="line"><span class="cl">anapsix/alpine-java                    Oracle Java <span class="m">8</span> <span class="o">(</span>and 7<span class="o">)</span> with GLIBC 2.28 over A…   <span class="m">427</span> 
+</span></span><span class="line"><span class="cl">&lt;snip&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lhf@lhf-virtual-machine:~$ docker search alpine --filter <span class="s2">&#34;is-official=true&#34;</span>
+</span></span><span class="line"><span class="cl">NAME                DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
+</span></span><span class="line"><span class="cl">alpine              A minimal Docker image based on Alpine Linux…   <span class="m">5757</span>                <span class="o">[</span>OK<span class="o">]</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>使用参数 &ndash;digests 在本地查看镜像摘要</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lhf@lhf-virtual-machine:~$ docker image ls --digests alpine
+</span></span><span class="line"><span class="cl">REPOSITORY          TAG                 DIGEST                                                                    IMAGE ID            CREATED             SIZE
+</span></span><span class="line"><span class="cl">alpine              latest              sha256:c19173c5ada610a5989151111163d28a67368362762534d8a8121ce95cf2bd5a   965ea09ff2eb        <span class="m">4</span> days ago          5.55MB
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>删除docker主机的全部镜像</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lhf@lhf-virtual-machine:~$ docker image rm <span class="k">$(</span>docker image ls -q<span class="k">)</span> -f
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="docker-container">docker container</h2>
+<ul>
+<li>
+<p>docker container run:启动rongq</p>
+</li>
+<li>
+<p>Ctrl-PQ:断开Shell与容器的连接</p>
+</li>
+<li>
+<p>docker container ls:列出运行状态的容器</p>
+</li>
+<li>
+<p>docker container exec:允许用户在运行状态的容器，启动一个新的进程。</p>
+</li>
+<li>
+<p>docker container stop：停止运行中的容器。</p>
+</li>
+<li>
+<p>docker container start:重启处于停止状态的容器。</p>
+</li>
+<li>
+<p>docker container rm：删除停止状态的容器。</p>
+</li>
+<li>
+<p>docker container inspect:显示容器的配置细节和运行时信息。</p>
+</li>
+<li>
+<p>-it参数： 使当前重点连接到容器的shell终端上</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ docker container run -it ubuntu /bin/bash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>快速清理容器</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ docker container  rm <span class="k">$(</span>docker container ls -aq<span class="k">)</span> -f
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="docker应用容器化">docker应用容器化</h2>
+<ul>
+<li>
+<p>docker image build ：读取Dockerfile文件,将应用程序容器化</p>
+<ul>
+<li>使用-t参数文件镜像打标签</li>
+<li>使用-f参数指定任意路径下的Dockerfile</li>
+</ul>
+</li>
+<li>
+<p>Dockerfile中FROM指令，指定构建镜像的一个基础层</p>
+</li>
+<li>
+<p>Dockerfile中RUN指令，在镜像中执行命令，创建新的镜像层</p>
+</li>
+<li>
+<p>Dockerfile中COPY指令，将文件作为新的层添加到镜像中</p>
+</li>
+<li>
+<p>Dockerfile中EXPOSR指令，记录应用所使用的的网络端口</p>
+</li>
+<li>
+<p>Dockerfile中ENTRYPOINT指令，指定镜像已容器的方式启动后默认运行程序</p>
+</li>
+<li>
+<p>查看镜像构建执行了那些指令</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ docker image <span class="nb">history</span> lhfdocker/web:latest
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>查看镜像的构建详情</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ docker image inspect lhfdocker/web:latest
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="docker-compose">Docker Compose</h2>
+<ul>
+<li>docker-compose up ：部署一个compose应用。默认读取docker-compose.yml文件，可以使有-f参数指定文件,-d 参数在后台启动</li>
+<li>docker-compose stop：停止compose应用的相关容器。可以通过docker-compose restart重新启动</li>
+<li>docker-compose rm：删除已停止的compose应用的容器，会删除容器和网络，不会删除卷和镜像。</li>
+<li>docker-compose restart 重启compose应用</li>
+<li>如果compose应用进行了变更,需要重启才能生效</li>
+<li>docker-compose ps:列出compose应用的容器
+<ul>
+<li>输出内容包括：状态、容器的运行命令，已经网络端口</li>
+</ul>
+</li>
+<li>docker-compose down:停止并删除运行中compose 的应用。会删除容器和网络，不会删除卷和镜像</li>
+</ul>
+<h2 id="docker-swarm">docker Swarm</h2>
+<ul>
+<li>docker swarm init 创建一个新的swarm,执行这个命令的节点称为管理节点</li>
+<li>docker swarm join-token 查询接入管理节点和工作节点到现有swarm时所使用的命令和Token
+<ul>
+<li>增加管理节点——docker swarm join-token manager</li>
+<li>增加工作节点——docker swarm join-token work</li>
+</ul>
+</li>
+<li>docker node ls 列出swarm所有节点及相关信息</li>
+<li>docker service create 创建新服务</li>
+<li>docker service ls 列出swarm中运行的服务</li>
+<li>docker service ps <service> 获取更多关于服务服务的信息</li>
+<li>docker service inspect 获取服务的详细信息</li>
+<li>docker service scale 用于对服务副本数量进行增减</li>
+<li>docker service update 对运行中的服务进行属性变更</li>
+<li>docker service logs 查看服务的日志</li>
+<li>docker service rm 从swarm删除服务</li>
+</ul>
+<h2 id="docker-network">docker network</h2>
+<ul>
+<li>docker network ls ：列出运行在本地的docker主机的全部网络</li>
+<li>docker network create :创建新的docker网络。默认采用的是bridge 加-d参数指定(网络类型)</li>
+<li>docker network inspect:提供docker网络的详细配置信息。</li>
+<li>docker network prune:删除docker主机上全部未使用的网络。</li>
+<li>docker network rm :删除docker主机上指定的网络</li>
+</ul>
+<h2 id="docker-volume">docker volume</h2>
+<ul>
+<li>docker volume create ：创建新卷，默认使用的local驱动，加-d参数指定不同驱动</li>
+<li>docker volume ls :查看docker主机的全部卷</li>
+<li>docker volume inspect: 查看卷的详细信息</li>
+<li>docker volume prune ：删除未被容器和服务使用的卷</li>
+<li>docker volume rm:删除指定卷</li>
+</ul>
+<h2 id="docker-stack">Docker Stack</h2>
+<ul>
+<li>docker stack deploy： 用于根据stack文件部署和更新stack服务</li>
+<li>docker stack ls ：列出swarm集群中所有的stack</li>
+<li>docker stack ps: 列出某个已经部署的stack的相关信息。</li>
+<li>docker stack rm：从swarm集群中移除stack</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-05-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/docker-command/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/docker-command/" data-title="Docker Command" data-via="xxxx" data-hashtags="docker"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/docker-command/" data-hashtag="docker"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/docker-command/" data-title="Docker Command"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/docker-command/" data-title="Docker Command"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/docker-command/" data-title="Docker Command"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/docker/">docker</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/sc-pv-pvc/" class="prev" rel="prev" title="Kubernets-Sc&amp;Pv&amp;Pvc"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Kubernets-Sc&Pv&Pvc</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
