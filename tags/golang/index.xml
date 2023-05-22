@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>golang - Tag - flamingo</title>
+        <link>https://f1aming007.github.io/tags/golang/</link>
+        <description>golang - Tag - flamingo</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sun, 21 May 2023 13:49:21 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Mysql CRUD</title>
+    <link>https://f1aming007.github.io/golang-mysql-crud/</link>
+    <pubDate>Sun, 21 May 2023 13:49:21 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-mysql-crud/</guid>
+    <description><![CDATA[Go 操作 sql server docker 安装 sqlserver 1 2 3 4 #拉取镜像 docker pull mcr.microsoft.com/azure-sql-edge #启动容器 docker run --name azuresqledge -e &#39;ACCEPT_EULA=Y&#39; -e &#39;SA_PASSWORD=yourStrong(!)Password&#39; -d -p 1433:1433 mcr.microsoft.com/azure-sql-edge 连接SQL数据库，要加载目标数据库的驱动，驱动里面包含了与数据库]]></description>
+</item>
+</channel>
+</rss>

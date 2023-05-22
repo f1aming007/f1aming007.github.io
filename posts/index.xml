@@ -4,7 +4,15 @@
         <link>https://f1aming007.github.io/posts/</link>
         <description>All Posts | flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sun, 21 May 2023 11:39:44 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sun, 21 May 2023 13:49:21 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Mysql CRUD</title>
+    <link>https://f1aming007.github.io/golang-mysql-crud/</link>
+    <pubDate>Sun, 21 May 2023 13:49:21 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-mysql-crud/</guid>
+    <description><![CDATA[Go 操作 sql server docker 安装 sqlserver 1 2 3 4 #拉取镜像 docker pull mcr.microsoft.com/azure-sql-edge #启动容器 docker run --name azuresqledge -e &#39;ACCEPT_EULA=Y&#39; -e &#39;SA_PASSWORD=yourStrong(!)Password&#39; -d -p 1433:1433 mcr.microsoft.com/azure-sql-edge 连接SQL数据库，要加载目标数据库的驱动，驱动里面包含了与数据库]]></description>
+</item>
+<item>
     <title>Docker Command</title>
     <link>https://f1aming007.github.io/docker-command/</link>
     <pubDate>Sun, 21 May 2023 11:39:44 &#43;0800</pubDate>
@@ -75,14 +83,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/deployment/</guid>
     <description><![CDATA[Deployment Deployment Pod 的 “水平扩展、收缩” ReplicaSet 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 apiVersion: apps/v1 kind: ReplicaSet metadata: name: nginx-set labels: app: nginx spec: replicas: 3 selector: matchLabels: app: nginx template: metadata: labels: app: nginx spec: containers: - name: nginx image: nginx:1.7.9 一个Replic]]></description>
-</item>
-<item>
-    <title>Kubernets-Pod</title>
-    <link>https://f1aming007.github.io/pod/</link>
-    <pubDate>Wed, 17 May 2023 09:04:25 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/pod/</guid>
-    <description><![CDATA[pod pod 的属性 凡是调度、网络、存储、以及安全相关的属性， 都是pod级别的 NodeSelector 用户将Pod 与Node进行绑定的字段 1 2 3 4 5 6 apiVersion: v1 kind: Pod ... spec: nodeSelector: disktype: ssd NodeName 一]]></description>
 </item>
 </channel>
 </rss>
