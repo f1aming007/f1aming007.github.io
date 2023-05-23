@@ -4,7 +4,15 @@
         <link>https://f1aming007.github.io/tags/golang/</link>
         <description>golang - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sun, 21 May 2023 13:49:21 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 23 May 2023 10:44:35 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Sqlx</title>
+    <link>https://f1aming007.github.io/golang-sqlx/</link>
+    <pubDate>Tue, 23 May 2023 10:44:35 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-sqlx/</guid>
+    <description><![CDATA[sqlx 库的使用 sqlx 的介绍 sqlx 是内置database/sql 软件包的基础上提供了一组拓展 兼容sql原生包，提供了更加优雅的查询，插入函数 sqlx 安装 1 go get github.com/jmoiron/sqlx]]></description>
+</item>
+<item>
     <title>Golang Mysql CRUD</title>
     <link>https://f1aming007.github.io/golang-mysql-crud/</link>
     <pubDate>Sun, 21 May 2023 13:49:21 &#43;0800</pubDate>

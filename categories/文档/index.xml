@@ -4,7 +4,15 @@
         <link>https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/</link>
         <description>文档 - Category - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sun, 21 May 2023 13:49:21 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 23 May 2023 10:44:35 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Sqlx</title>
+    <link>https://f1aming007.github.io/golang-sqlx/</link>
+    <pubDate>Tue, 23 May 2023 10:44:35 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-sqlx/</guid>
+    <description><![CDATA[sqlx 库的使用 sqlx 的介绍 sqlx 是内置database/sql 软件包的基础上提供了一组拓展 兼容sql原生包，提供了更加优雅的查询，插入函数 sqlx 安装 1 go get github.com/jmoiron/sqlx]]></description>
+</item>
+<item>
     <title>Golang Mysql CRUD</title>
     <link>https://f1aming007.github.io/golang-mysql-crud/</link>
     <pubDate>Sun, 21 May 2023 13:49:21 &#43;0800</pubDate>
@@ -75,14 +83,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/daemonset/</guid>
     <description><![CDATA[DaemonSet 主要作用 在kubernetes集群里， 运行一个Daemon Pod， 所以， 这个Pod有如下三个特征 这个Pod运载kubernetes集群里的]]></description>
-</item>
-<item>
-    <title>Kubernets-Deployment</title>
-    <link>https://f1aming007.github.io/deployment/</link>
-    <pubDate>Sat, 20 May 2023 11:16:48 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/deployment/</guid>
-    <description><![CDATA[Deployment Deployment Pod 的 “水平扩展、收缩” ReplicaSet 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 apiVersion: apps/v1 kind: ReplicaSet metadata: name: nginx-set labels: app: nginx spec: replicas: 3 selector: matchLabels: app: nginx template: metadata: labels: app: nginx spec: containers: - name: nginx image: nginx:1.7.9 一个Replic]]></description>
 </item>
 </channel>
 </rss>
