@@ -266,3 +266,6 @@ if err != nil {
 }
 fmt.Printf("Deleted %v documents in the trainers collection\n", deleteResult2.DeletedCount)
 ```
+
+* 参考链接
+https://pkg.go.dev/go.mongodb.org/mongo-driver/mongo
