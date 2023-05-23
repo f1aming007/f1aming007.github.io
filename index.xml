@@ -4,9 +4,17 @@
         <link>https://f1aming007.github.io/</link>
         <description>flamingo Hugo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 23 May 2023 16:16:11 &#43;0800</lastBuildDate>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 23 May 2023 16:57:24 &#43;0800</lastBuildDate>
             <atom:link href="https://f1aming007.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Golang MangoDB</title>
+    <link>https://f1aming007.github.io/golang-mangodb/</link>
+    <pubDate>Tue, 23 May 2023 16:57:24 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-mangodb/</guid>
+    <description><![CDATA[MongoDB MongoDB介绍 mongoDB是基于分布式文件存储的数据库，是一个介于关系型数据库和非关系数据库之间的产品 mongoDB将一条数据存储为]]></description>
+</item>
+<item>
     <title>Golang Redis</title>
     <link>https://f1aming007.github.io/golang-redis/</link>
     <pubDate>Tue, 23 May 2023 16:16:11 &#43;0800</pubDate>
@@ -77,14 +85,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/job_cronjob/</guid>
     <description><![CDATA[Job 与 CronJob Job API 1 2 3 4 5 6 7 8 9 10 11 12 13 apiVersion: batch/v1 kind: Job metadata: name: pi spec: template: spec: containers: - name: pi image: resouer/ubuntu-bc command: [&#34;sh&#34;, &#34;-c&#34;, &#34;echo &#39;scale=10000; 4*a(1)&#39; | bc -l &#34;] restartPolicy: Never backoffLimit: 4 计算π值的容器。而通过 scale=10000]]></description>
-</item>
-<item>
-    <title>Kubernets-StatefulSet</title>
-    <link>https://f1aming007.github.io/stateful/</link>
-    <pubDate>Sat, 20 May 2023 11:26:22 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/stateful/</guid>
-    <description><![CDATA[StatefulSet 概念 StatefulSet 的设计其实非常容器理解， 它把真实世界里的应用状态， 抽象为两个情况 拓扑状态：这种情况意味着， 应用的多个实例之间不是完全对等的关系， 这些]]></description>
 </item>
 </channel>
 </rss>
