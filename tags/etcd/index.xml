@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>etcd - Tag - flamingo</title>
+        <link>https://f1aming007.github.io/tags/etcd/</link>
+        <description>etcd - Tag - flamingo</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 23 May 2023 22:02:20 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/etcd/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Etcd</title>
+    <link>https://f1aming007.github.io/golang-etcd/</link>
+    <pubDate>Tue, 23 May 2023 22:02:20 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-etcd/</guid>
+    <description><![CDATA[Etcd etcd 是一个开源的， 高可用的分布式的 key-value 存储系统， 可以用于配制共享和服务的注册和发现 etcd具有的特点 完全复制： 集群中的每个阶段都可以使用完整的]]></description>
+</item>
+</channel>
+</rss>

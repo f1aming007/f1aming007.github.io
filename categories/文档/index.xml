@@ -4,7 +4,15 @@
         <link>https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/</link>
         <description>文档 - Category - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 23 May 2023 16:57:24 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 23 May 2023 22:02:20 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Etcd</title>
+    <link>https://f1aming007.github.io/golang-etcd/</link>
+    <pubDate>Tue, 23 May 2023 22:02:20 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-etcd/</guid>
+    <description><![CDATA[Etcd etcd 是一个开源的， 高可用的分布式的 key-value 存储系统， 可以用于配制共享和服务的注册和发现 etcd具有的特点 完全复制： 集群中的每个阶段都可以使用完整的]]></description>
+</item>
+<item>
     <title>Golang MangoDB</title>
     <link>https://f1aming007.github.io/golang-mongodb/</link>
     <pubDate>Tue, 23 May 2023 16:57:24 &#43;0800</pubDate>
@@ -75,14 +83,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/</guid>
     <description><![CDATA[声明式API与Kubernetes编码范式 kubectl create 再replace的操作， 称为命令式配置文件操作 声明式API https://hugbz2.51cg3.co/archives/25451 /https://hugbz2.51cg3.co/archives/4081/ kuberctl apply 命令就是 声明式API apply 与 re]]></description>
-</item>
-<item>
-    <title>Kubernets-Job_Cronjob</title>
-    <link>https://f1aming007.github.io/job_cronjob/</link>
-    <pubDate>Sat, 20 May 2023 11:26:50 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/job_cronjob/</guid>
-    <description><![CDATA[Job 与 CronJob Job API 1 2 3 4 5 6 7 8 9 10 11 12 13 apiVersion: batch/v1 kind: Job metadata: name: pi spec: template: spec: containers: - name: pi image: resouer/ubuntu-bc command: [&#34;sh&#34;, &#34;-c&#34;, &#34;echo &#39;scale=10000; 4*a(1)&#39; | bc -l &#34;] restartPolicy: Never backoffLimit: 4 计算π值的容器。而通过 scale=10000]]></description>
 </item>
 </channel>
 </rss>
