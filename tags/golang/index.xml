@@ -6,10 +6,10 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
             <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 23 May 2023 16:57:24 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
     <title>Golang MangoDB</title>
-    <link>https://f1aming007.github.io/golang-mangodb/</link>
+    <link>https://f1aming007.github.io/golang-mongodb/</link>
     <pubDate>Tue, 23 May 2023 16:57:24 &#43;0800</pubDate>
     <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-mangodb/</guid>
+    <guid>https://f1aming007.github.io/golang-mongodb/</guid>
     <description><![CDATA[MongoDB MongoDB介绍 mongoDB是基于分布式文件存储的数据库，是一个介于关系型数据库和非关系数据库之间的产品 mongoDB将一条数据存储为]]></description>
 </item>
 <item>
