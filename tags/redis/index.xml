@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>redis - Tag - flamingo</title>
+        <link>https://f1aming007.github.io/tags/redis/</link>
+        <description>redis - Tag - flamingo</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 23 May 2023 16:16:11 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/redis/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Redis</title>
+    <link>https://f1aming007.github.io/golang-redis/</link>
+    <pubDate>Tue, 23 May 2023 16:16:11 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-redis/</guid>
+    <description><![CDATA[Redis Redis 介绍 Redis是一个开源的内存数据库，提供了多种不同的数据结构， 通过复制、持久化/客户端分片等特性， 方便的将Redis 拓展成一个包含数百]]></description>
+</item>
+</channel>
+</rss>
