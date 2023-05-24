@@ -39,7 +39,7 @@ etcd具有的特点
 
 ## 安装
 ```bash
-go get go.etcd.io/etcd/clientv3
+go get go.etcd.io/etcd/client/v3
 ```
 
 ## put和get 操作
@@ -51,7 +51,7 @@ import (
 	"fmt"
 	"time"
 
-	"go.etcd.io/etcd/clientv3"
+	clientv3 "go.etcd.io/etcd/client/v3"
 )
 
 // etcd client put/get demo
@@ -67,7 +67,7 @@ func main() {
 		fmt.Printf("connect to etcd failed, err:%v\n", err)
 		return
 	}
-    fmt.Println("connect to etcd success")
+	fmt.Println("connect to etcd success")
 	defer cli.Close()
 	// put
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
@@ -90,3 +90,252 @@ func main() {
 	}
 }
 ```
+
+### watch操作
+* watch 用来获取未来更改的通知
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"time"
+
+	clientv3 "go.etcd.io/etcd/client/v3"
+)
+
+// watch demo
+
+func main() {
+	cli, err := clientv3.New(clientv3.Config{
+		Endpoints:   []string{"127.0.0.1:2379"},
+		DialTimeout: 5 * time.Second,
+	})
+
+	if err != nil {
+		fmt.Printf("connect to etcd failed, err:%v\n", err)
+		return
+	}
+	fmt.Println("Connect to etcd successful")
+
+	defer cli.Close()
+
+	// watch keys:demo changes
+	rch := cli.Watch(context.Background(), "demo")
+	for wresp := range rch {
+		for _, ev := range wresp.Events {
+			fmt.Printf("Type: %s Key:%s Value:%s\n", ev.Type, ev.Kv.Key, ev.Kv.Value)
+		}
+	}
+}
+```
+> 这个程序会等待 etcd 中 `demo` 这个key的变化
+
+* 打开终端对 demo 这个命令 设置
+
+```bash
+etcdctl put demo "dsb01"
+OK
+etcdctl del demo
+1
+etcdctl put demo "ddd03"
+OK
+```
+
+> watch 会收到的通知
+```bash
+Connect to etcd successful
+Type: PUT Key:demo Value:dsb01
+Type: DELETE Key:demo Value:
+Type: PUT Key:demo Value:ddd03
+```
+
+## lease 租约
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"time"
+
+	clientv3 "go.etcd.io/etcd/client/v3"
+)
+
+// watch demo
+
+func main() {
+	cli, err := clientv3.New(clientv3.Config{
+		Endpoints:   []string{"127.0.0.1:2379"},
+		DialTimeout: 5 * time.Second,
+	})
+
+	if err != nil {
+		fmt.Printf("connect to etcd failed, err:%v\n", err)
+		return
+	}
+	fmt.Println("Connect to etcd successful")
+
+	defer cli.Close()
+
+	//etcd lease
+	// 创建一个5s的租约
+	resp, err := cli.Grant(context.TODO(), 5)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	// 5s之后， /demo/ 这个key就会被移除
+	_, err = cli.Put(context.TODO(), "/demo/", "bbb", clientv3.WithLease(resp.ID))
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+}
+```
+
+## keepAlive
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"time"
+
+	clientv3 "go.etcd.io/etcd/client/v3"
+)
+
+// watch demo
+
+func main() {
+	cli, err := clientv3.New(clientv3.Config{
+		Endpoints:   []string{"127.0.0.1:2379"},
+		DialTimeout: 5 * time.Second,
+	})
+
+	if err != nil {
+		fmt.Printf("connect to etcd failed, err:%v\n", err)
+		return
+	}
+	fmt.Println("Connect to etcd successful")
+
+	defer cli.Close()
+
+	//etcd lease
+	// 创建一个5s的租约
+	resp, err := cli.Grant(context.TODO(), 5)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	// 5s之后， /demo/ 这个key就会被移除
+	_, err = cli.Put(context.TODO(), "/demo/", "bbb", clientv3.WithLease(resp.ID))
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	// the key 'foo' will be kept forever
+	ch, haerr := cli.KeepAlive(context.TODO(), resp.ID)
+	if haerr != nil {
+		log.Fatal(err.Error())
+	}
+	for {
+		ha := <-ch
+		fmt.Println("ttl: ", ha.TTL)
+	}
+}
+```
+
+## 基于etcd 实现分布式锁
+* `go.etcd.io/etcd/client/v3/concurrency` 在etcd之上实现并发操作， 如分布式锁/屏障和选举
+* 倒入包
+```go
+import "go.etcd.io/etcd/client/v3/concurrency"
+```
+
+* 基于etcd 实现分布式锁的示例
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"time"
+
+	clientv3 "go.etcd.io/etcd/client/v3"
+	"go.etcd.io/etcd/client/v3/concurrency"
+)
+
+// watch demo
+
+func main() {
+	cli, err := clientv3.New(clientv3.Config{
+		Endpoints:   []string{"127.0.0.1:2379"},
+		DialTimeout: 5 * time.Second,
+	})
+
+	if err != nil {
+		fmt.Printf("connect to etcd failed, err:%v\n", err)
+		return
+	}
+	fmt.Println("Connect to etcd successful")
+
+	defer cli.Close()
+
+	// 创建两个单独的会话来演示竞争锁
+	s1, err := concurrency.NewSession(cli)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	defer s1.Close()
+	m1 := concurrency.NewMutex(s1, "/my-lock/")
+
+	s2, err := concurrency.NewSession(cli)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	defer s2.Close()
+	m2 := concurrency.NewMutex(s2, "/my-lock/")
+
+	// 会话s1 获取锁
+	if err := m1.Lock(context.TODO()); err != nil {
+		log.Fatal(err.Error())
+	}
+
+	fmt.Println("acquired lock for s1")
+
+	m2Locked := make(chan struct{})
+	go func() {
+		defer close(m2Locked)
+		// 等待之后会话s1 释放了/my-lock/的锁
+		if err := m2.Lock(context.TODO()); err != nil {
+			log.Fatal(err.Error())
+		}
+		fmt.Println("acquired lock for s2")
+	}()
+
+	if err := m1.Unlock(context.TODO()); err != nil {
+		log.Fatal(err.Error())
+	}
+
+	fmt.Println("release lock for s1")
+
+	<-m2Locked
+	fmt.Println("release lock for s2")
+}
+```
+
+* 输出结果
+```bash
+Connect to etcd successful
+acquired lock for s1
+release lock for s1
+acquired lock for s2
+release lock for s2
+```
+
+* 参考链接
+https://pkg.go.dev/go.etcd.io/etcd/clientv3/concurrency
+https://github.com/etcd-io/etcd/tree/main/client/v3
