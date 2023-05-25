@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>K8s Liveness_Readines - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="K8s Liveness_Readines" />
+<meta property="og:description" content="Liveness&amp;Readines 需求来源 实时观察应用的健康状态 获取应用的资源使用情况 拿到应用的实时日志， 进行问题的诊断和分析 Liveness probe 和 Readiness probe 介绍 livenness probe 是就绪指针，判断一个pod是" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/k8s-liveness_readines/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-24T16:28:31+08:00" />
+<meta property="article:modified_time" content="2023-05-24T16:28:31+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="K8s Liveness_Readines"/>
+<meta name="twitter:description" content="Liveness&amp;Readines 需求来源 实时观察应用的健康状态 获取应用的资源使用情况 拿到应用的实时日志， 进行问题的诊断和分析 Liveness probe 和 Readiness probe 介绍 livenness probe 是就绪指针，判断一个pod是"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/k8s-liveness_readines/" /><link rel="prev" href="https://f1aming007.github.io/golang-etcd/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "K8s Liveness_Readines",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/k8s-liveness_readines\/"
+        },"genre": "posts","keywords": "k8s","wordcount":  2394 ,
+        "url": "https:\/\/f1aming007.github.io\/k8s-liveness_readines\/","datePublished": "2023-05-24T16:28:31+08:00","dateModified": "2023-05-24T16:28:31+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">K8s Liveness_Readines</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-24">2023-05-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2394 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#需求来源">需求来源</a></li>
+    <li><a href="#liveness-probe-和-readiness-probe-介绍">Liveness probe 和 Readiness probe 介绍</a></li>
+    <li><a href="#应用健康状态-使用方式">应用健康状态-使用方式</a>
+      <ul>
+        <li><a href="#探测方式">探测方式</a></li>
+        <li><a href="#探测结果">探测结果</a></li>
+      </ul>
+    </li>
+    <li><a href="#应用健康状态检查方式-pod-probe-spec">应用健康状态检查方式-pod Probe spec</a>
+      <ul>
+        <li><a href="#exec">exec</a></li>
+        <li><a href="#httpget">httpGet</a></li>
+        <li><a href="#tcpsocket">tcpSocket</a></li>
+      </ul>
+    </li>
+    <li><a href="#liveness-与-readiness-总结">Liveness 与 Readiness 总结</a>
+      <ul>
+        <li><a href="#适用场景">适用场景</a></li>
+      </ul>
+    </li>
+    <li><a href="#应用故障排除状态机制">应用故障排除——状态机制</a></li>
+    <li><a href="#应用故障排除-场景应用异常">应用故障排除-场景应用异常</a>
+      <ul>
+        <li><a href="#pod停留在pending">pod停留在Pending</a></li>
+        <li><a href="#pod-停留在-waiting">Pod 停留在 waiting</a></li>
+        <li><a href="#pod-不断被拉取并且可以看到-crashing">Pod 不断被拉取并且可以看到 crashing</a></li>
+        <li><a href="#pod-处在-runing-但是没有正常工作">Pod 处在 Runing 但是没有正常工作</a></li>
+        <li><a href="#service-无法正常的工作">Service 无法正常的工作</a></li>
+      </ul>
+    </li>
+    <li><a href="#应用远程调试">应用远程调试</a>
+      <ul>
+        <li><a href="#应用远程调试---pod-远程调试">应用远程调试 - Pod 远程调试</a></li>
+        <li><a href="#应用远程调试---service-远程调试">应用远程调试 - Service 远程调试</a></li>
+      </ul>
+    </li>
+    <li><a href="#kubectl-debug">kubectl-debug</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="livenessreadines">Liveness&amp;Readines</h1>
+<h2 id="需求来源">需求来源</h2>
+<ol>
+<li>实时观察应用的健康状态</li>
+<li>获取应用的资源使用情况</li>
+<li>拿到应用的实时日志， 进行问题的诊断和分析</li>
+</ol>
+<h2 id="liveness-probe-和-readiness-probe-介绍">Liveness probe 和 Readiness probe 介绍</h2>
+<ul>
+<li>
+<p>livenness probe 是就绪指针，判断一个pod是否处于就绪状态。</p>
+</li>
+<li>
+<p>当一个pod处于就绪状态的时候 才能对外提供对应的服务，接入层的流量才能打入相应的pod</p>
+</li>
+<li>
+<p>当这个pod不处于就绪状态， 接入层灰吧相应的流量从这个pod上面剔除。
+<figure><img src="/images/Readiness01.png"/><figcaption>
+            <h4>Liveness01 (figure)</h4>
+        </figcaption>
+</figure>
+</p>
+</li>
+<li>
+<p>这个pod指针一直处于失败， 接入层流量不会打到这个pod</p>
+</li>
+<li>
+<p>这个 pod 的状态从 FAIL 的状态转换成 success 的状态时，它才能够真实地承载这个流量</p>
+</li>
+<li>
+<p>这个时候会由上层的判断机制来判断这个 pod 是否需要被重新拉起。那如果上层配置的重启策略是 restart always 的话，那么此时这个 pod 会直接被重新拉起。</p>
+</li>
+</ul>
+<h2 id="应用健康状态-使用方式">应用健康状态-使用方式</h2>
+<h3 id="探测方式">探测方式</h3>
+<p>liveness指针和Readkiness指针支持三种不同的探测方式</p>
+<ol>
+<li>httpGet: 通过发送http 个体请求进行判断， 当返回码是200～399 ，标识这个应用是健康的</li>
+<li>Exec: 执行容器中的一个命令判断当前容器是否正常，当返回时0，标识容器时健康的</li>
+<li>tcpSocket： 通过探测容器的IP和Port 进行TCP健康检查， TCP能正常建立， 标识这个容器时健康的</li>
+</ol>
+<h3 id="探测结果">探测结果</h3>
+<ol>
+<li>Success:  标识Container 通过健康检查</li>
+<li>Failure:  container没有通过健康检查，此时会有一个相应的处理，Readiness——（service层将没有通过Readiness的pod进行移除）liveness 将这个pod重新拉起， 或者删除</li>
+<li>Unknown: 当前的执行机制没有完成执行（超时或者一些脚本没有及时返回），等待下次的机制来进行校验</li>
+</ol>
+<h2 id="应用健康状态检查方式-pod-probe-spec">应用健康状态检查方式-pod Probe spec</h2>
+<h3 id="exec">exec</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502713702-6b90ff5b-265d-4c2d-a46f-b363ea54c2d7.png"
+        data-srcset="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502713702-6b90ff5b-265d-4c2d-a46f-b363ea54c2d7.png, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502713702-6b90ff5b-265d-4c2d-a46f-b363ea54c2d7.png 1.5x, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502713702-6b90ff5b-265d-4c2d-a46f-b363ea54c2d7.png 2x"
+        data-sizes="auto"
+        alt="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502713702-6b90ff5b-265d-4c2d-a46f-b363ea54c2d7.png"
+        title="Minion" /></p>
+<ul>
+<li>通过cat 一个具体文件来判断当前Liveness probe 的状态，返回0 这个pod 处于健康状态
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502757691-ece72c57-6446-4796-8e4b-568a1cf6ca74.png"
+        data-srcset="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502757691-ece72c57-6446-4796-8e4b-568a1cf6ca74.png, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502757691-ece72c57-6446-4796-8e4b-568a1cf6ca74.png 1.5x, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502757691-ece72c57-6446-4796-8e4b-568a1cf6ca74.png 2x"
+        data-sizes="auto"
+        alt="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502757691-ece72c57-6446-4796-8e4b-568a1cf6ca74.png"
+        title="Minion" /></li>
+</ul>
+<h3 id="httpget">httpGet</h3>
+<h3 id="tcpsocket">tcpSocket</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502777983-dfa814ec-747e-4540-9f6a-46e41912f9bd.png"
+        data-srcset="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502777983-dfa814ec-747e-4540-9f6a-46e41912f9bd.png, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502777983-dfa814ec-747e-4540-9f6a-46e41912f9bd.png 1.5x, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502777983-dfa814ec-747e-4540-9f6a-46e41912f9bd.png 2x"
+        data-sizes="auto"
+        alt="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502777983-dfa814ec-747e-4540-9f6a-46e41912f9bd.png"
+        title="Minion" /></p>
+<ul>
+<li>参数说明：
+<ul>
+<li>initialDelaySeconds： pod启动延迟多久进行一次检查</li>
+<li>periodSeconds： 检查的时间间隔，默认值是10秒</li>
+<li>timeoutSeconds： 检查的超时时间</li>
+<li>successThreshold： pod从探测失败到再一次探测成功， 锁需要的阀值次数</li>
+<li>failureThreshold： 探测失败的重启次数， 默认值是3</li>
+</ul>
+</li>
+</ul>
+<h2 id="liveness-与-readiness-总结">Liveness 与 Readiness 总结</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502867094-9c716cdd-edd0-4296-98c1-02afab9a5487.png?x-oss-process=image/resize,w_2222"
+        data-srcset="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502867094-9c716cdd-edd0-4296-98c1-02afab9a5487.png?x-oss-process=image/resize%2cw_2222, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502867094-9c716cdd-edd0-4296-98c1-02afab9a5487.png?x-oss-process=image/resize%2cw_2222 1.5x, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502867094-9c716cdd-edd0-4296-98c1-02afab9a5487.png?x-oss-process=image/resize%2cw_2222 2x"
+        data-sizes="auto"
+        alt="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502867094-9c716cdd-edd0-4296-98c1-02afab9a5487.png?x-oss-process=image/resize,w_2222"
+        title="Minion" /></p>
+<ul>
+<li>liveness: 判断容器是否处于running ,如果容器不健康，会通过kubelet 杀掉相应的pod</li>
+<li>Readiness： 判断容器是否启动完成，如果探测一个结果不成功， 会从pod上Endpoint上移除。</li>
+</ul>
+<h3 id="适用场景">适用场景</h3>
+<ul>
+<li>liveness： 支持可以重新拉起的应用</li>
+<li>Readiness： 应对 启动后无法立即对外提供服务的应用。</li>
+</ul>
+<h2 id="应用故障排除状态机制">应用故障排除——状态机制</h2>
+<ul>
+<li>
+<p>k8s 的状态机制， 通过yaml的方式定义个期望到达的状态。</p>
+</li>
+<li>
+<p>这个yaml的真正执行过程 各种各样的controller来负责整体的状态之间的转换
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502911373-048d928b-f606-4503-ac09-ab71505841cf.png"
+        data-srcset="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502911373-048d928b-f606-4503-ac09-ab71505841cf.png, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502911373-048d928b-f606-4503-ac09-ab71505841cf.png 1.5x, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502911373-048d928b-f606-4503-ac09-ab71505841cf.png 2x"
+        data-sizes="auto"
+        alt="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502911373-048d928b-f606-4503-ac09-ab71505841cf.png"
+        title="Minion" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502921155-cb806fc8-e90d-4c81-bd1f-8636aa59db66.png"
+        data-srcset="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502921155-cb806fc8-e90d-4c81-bd1f-8636aa59db66.png, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502921155-cb806fc8-e90d-4c81-bd1f-8636aa59db66.png 1.5x, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502921155-cb806fc8-e90d-4c81-bd1f-8636aa59db66.png 2x"
+        data-sizes="auto"
+        alt="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570502921155-cb806fc8-e90d-4c81-bd1f-8636aa59db66.png"
+        title="Minion" /></p>
+</li>
+<li>
+<p>一个 Pod 的一个生命周期。刚开始它处在一个 pending 的状态，那接下来可能会转换到类似像 running，也可能转换到 Unknown，甚至可以转换到 failed。然后，当 running 执行了一段时间之后，它可以转换到类似像 successded 或者是 failed，然后当出现在 unknown 这个状态时，可能由于一些状态的恢复，它会重新恢复到 running 或者 successded 或者是 failed。</p>
+</li>
+<li>
+<p>k8s 整体的一个状态就是状态机制的转换</p>
+</li>
+<li>
+<p>一个pod状态位的展现
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503040532-79a6ac60-4106-4f37-87b2-9934856626ca.png"
+        data-srcset="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503040532-79a6ac60-4106-4f37-87b2-9934856626ca.png, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503040532-79a6ac60-4106-4f37-87b2-9934856626ca.png 1.5x, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503040532-79a6ac60-4106-4f37-87b2-9934856626ca.png 2x"
+        data-sizes="auto"
+        alt="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503040532-79a6ac60-4106-4f37-87b2-9934856626ca.png"
+        title="Minion" /></p>
+</li>
+</ul>
+<h2 id="应用故障排除-场景应用异常">应用故障排除-场景应用异常</h2>
+<h3 id="pod停留在pending">pod停留在Pending</h3>
+<ul>
+<li>标识没有调度器进行介入
+<ul>
+<li>可能是资源或端口占用</li>
+<li>由于node selector 造成的pod无法调度</li>
+</ul>
+</li>
+</ul>
+<h3 id="pod-停留在-waiting">Pod 停留在 waiting</h3>
+<ul>
+<li>表示pod的镜像没有正常拉取</li>
+<li>可能原因
+<ul>
+<li>私有镜像 没有配置pod secret</li>
+<li>镜像地址不存在</li>
+</ul>
+</li>
+</ul>
+<h3 id="pod-不断被拉取并且可以看到-crashing">Pod 不断被拉取并且可以看到 crashing</h3>
+<ul>
+<li>标识pod已经调度完成， 但是启动失败</li>
+<li>需要关注应用的自身状态
+<ul>
+<li>查看pod的具体日志</li>
+</ul>
+</li>
+</ul>
+<h3 id="pod-处在-runing-但是没有正常工作">Pod 处在 Runing 但是没有正常工作</h3>
+<ul>
+<li>常见问题——yaml信息里可能有拼写错误</li>
+<li>apply-validate -f pod.yaml 判断当前的yaml是否正确
+<ul>
+<li>如果没有问题，诊断配置的端口是否正常，以及liveness或Readiness 配置是否正确</li>
+</ul>
+</li>
+</ul>
+<h3 id="service-无法正常的工作">Service 无法正常的工作</h3>
+<ul>
+<li>因为service和底层pod之间的关联是通过selector的方式进行匹配的，</li>
+<li>pod上面配置label， 然后service通过match label的方式和pod进行关联
+<ul>
+<li>如果lable配置有问题，可能会造成service无法找到后面的endpoint</li>
+<li>造成相应的service无法对外提供服务</li>
+</ul>
+</li>
+<li>排除这种问题
+<ul>
+<li>首先 看service 后面的是不是有一个真正的endpoint</li>
+<li>其次 看这个endpoint 是否可以对外提供正常的服务</li>
+</ul>
+</li>
+</ul>
+<h2 id="应用远程调试">应用远程调试</h2>
+<h3 id="应用远程调试---pod-远程调试">应用远程调试 - Pod 远程调试</h3>
+<ul>
+<li>进入容器里进行诊断
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503283791-1688c1e8-032d-4e35-9be0-728101b6663d.png?x-oss-process=image/resize,w_2222"
+        data-srcset="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503283791-1688c1e8-032d-4e35-9be0-728101b6663d.png?x-oss-process=image/resize%2cw_2222, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503283791-1688c1e8-032d-4e35-9be0-728101b6663d.png?x-oss-process=image/resize%2cw_2222 1.5x, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503283791-1688c1e8-032d-4e35-9be0-728101b6663d.png?x-oss-process=image/resize%2cw_2222 2x"
+        data-sizes="auto"
+        alt="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503283791-1688c1e8-032d-4e35-9be0-728101b6663d.png?x-oss-process=image/resize,w_2222"
+        title="Minion" /></li>
+</ul>
+<h3 id="应用远程调试---service-远程调试">应用远程调试 - Service 远程调试</h3>
+<ul>
+<li>service调试 分了两部分
+<ol>
+<li>将服务暴露到远程的一个集群之内，让远程集群的一些应用去调用本地的一个服务，这是一条反向的一个链路</li>
+<li>让本地的服务能够远程调用服务， 这是一条正向的链路</li>
+</ol>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503307524-cc111087-301f-4db3-9f29-b8f94345699a.png"
+        data-srcset="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503307524-cc111087-301f-4db3-9f29-b8f94345699a.png, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503307524-cc111087-301f-4db3-9f29-b8f94345699a.png 1.5x, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503307524-cc111087-301f-4db3-9f29-b8f94345699a.png 2x"
+        data-sizes="auto"
+        alt="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503307524-cc111087-301f-4db3-9f29-b8f94345699a.png"
+        title="Minion" /></p>
+<ul>
+<li>将 Telepresence 的一个 Proxy 应用部署到远程的 K8s 集群里面。然后将远程单一个 deployment swap 到本地的一个 application，使用的命令就是 Telepresence-swap-deployment 然后以及远程的 DEPLOYMENT_NAME。通过这种方式就可以将本地一个 application 代理到远程的 service 之上、可以将应用在远程集群里面进行本地调试</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503322949-7064b86b-cdea-4b70-af98-bbf26e22e27d.png"
+        data-srcset="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503322949-7064b86b-cdea-4b70-af98-bbf26e22e27d.png, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503322949-7064b86b-cdea-4b70-af98-bbf26e22e27d.png 1.5x, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503322949-7064b86b-cdea-4b70-af98-bbf26e22e27d.png 2x"
+        data-sizes="auto"
+        alt="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503322949-7064b86b-cdea-4b70-af98-bbf26e22e27d.png"
+        title="Minion" /></p>
+<ul>
+<li>使用方式是 kubectl port-forward，然后 service 加上远程的 service name，再加上相应的 namespace，后面还可以加上一些额外的参数，比如说端口的一个映射，通过这种机制就可以把远程的一个应用代理到本地的端口之上，此时通过访问本地端口就可以访问远程的服务。</li>
+</ul>
+<h2 id="kubectl-debug">kubectl-debug</h2>
+<ul>
+<li>
+<p>kubectl-debug 这个工具是依赖于 Linux namespace 的方式来去做的，它可以 datash 一个 Linux namespace 到一个额外的 container，然后在这个 container 里面执行任何的 debug 动作，其实和直接去 debug 这个 Linux namespace 是一致的。这里有一个简单的操作</p>
+</li>
+<li>
+<p>通过 kubectl-debug 这条命令来去诊断远程的一个 pod</p>
+<ul>
+<li>执行debug的时候，首先会拉取一些镜像， 这个镜像里会默认带一些诊断工具</li>
+<li>当这个镜像启用的时候，它会把这个 debug container 进行启动</li>
+<li>这个 container 和相应的你要诊断的这个 container 的 namespace 进行挂靠，类似像网络站，或者是类似像内核的一些参数，可以在这个 debug container 里面实时地进行查看。</li>
+</ul>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503431005-d0a56ed2-4a7d-4a71-bdee-65ce5635d829.png"
+        data-srcset="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503431005-d0a56ed2-4a7d-4a71-bdee-65ce5635d829.png, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503431005-d0a56ed2-4a7d-4a71-bdee-65ce5635d829.png 1.5x, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503431005-d0a56ed2-4a7d-4a71-bdee-65ce5635d829.png 2x"
+        data-sizes="auto"
+        alt="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503431005-d0a56ed2-4a7d-4a71-bdee-65ce5635d829.png"
+        title="Minion" /></p>
+<ul>
+<li>
+<p>去查看类似像 hostname、进程、netstat 等等，这个容器和需要debug的pod在同一个环境里
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503480829-fe86c647-228f-486e-9f24-edb3a0e202d5.png"
+        data-srcset="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503480829-fe86c647-228f-486e-9f24-edb3a0e202d5.png, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503480829-fe86c647-228f-486e-9f24-edb3a0e202d5.png 1.5x, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503480829-fe86c647-228f-486e-9f24-edb3a0e202d5.png 2x"
+        data-sizes="auto"
+        alt="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503480829-fe86c647-228f-486e-9f24-edb3a0e202d5.png"
+        title="Minion" /></p>
+</li>
+<li>
+<p>进行 logout 的话，相当于会把相应的这个 debug pod 杀掉
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503514061-af6ea2ab-4539-41ef-bfd9-530e2ac3a5fd.png"
+        data-srcset="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503514061-af6ea2ab-4539-41ef-bfd9-530e2ac3a5fd.png, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503514061-af6ea2ab-4539-41ef-bfd9-530e2ac3a5fd.png 1.5x, https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503514061-af6ea2ab-4539-41ef-bfd9-530e2ac3a5fd.png 2x"
+        data-sizes="auto"
+        alt="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503514061-af6ea2ab-4539-41ef-bfd9-530e2ac3a5fd.png"
+        title="Minion" /></p>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-05-24</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/k8s-liveness_readines/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/k8s-liveness_readines/" data-title="K8s Liveness_Readines" data-via="xxxx" data-hashtags="k8s"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/k8s-liveness_readines/" data-hashtag="k8s"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/k8s-liveness_readines/" data-title="K8s Liveness_Readines"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/k8s-liveness_readines/" data-title="K8s Liveness_Readines"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/k8s-liveness_readines/" data-title="K8s Liveness_Readines"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/golang-etcd/" class="prev" rel="prev" title="Golang Etcd"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Golang Etcd</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

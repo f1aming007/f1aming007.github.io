@@ -4,7 +4,15 @@
         <link>https://f1aming007.github.io/tags/k8s/</link>
         <description>k8s - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 20 May 2023 11:29:36 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Wed, 24 May 2023 16:28:31 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+    <title>K8s Liveness_Readines</title>
+    <link>https://f1aming007.github.io/k8s-liveness_readines/</link>
+    <pubDate>Wed, 24 May 2023 16:28:31 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/k8s-liveness_readines/</guid>
+    <description><![CDATA[Liveness&amp;Readines 需求来源 实时观察应用的健康状态 获取应用的资源使用情况 拿到应用的实时日志， 进行问题的诊断和分析 Liveness probe 和 Readiness probe 介绍 livenness probe 是就绪指针，判断一个pod是]]></description>
+</item>
+<item>
     <title>Kubernets-Sc&amp;Pv&amp;Pvc</title>
     <link>https://f1aming007.github.io/sc-pv-pvc/</link>
     <pubDate>Sat, 20 May 2023 11:29:36 &#43;0800</pubDate>

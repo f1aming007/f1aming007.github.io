@@ -4,9 +4,17 @@
         <link>https://f1aming007.github.io/</link>
         <description>flamingo Hugo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 23 May 2023 22:02:20 &#43;0800</lastBuildDate>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Wed, 24 May 2023 16:28:31 &#43;0800</lastBuildDate>
             <atom:link href="https://f1aming007.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>K8s Liveness_Readines</title>
+    <link>https://f1aming007.github.io/k8s-liveness_readines/</link>
+    <pubDate>Wed, 24 May 2023 16:28:31 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/k8s-liveness_readines/</guid>
+    <description><![CDATA[Liveness&amp;Readines 需求来源 实时观察应用的健康状态 获取应用的资源使用情况 拿到应用的实时日志， 进行问题的诊断和分析 Liveness probe 和 Readiness probe 介绍 livenness probe 是就绪指针，判断一个pod是]]></description>
+</item>
+<item>
     <title>Golang Etcd</title>
     <link>https://f1aming007.github.io/golang-etcd/</link>
     <pubDate>Tue, 23 May 2023 22:02:20 &#43;0800</pubDate>
@@ -77,14 +85,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/rbac/</guid>
     <description><![CDATA[基于角色的权限控制：RBAC 在kubernetes项目中 负责完成授权的（Authorization）工作的记住， 就是RBAC， 基于角色的访问]]></description>
-</item>
-<item>
-    <title>Kubernets-声明式API</title>
-    <link>https://f1aming007.github.io/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/</link>
-    <pubDate>Sat, 20 May 2023 11:27:18 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/</guid>
-    <description><![CDATA[声明式API与Kubernetes编码范式 kubectl create 再replace的操作， 称为命令式配置文件操作 声明式API https://hugbz2.51cg3.co/archives/25451 /https://hugbz2.51cg3.co/archives/4081/ kuberctl apply 命令就是 声明式API apply 与 re]]></description>
 </item>
 </channel>
 </rss>
