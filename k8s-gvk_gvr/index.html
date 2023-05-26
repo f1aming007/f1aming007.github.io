@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>K8s GVK_GVR - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="K8s GVK_GVR" />
+<meta property="og:description" content="K8s-GVK&amp;FVR GVK &amp; GVR 介绍 GVK —— group 、version、 kind GVR —— group 、version 、resource kind 和 resource 概念 在编码过程中， 资源数据存储都是结构体存储 多版本v" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/k8s-gvk_gvr/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-26T09:44:00+08:00" />
+<meta property="article:modified_time" content="2023-05-26T09:44:00+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="K8s GVK_GVR"/>
+<meta name="twitter:description" content="K8s-GVK&amp;FVR GVK &amp; GVR 介绍 GVK —— group 、version、 kind GVR —— group 、version 、resource kind 和 resource 概念 在编码过程中， 资源数据存储都是结构体存储 多版本v"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/k8s-gvk_gvr/" /><link rel="prev" href="https://f1aming007.github.io/k8s-liveness_readines/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "K8s GVK_GVR",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/k8s-gvk_gvr\/"
+        },"genre": "posts","keywords": "k8s","wordcount":  1448 ,
+        "url": "https:\/\/f1aming007.github.io\/k8s-gvk_gvr\/","datePublished": "2023-05-26T09:44:00+08:00","dateModified": "2023-05-26T09:44:00+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">K8s GVK_GVR</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-26">2023-05-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1448 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#gvk--gvr-介绍">GVK &amp; GVR 介绍</a>
+      <ul>
+        <li><a href="#kind-和-resource-概念">kind 和 resource 概念</a></li>
+      </ul>
+    </li>
+    <li><a href="#相同名称-kind-可以存在不同组">相同名称 Kind 可以存在不同组</a></li>
+    <li><a href="#api-group-资源分组">API-group 资源分组</a></li>
+    <li><a href="#gvk-与-gvr-映射">GVK 与 GVR 映射</a></li>
+    <li><a href="#api-存储">API 存储</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="k8s-gvkfvr">K8s-GVK&amp;FVR</h1>
+<h2 id="gvk--gvr-介绍">GVK &amp; GVR 介绍</h2>
+<ul>
+<li>GVK —— group 、version、 kind</li>
+<li>GVR —— group 、version 、resource</li>
+</ul>
+<h3 id="kind-和-resource-概念">kind 和 resource 概念</h3>
+<ul>
+<li>在编码过程中， 资源数据存储都是<strong>结构体存储</strong>
+<ul>
+<li>多版本version存储在（alpha1，beta1，v1等），不同版本中存储结构体的存在着差异</li>
+<li>用 Kind 名（如 Deployment），并不能准确获取到其使用哪个版本结构体</li>
+<li>采用 GVK 获取到一个具体的 存储结构体，也就是 GVK 的三个信息（group/verion/kind) 确定一个 Go type（结构体）</li>
+<li>Scheme 存储了 GVK 和 Go type 的映射关系</li>
+</ul>
+</li>
+<li>创建资源， 编写yaml，提交请求
+<ul>
+<li>编写 yaml 过程中，我们会写 apiversion 和 kind，其实就是 GVK</li>
+<li>与 apiserver 通信是 http 形式，就是将请求发送到某一 http path</li>
+<li>http path 其实就是 GVR
+<ul>
+<li>/apis/batch/v1/namespaces/default/job 这个就是表示 default 命名空间的 job 资源</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="相同名称-kind-可以存在不同组">相同名称 Kind 可以存在不同组</h2>
+<p>相同名称的kind不仅可以存在不同的Version， 也可以存在不同的group</p>
+<ul>
+<li>Ingress, NetworkPolicy同时在这个两个API Group： extensions、 networking.k8s.io</li>
+<li>Deployment, DaemonSet, ReplicaSet同时在这些API Group中：extensions、 apps</li>
+<li>Event同时在这些API Group中： core group and events.k8s.io</li>
+</ul>
+<h2 id="api-group-资源分组">API-group 资源分组</h2>
+<ul>
+<li>各组可以单独打开或者关闭</li>
+<li>各组可以有自己独立的版本， 不影响其他组的情况下可以单独衍化</li>
+<li>同一个资源可以同时存在于多个不同组中，这样就可以同时支持某个特定资源稳定版本与实验版本</li>
+</ul>
+<blockquote>
+<p>kubernetes API
+查看当前 kubernetes 集群支持的 API 版本</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ kubectl api-versions
+</span></span><span class="line"><span class="cl">apiextensions.k8s.io/v1beta1
+</span></span><span class="line"><span class="cl">apiregistration.k8s.io/v1beta1
+</span></span><span class="line"><span class="cl">apps/v1beta1
+</span></span><span class="line"><span class="cl">apps/v1beta2
+</span></span><span class="line"><span class="cl">authentication.k8s.io/v1
+</span></span><span class="line"><span class="cl">authentication.k8s.io/v1beta1
+</span></span><span class="line"><span class="cl">authorization.k8s.io/v1
+</span></span><span class="line"><span class="cl">authorization.k8s.io/v1beta1
+</span></span><span class="line"><span class="cl">autoscaling/v1
+</span></span><span class="line"><span class="cl">autoscaling/v2beta1
+</span></span><span class="line"><span class="cl">batch/v1
+</span></span><span class="line"><span class="cl">batch/v1beta1
+</span></span><span class="line"><span class="cl">certificates.k8s.io/v1beta1
+</span></span><span class="line"><span class="cl">custom-metrics.metrics.k8s.io/v1alpha1
+</span></span><span class="line"><span class="cl">extensions/v1beta1
+</span></span><span class="line"><span class="cl">monitoring.coreos.com/v1
+</span></span><span class="line"><span class="cl">networking.k8s.io/v1
+</span></span><span class="line"><span class="cl">policy/v1beta1
+</span></span><span class="line"><span class="cl">rbac.authorization.k8s.io/v1
+</span></span><span class="line"><span class="cl">rbac.authorization.k8s.io/v1beta1
+</span></span><span class="line"><span class="cl">storage.k8s.io/v1
+</span></span><span class="line"><span class="cl">storage.k8s.io/v1beta1
+</span></span><span class="line"><span class="cl">v1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>对于同一个资源对象的不同版本，API-Server 负责不同版本之间的无损切换，这点对于客户端来说是完全透明的（无感知）。</li>
+<li>事实上，不同版本的同类型的资源在持久化层的数据可能是相同的。
+<ul>
+<li>例如，对于同一种资源类型支持 v1 和 v1beta1 两个 API 版本，以 v1beta1 版本创建该资源的对象，后续可以以v1 或者 v1beta1 来更新或者删除该资源对象</li>
+</ul>
+</li>
+</ul>
+<h2 id="gvk-与-gvr-映射">GVK 与 GVR 映射</h2>
+<ul>
+<li>
+<p><strong>kind</strong> 是API <u>顶级</u> 资源对象类型，每个资源对象都需要kind来区分自身代表的类型</p>
+<ul>
+<li>kind 字段 该资源对象的类型
+<ul>
+<li>单个的资源对象类型（pod）</li>
+<li>资源对象列表类型， （podlist 或者 nodelist）</li>
+<li>特殊类型以及非吃就好类型 （很多这种类型的资源是 subresource， 例如用于绑定资源的 /binding、更新资源状态的 /status 以及读写资源实例数量的 /scale）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Resource</strong>  通过http协议以JSON格式发送或者读取的资源展现形式</p>
+<ul>
+<li>单个资源 （&hellip;/namespaces/default）</li>
+<li>列表资源（&hellip;/jobs）</li>
+</ul>
+</li>
+</ul>
+<p>GVR 常用于组合成 RESTful API 请求路径</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">GET /apis/apps/v1/namespaces/<span class="o">{</span>namespace<span class="o">}</span>/deployments/<span class="o">{</span>name<span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="api-存储">API 存储</h2>
+<ul>
+<li>
+<p>API-Server 是无状态的，它需要与分布式存储系统 etcd 交互来实现资源对象的持久化操作</p>
+</li>
+<li>
+<p>Kubernetes 资源对象是以JSON或  Protocol Buffers 格式存储在 etcd 中</p>
+<ul>
+<li>以通过配置 kube-apiserver 的启动参数 &ndash;storage-media-type 来决定想要序列化数据存入 etcd 的格式</li>
+</ul>
+</li>
+<li>
+<p>创建一个 pod，然后使用 etcdctl 工具来查看存储在 etcd 中数据</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ cat <span class="s">&lt;&lt; EOF | kubectl create -f -
+</span></span></span><span class="line"><span class="cl"><span class="s">apiVersion: v1
+</span></span></span><span class="line"><span class="cl"><span class="s">kind: Pod
+</span></span></span><span class="line"><span class="cl"><span class="s">metadata:
+</span></span></span><span class="line"><span class="cl"><span class="s">  name: webserver
+</span></span></span><span class="line"><span class="cl"><span class="s">spec:
+</span></span></span><span class="line"><span class="cl"><span class="s">  containers:
+</span></span></span><span class="line"><span class="cl"><span class="s">  - name: nginx
+</span></span></span><span class="line"><span class="cl"><span class="s">    image: nginx
+</span></span></span><span class="line"><span class="cl"><span class="s">    ports:
+</span></span></span><span class="line"><span class="cl"><span class="s">    - containerPort: 80
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">pod/webserver created
+</span></span><span class="line"><span class="cl">$ etcdctl --endpoints<span class="o">=</span><span class="nv">$ETCD_URL</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --cert /etc/kubernetes/pki/etcd/server.crt <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --key /etc/kubernetes/pki/etcd/server.key <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --cacert /etc/kubernetes/pki/etcd/ca.crt <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  get /registry/pods/default/webserver --prefix -w simple
+</span></span><span class="line"><span class="cl">/registry/pods/default/webserver
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">10.244.0.5<span class="s2">&#34;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>客户端工具创建资源对象到然后存储到 etcd 的流程</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://img-blog.csdnimg.cn/img_convert/1ebad43cb82706dac0885871582c1a14.png"
+        data-srcset="https://img-blog.csdnimg.cn/img_convert/1ebad43cb82706dac0885871582c1a14.png, https://img-blog.csdnimg.cn/img_convert/1ebad43cb82706dac0885871582c1a14.png 1.5x, https://img-blog.csdnimg.cn/img_convert/1ebad43cb82706dac0885871582c1a14.png 2x"
+        data-sizes="auto"
+        alt="https://img-blog.csdnimg.cn/img_convert/1ebad43cb82706dac0885871582c1a14.png"
+        title="Minion" /></p>
+<ol>
+<li><strong>客户端工具(kubectl) 提供一个期望状态的资源对象的序列化表示，是一样yaml格式提供</strong></li>
+<li><strong>kubectl 将YAML转换为JSON 格式， 并发送给API -server</strong></li>
+<li><strong>对应同类型对象的不同版本，API- SERVER 执行无损转换，对于老版本不存在的字段则存储在annotations中</strong></li>
+<li><strong>API- SERVER 将接收到的对象转换为规范存储版本，这个版本由API-Server启动参数指定，通常是最稳定的版本</strong></li>
+<li><strong>最后将资源对象通过JSON 或YAML方式解析并通过一个特定的key 存入etcd中</strong></li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-05-26</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/k8s-gvk_gvr/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/k8s-gvk_gvr/" data-title="K8s GVK_GVR" data-via="xxxx" data-hashtags="k8s"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/k8s-gvk_gvr/" data-hashtag="k8s"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/k8s-gvk_gvr/" data-title="K8s GVK_GVR"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/k8s-gvk_gvr/" data-title="K8s GVK_GVR"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/k8s-gvk_gvr/" data-title="K8s GVK_GVR"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/k8s-liveness_readines/" class="prev" rel="prev" title="K8s Liveness_Readines"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>K8s Liveness_Readines</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
