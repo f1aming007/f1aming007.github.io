@@ -4,7 +4,15 @@
         <link>https://f1aming007.github.io/tags/golang/</link>
         <description>golang - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 23 May 2023 22:02:20 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Fri, 26 May 2023 17:32:01 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang PortScan</title>
+    <link>https://f1aming007.github.io/golang-portscan/</link>
+    <pubDate>Fri, 26 May 2023 17:32:01 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-portscan/</guid>
+    <description><![CDATA[Golang TCP 端口扫描 非并发版 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 package main import ( &#34;fmt&#34; &#34;net&#34; ) func main() { for i := 21; i &lt; 120; i++ { address := fmt.Sprintf(&#34;192.168.0.2:%d&#34;, i) conn, err := net.Dial(&#34;tcp&#34;, address) if err != nil { fmt.Printf(&#34;%d 关闭了\n&#]]></description>
+</item>
+<item>
     <title>Golang Etcd</title>
     <link>https://f1aming007.github.io/golang-etcd/</link>
     <pubDate>Tue, 23 May 2023 22:02:20 &#43;0800</pubDate>

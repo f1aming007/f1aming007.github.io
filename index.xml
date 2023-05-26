@@ -4,9 +4,17 @@
         <link>https://f1aming007.github.io/</link>
         <description>flamingo Hugo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Fri, 26 May 2023 09:44:00 &#43;0800</lastBuildDate>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Fri, 26 May 2023 17:32:01 &#43;0800</lastBuildDate>
             <atom:link href="https://f1aming007.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Golang PortScan</title>
+    <link>https://f1aming007.github.io/golang-portscan/</link>
+    <pubDate>Fri, 26 May 2023 17:32:01 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-portscan/</guid>
+    <description><![CDATA[Golang TCP 端口扫描 非并发版 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 package main import ( &#34;fmt&#34; &#34;net&#34; ) func main() { for i := 21; i &lt; 120; i++ { address := fmt.Sprintf(&#34;192.168.0.2:%d&#34;, i) conn, err := net.Dial(&#34;tcp&#34;, address) if err != nil { fmt.Printf(&#34;%d 关闭了\n&#]]></description>
+</item>
+<item>
     <title>K8s GVK_GVR</title>
     <link>https://f1aming007.github.io/k8s-gvk_gvr/</link>
     <pubDate>Fri, 26 May 2023 09:44:00 &#43;0800</pubDate>
@@ -77,14 +85,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/sc-pv-pvc/</guid>
     <description><![CDATA[Lighthouse (figure) PV、PVC、StorageClass Kubernetes 处理容器持久化存储的核心原理 PV： 持久化存储数据卷 pv 一般有运维人员事先创建之后使用， 定义一个NF]]></description>
-</item>
-<item>
-    <title>Kubernets-Operator</title>
-    <link>https://f1aming007.github.io/operator/</link>
-    <pubDate>Sat, 20 May 2023 11:29:17 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/operator/</guid>
-    <description><![CDATA[Operator 工作原理解读 operator的工作原理和编写方法 第一步，将这个 Operator 的代码 Clone 到本地： 1 git clone https://github.com/coreos/etcd-operator 第二步，将这个 Etcd Operator 部署在 Kubernetes 集群里 1 example/rbac/create_role.sh 这个脚本为 Etcd Operator]]></description>
 </item>
 </channel>
 </rss>
