@@ -1,12 +1,12 @@
 # K8s GVK_GVR
 
-
 # K8s-GVK&FVR
-
+![Minion](https://images.unsplash.com/photo-1667372459510-55b5e2087cd0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80)
 ## GVK & GVR 介绍
 * GVK —— group 、version、 kind
 * GVR —— group 、version 、resource
 
+<!--more-->
 ### kind 和 resource 概念
 
 * 在编码过程中， 资源数据存储都是**结构体存储**

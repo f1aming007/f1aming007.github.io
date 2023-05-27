@@ -3,14 +3,15 @@
         <title>All Posts - flamingo</title>
         <link>https://f1aming007.github.io/posts/</link>
         <description>All Posts | flamingo</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
+        <generator>Hugo -- gohugo.io</generator><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
             <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Fri, 26 May 2023 17:32:01 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>Golang PortScan</title>
     <link>https://f1aming007.github.io/golang-portscan/</link>
     <pubDate>Fri, 26 May 2023 17:32:01 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/golang-portscan/</guid>
-    <description><![CDATA[Golang TCP 端口扫描 非并发版 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 package main import ( &#34;fmt&#34; &#34;net&#34; ) func main() { for i := 21; i &lt; 120; i++ { address := fmt.Sprintf(&#34;192.168.0.2:%d&#34;, i) conn, err := net.Dial(&#34;tcp&#34;, address) if err != nil { fmt.Printf(&#34;%d 关闭了\n&#]]></description>
+    <description><![CDATA[<h1 id="golang-tcp-端口扫描">Golang TCP 端口扫描</h1>
+<p></p>]]></description>
 </item>
 <item>
     <title>K8s GVK_GVR</title>
@@ -18,7 +19,13 @@
     <pubDate>Fri, 26 May 2023 09:44:00 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/k8s-gvk_gvr/</guid>
-    <description><![CDATA[K8s-GVK&amp;FVR GVK &amp; GVR 介绍 GVK —— group 、version、 kind GVR —— group 、version 、resource kind 和 resource 概念 在编码过程中， 资源数据存储都是结构体存储 多版本v]]></description>
+    <description><![CDATA[<h1 id="k8s-gvkfvr">K8s-GVK&amp;FVR</h1>
+<p></p>
+<h2 id="gvk--gvr-介绍">GVK &amp; GVR 介绍</h2>
+<ul>
+<li>GVK —— group 、version、 kind</li>
+<li>GVR —— group 、version 、resource</li>
+</ul>]]></description>
 </item>
 <item>
     <title>K8s Liveness_Readines</title>
@@ -26,7 +33,14 @@
     <pubDate>Wed, 24 May 2023 16:28:31 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/k8s-liveness_readines/</guid>
-    <description><![CDATA[Liveness&amp;Readines 需求来源 实时观察应用的健康状态 获取应用的资源使用情况 拿到应用的实时日志， 进行问题的诊断和分析 Liveness probe 和 Readiness probe 介绍 livenness probe 是就绪指针，判断一个pod是]]></description>
+    <description><![CDATA[<h1 id="livenessreadines">Liveness&amp;Readines</h1>
+<p></p>
+<h2 id="需求来源">需求来源</h2>
+<ol>
+<li>实时观察应用的健康状态</li>
+<li>获取应用的资源使用情况</li>
+<li>拿到应用的实时日志， 进行问题的诊断和分析</li>
+</ol>]]></description>
 </item>
 <item>
     <title>Golang Etcd</title>

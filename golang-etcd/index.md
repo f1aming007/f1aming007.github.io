@@ -1,6 +1,5 @@
 # Golang Etcd
 
-
 # Etcd
 * etcd 是一个开源的， 高可用的分布式的 key-value 存储系统， 可以用于配制共享和服务的注册和发现
 

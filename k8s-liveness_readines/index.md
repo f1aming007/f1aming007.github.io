@@ -1,12 +1,12 @@
 # K8s Liveness_Readines
 
 # Liveness&Readines
-
+![Minion](https://plus.unsplash.com/premium_photo-1675404521308-2ceb136f3908?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80)
 ## 需求来源
 1. 实时观察应用的健康状态
 2. 获取应用的资源使用情况
 3. 拿到应用的实时日志， 进行问题的诊断和分析
-
+<!--more-->
 ## Liveness probe 和 Readiness probe 介绍
 
 * livenness probe 是就绪指针，判断一个pod是否处于就绪状态。
@@ -142,3 +142,4 @@ liveness指针和Readkiness指针支持三种不同的探测方式
 
 * 进行 logout 的话，相当于会把相应的这个 debug pod 杀掉
 ![Minion](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/225439/1570503514061-af6ea2ab-4539-41ef-bfd9-530e2ac3a5fd.png)
+
