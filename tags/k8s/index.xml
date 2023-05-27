@@ -3,15 +3,15 @@
         <title>k8s - Tag - flamingo</title>
         <link>https://f1aming007.github.io/tags/k8s/</link>
         <description>k8s - Tag - flamingo</description>
-        <generator>Hugo -- gohugo.io</generator><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
             <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Fri, 26 May 2023 09:44:00 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
     <title>K8s GVK_GVR</title>
     <link>https://f1aming007.github.io/k8s-gvk_gvr/</link>
     <pubDate>Fri, 26 May 2023 09:44:00 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/k8s-gvk_gvr/</guid>
-    <description><![CDATA[<h1 id="k8s-gvkfvr">K8s-GVK&amp;FVR</h1>
-<p></p>
+    <description><![CDATA[<p></p>
+<h1 id="k8s-gvkfvr">K8s-GVK&amp;FVR</h1>
 <h2 id="gvk--gvr-介绍">GVK &amp; GVR 介绍</h2>
 <ul>
 <li>GVK —— group 、version、 kind</li>
@@ -24,8 +24,8 @@
     <pubDate>Wed, 24 May 2023 16:28:31 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/k8s-liveness_readines/</guid>
-    <description><![CDATA[<h1 id="livenessreadines">Liveness&amp;Readines</h1>
-<p></p>
+    <description><![CDATA[<p></p>
+<h1 id="livenessreadines">Liveness&amp;Readines</h1>
 <h2 id="需求来源">需求来源</h2>
 <ol>
 <li>实时观察应用的健康状态</li>

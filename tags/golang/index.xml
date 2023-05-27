@@ -3,15 +3,23 @@
         <title>golang - Tag - flamingo</title>
         <link>https://f1aming007.github.io/tags/golang/</link>
         <description>golang - Tag - flamingo</description>
-        <generator>Hugo -- gohugo.io</generator><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Fri, 26 May 2023 17:32:01 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 27 May 2023 10:18:12 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang 命令行参数os.Args</title>
+    <link>https://f1aming007.github.io/golang-args/</link>
+    <pubDate>Sat, 27 May 2023 10:18:12 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-args/</guid>
+    <description><![CDATA[Golang 命令行参数os.Args 如何制作命令行应用 如何使用os.Args 获取命令行参数 使用的知识点 os包提供了用于处理操作系统的相关内容的函数/值]]></description>
+</item>
+<item>
     <title>Golang PortScan</title>
     <link>https://f1aming007.github.io/golang-portscan/</link>
     <pubDate>Fri, 26 May 2023 17:32:01 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/golang-portscan/</guid>
-    <description><![CDATA[<h1 id="golang-tcp-端口扫描">Golang TCP 端口扫描</h1>
-<p></p>]]></description>
+    <description><![CDATA[<p></p>
+<h1 id="golang-tcp-端口扫描">Golang TCP 端口扫描</h1>]]></description>
 </item>
 <item>
     <title>Golang Etcd</title>

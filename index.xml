@@ -3,17 +3,25 @@
         <title>flamingo</title>
         <link>https://f1aming007.github.io/</link>
         <description>flamingo Hugo</description>
-        <generator>Hugo -- gohugo.io</generator><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Fri, 26 May 2023 17:32:01 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 27 May 2023 10:18:12 &#43;0800</lastBuildDate>
             <atom:link href="https://f1aming007.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Golang 命令行参数os.Args</title>
+    <link>https://f1aming007.github.io/golang-args/</link>
+    <pubDate>Sat, 27 May 2023 10:18:12 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-args/</guid>
+    <description><![CDATA[Golang 命令行参数os.Args 如何制作命令行应用 如何使用os.Args 获取命令行参数 使用的知识点 os包提供了用于处理操作系统的相关内容的函数/值]]></description>
+</item>
+<item>
     <title>Golang PortScan</title>
     <link>https://f1aming007.github.io/golang-portscan/</link>
     <pubDate>Fri, 26 May 2023 17:32:01 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/golang-portscan/</guid>
-    <description><![CDATA[<h1 id="golang-tcp-端口扫描">Golang TCP 端口扫描</h1>
-<p></p>]]></description>
+    <description><![CDATA[<p></p>
+<h1 id="golang-tcp-端口扫描">Golang TCP 端口扫描</h1>]]></description>
 </item>
 <item>
     <title>K8s GVK_GVR</title>
@@ -21,8 +29,8 @@
     <pubDate>Fri, 26 May 2023 09:44:00 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/k8s-gvk_gvr/</guid>
-    <description><![CDATA[<h1 id="k8s-gvkfvr">K8s-GVK&amp;FVR</h1>
-<p></p>
+    <description><![CDATA[<p></p>
+<h1 id="k8s-gvkfvr">K8s-GVK&amp;FVR</h1>
 <h2 id="gvk--gvr-介绍">GVK &amp; GVR 介绍</h2>
 <ul>
 <li>GVK —— group 、version、 kind</li>
@@ -35,8 +43,8 @@
     <pubDate>Wed, 24 May 2023 16:28:31 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/k8s-liveness_readines/</guid>
-    <description><![CDATA[<h1 id="livenessreadines">Liveness&amp;Readines</h1>
-<p></p>
+    <description><![CDATA[<p></p>
+<h1 id="livenessreadines">Liveness&amp;Readines</h1>
 <h2 id="需求来源">需求来源</h2>
 <ol>
 <li>实时观察应用的健康状态</li>
@@ -91,14 +99,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/docker-command/</guid>
     <description><![CDATA[docker常用命令整理 docker images docker image pull ：下载镜像 docker image ls：列出本地存储的镜像,参数 &ndash;digests查看镜像的SHA26签名 docker image ins]]></description>
-</item>
-<item>
-    <title>Kubernets-Sc&amp;Pv&amp;Pvc</title>
-    <link>https://f1aming007.github.io/sc-pv-pvc/</link>
-    <pubDate>Sat, 20 May 2023 11:29:36 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/sc-pv-pvc/</guid>
-    <description><![CDATA[Lighthouse (figure) PV、PVC、StorageClass Kubernetes 处理容器持久化存储的核心原理 PV： 持久化存储数据卷 pv 一般有运维人员事先创建之后使用， 定义一个NF]]></description>
 </item>
 </channel>
 </rss>

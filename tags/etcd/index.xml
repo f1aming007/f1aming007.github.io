@@ -3,7 +3,7 @@
         <title>etcd - Tag - flamingo</title>
         <link>https://f1aming007.github.io/tags/etcd/</link>
         <description>etcd - Tag - flamingo</description>
-        <generator>Hugo -- gohugo.io</generator><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
             <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 23 May 2023 22:02:20 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/etcd/" rel="self" type="application/rss+xml" /><item>
     <title>Golang Etcd</title>
     <link>https://f1aming007.github.io/golang-etcd/</link>

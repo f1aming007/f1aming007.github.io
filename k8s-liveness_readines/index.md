@@ -1,7 +1,7 @@
 # K8s Liveness_Readines
 
-# Liveness&Readines
 ![Minion](https://plus.unsplash.com/premium_photo-1675404521308-2ceb136f3908?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80)
+# Liveness&Readines
 ## 需求来源
 1. 实时观察应用的健康状态
 2. 获取应用的资源使用情况
