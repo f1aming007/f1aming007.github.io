@@ -4,15 +4,34 @@
         <link>https://f1aming007.github.io/</link>
         <description>flamingo Hugo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 27 May 2023 10:18:12 &#43;0800</lastBuildDate>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 27 May 2023 11:35:01 &#43;0800</lastBuildDate>
             <atom:link href="https://f1aming007.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>🚀Golang BinarySearch</title>
+    <link>https://f1aming007.github.io/golang-binarysearch/</link>
+    <pubDate>Sat, 27 May 2023 11:35:01 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-binarysearch/</guid>
+    <description><![CDATA[<p></p>
+<h1 id="golang算法--二分算法binary-search">🔥Golang算法- 二分算法（Binary Search）</h1>
+<ul>
+<li>输入：<strong>排好序</strong> 的集合</li>
+<li>如果要查询的元素在集合中： 返回位置（索引）</li>
+<li>否则：返回空</li>
+</ul>]]></description>
+</item>
+<item>
     <title>Golang 命令行参数os.Args</title>
     <link>https://f1aming007.github.io/golang-args/</link>
     <pubDate>Sat, 27 May 2023 10:18:12 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/golang-args/</guid>
-    <description><![CDATA[Golang 命令行参数os.Args 如何制作命令行应用 如何使用os.Args 获取命令行参数 使用的知识点 os包提供了用于处理操作系统的相关内容的函数/值]]></description>
+    <description><![CDATA[<p></p>
+<h1 id="golang-命令行参数osargs">Golang 命令行参数os.Args</h1>
+<ul>
+<li>如何制作命令行应用</li>
+<li>如何使用os.Args 获取命令行参数</li>
+</ul>]]></description>
 </item>
 <item>
     <title>Golang PortScan</title>
@@ -91,14 +110,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/golang-mysql-crud/</guid>
     <description><![CDATA[Go 操作 sql server docker 安装 sqlserver 1 2 3 4 #拉取镜像 docker pull mcr.microsoft.com/azure-sql-edge #启动容器 docker run --name azuresqledge -e &#39;ACCEPT_EULA=Y&#39; -e &#39;SA_PASSWORD=yourStrong(!)Password&#39; -d -p 1433:1433 mcr.microsoft.com/azure-sql-edge 连接SQL数据库，要加载目标数据库的驱动，驱动里面包含了与数据库]]></description>
-</item>
-<item>
-    <title>Docker Command</title>
-    <link>https://f1aming007.github.io/docker-command/</link>
-    <pubDate>Sun, 21 May 2023 11:39:44 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/docker-command/</guid>
-    <description><![CDATA[docker常用命令整理 docker images docker image pull ：下载镜像 docker image ls：列出本地存储的镜像,参数 &ndash;digests查看镜像的SHA26签名 docker image ins]]></description>
 </item>
 </channel>
 </rss>

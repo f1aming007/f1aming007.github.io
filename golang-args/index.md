@@ -2,10 +2,9 @@
 
 ![Minion](https://images.unsplash.com/photo-1629654297299-c8506221ca97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1548&q=80)
 # Golang 命令行参数os.Args
-
 * 如何制作命令行应用
 * 如何使用os.Args 获取命令行参数
-
+<!--more-->
 ## 使用的知识点
 
 * os包提供了用于处理操作系统的相关内容的函数/值

@@ -1,0 +1,22 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>算法 - Tag - flamingo</title>
+        <link>https://f1aming007.github.io/tags/%E7%AE%97%E6%B3%95/</link>
+        <description>算法 - Tag - flamingo</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 27 May 2023 11:35:01 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/%E7%AE%97%E6%B3%95/" rel="self" type="application/rss+xml" /><item>
+    <title>🚀Golang BinarySearch</title>
+    <link>https://f1aming007.github.io/golang-binarysearch/</link>
+    <pubDate>Sat, 27 May 2023 11:35:01 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-binarysearch/</guid>
+    <description><![CDATA[<p></p>
+<h1 id="golang算法--二分算法binary-search">🔥Golang算法- 二分算法（Binary Search）</h1>
+<ul>
+<li>输入：<strong>排好序</strong> 的集合</li>
+<li>如果要查询的元素在集合中： 返回位置（索引）</li>
+<li>否则：返回空</li>
+</ul>]]></description>
+</item>
+</channel>
+</rss>
