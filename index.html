@@ -113,6 +113,25 @@
         alt="/avatar.png"
         title="/avatar.png" /></a></div><h1 class="home-title">f1aming007</h1><div class="home-subtitle"><div id="id-3" class="typeit"></div></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/golang-context/">Golang Context 底层原理</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-29">2023-05-29</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div><div class="content"><figure><img src="/images/context01.png"/><figcaption>
+            <h4>go-work (figure)</h4>
+        </figcaption>
+</figure>
+
+<h1 id="golang-context-实现原理">Golang context 实现原理</h1>
+<ul>
+<li>context的主要功能
+<ul>
+<li>异步场景中用于实现并发协调</li>
+<li>对goroutine 的生命周期控制</li>
+<li>有一定的数据存储能力</li>
+</ul>
+</li>
+</ul></div><div class="post-footer">
+        <a href="/golang-context/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/golang/">golang</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/golang-selectionsort/">Golang Selection Sort</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-29">2023-05-29</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div><div class="content"><figure><img src="/images/golang-selection.png"/><figcaption>
             <h4>go-work (figure)</h4>
@@ -193,25 +212,6 @@
 <li>GVR —— group 、version 、resource</li>
 </ul></div><div class="post-footer">
         <a href="/k8s-gvk_gvr/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/k8s-liveness_readines/">K8s Liveness_Readines</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-24">2023-05-24</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div><div class="content"><p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://plus.unsplash.com/premium_photo-1675404521308-2ceb136f3908?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1932&amp;q=80"
-        data-srcset="https://plus.unsplash.com/premium_photo-1675404521308-2ceb136f3908?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1932&amp;q=80, https://plus.unsplash.com/premium_photo-1675404521308-2ceb136f3908?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1932&amp;q=80 1.5x, https://plus.unsplash.com/premium_photo-1675404521308-2ceb136f3908?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1932&amp;q=80 2x"
-        data-sizes="auto"
-        alt="https://plus.unsplash.com/premium_photo-1675404521308-2ceb136f3908?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1932&amp;q=80"
-        title="Minion" /></p>
-<h1 id="livenessreadines">Liveness&amp;Readines</h1>
-<h2 id="需求来源">需求来源</h2>
-<ol>
-<li>实时观察应用的健康状态</li>
-<li>获取应用的资源使用情况</li>
-<li>拿到应用的实时日志， 进行问题的诊断和分析</li>
-</ol></div><div class="post-footer">
-        <a href="/k8s-liveness_readines/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></div></div>
 </article><ul class="pagination"><li class="page-item active">
                     <span class="page-link">

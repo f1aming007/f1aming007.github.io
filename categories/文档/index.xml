@@ -4,7 +4,29 @@
         <link>https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/</link>
         <description>文档 - Category - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 29 May 2023 15:05:16 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 29 May 2023 17:00:08 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Context 底层原理</title>
+    <link>https://f1aming007.github.io/golang-context/</link>
+    <pubDate>Mon, 29 May 2023 17:00:08 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-context/</guid>
+    <description><![CDATA[<figure><figcaption>
+            <h4>go-work (figure)</h4>
+        </figcaption>
+</figure>
+
+<h1 id="golang-context-实现原理">Golang context 实现原理</h1>
+<ul>
+<li>context的主要功能
+<ul>
+<li>异步场景中用于实现并发协调</li>
+<li>对goroutine 的生命周期控制</li>
+<li>有一定的数据存储能力</li>
+</ul>
+</li>
+</ul>]]></description>
+</item>
+<item>
     <title>Golang Selection Sort</title>
     <link>https://f1aming007.github.io/golang-selectionsort/</link>
     <pubDate>Mon, 29 May 2023 15:05:16 &#43;0800</pubDate>
@@ -111,14 +133,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/golang-redis/</guid>
     <description><![CDATA[Redis Redis 介绍 Redis是一个开源的内存数据库，提供了多种不同的数据结构， 通过复制、持久化/客户端分片等特性， 方便的将Redis 拓展成一个包含数百]]></description>
-</item>
-<item>
-    <title>Golang Sqlx</title>
-    <link>https://f1aming007.github.io/golang-sqlx/</link>
-    <pubDate>Tue, 23 May 2023 10:44:35 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-sqlx/</guid>
-    <description><![CDATA[sqlx 库的使用 sqlx 的介绍 sqlx 是内置database/sql 软件包的基础上提供了一组拓展 兼容sql原生包，提供了更加优雅的查询，插入函数 sqlx 安装 1 go get github.com/jmoiron/sqlx]]></description>
 </item>
 </channel>
 </rss>
