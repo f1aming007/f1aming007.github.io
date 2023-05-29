@@ -4,7 +4,26 @@
         <link>https://f1aming007.github.io/posts/</link>
         <description>All Posts | flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 27 May 2023 11:35:01 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 29 May 2023 15:05:16 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Selection Sort</title>
+    <link>https://f1aming007.github.io/golang-selectionsort/</link>
+    <pubDate>Mon, 29 May 2023 15:05:16 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-selectionsort/</guid>
+    <description><![CDATA[<figure><figcaption>
+            <h4>go-work (figure)</h4>
+        </figcaption>
+</figure>
+
+<h1 id="golang算法--选择排序selection-sort">🔥Golang算法- 选择排序（Selection Sort)</h1>
+<ul>
+<li>在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，</li>
+<li>然后，再从剩余未排序元素中继续寻找最小（大）元素，</li>
+<li>然后放到已排序序列的末尾。</li>
+<li>以此类推，直到所有元素均排序完毕。</li>
+</ul>]]></description>
+</item>
+<item>
     <title>🚀Golang BinarySearch</title>
     <link>https://f1aming007.github.io/golang-binarysearch/</link>
     <pubDate>Sat, 27 May 2023 11:35:01 &#43;0800</pubDate>
@@ -100,14 +119,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/golang-sqlx/</guid>
     <description><![CDATA[sqlx 库的使用 sqlx 的介绍 sqlx 是内置database/sql 软件包的基础上提供了一组拓展 兼容sql原生包，提供了更加优雅的查询，插入函数 sqlx 安装 1 go get github.com/jmoiron/sqlx]]></description>
-</item>
-<item>
-    <title>Golang Mysql CRUD</title>
-    <link>https://f1aming007.github.io/golang-mysql-crud/</link>
-    <pubDate>Sun, 21 May 2023 13:49:21 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-mysql-crud/</guid>
-    <description><![CDATA[Go 操作 sql server docker 安装 sqlserver 1 2 3 4 #拉取镜像 docker pull mcr.microsoft.com/azure-sql-edge #启动容器 docker run --name azuresqledge -e &#39;ACCEPT_EULA=Y&#39; -e &#39;SA_PASSWORD=yourStrong(!)Password&#39; -d -p 1433:1433 mcr.microsoft.com/azure-sql-edge 连接SQL数据库，要加载目标数据库的驱动，驱动里面包含了与数据库]]></description>
 </item>
 </channel>
 </rss>
