@@ -4,9 +4,17 @@
         <link>https://f1aming007.github.io/</link>
         <description>flamingo Hugo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 29 May 2023 17:00:08 &#43;0800</lastBuildDate>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 30 May 2023 21:12:34 &#43;0800</lastBuildDate>
             <atom:link href="https://f1aming007.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Golang Recursion</title>
+    <link>https://f1aming007.github.io/golang-recursion01/</link>
+    <pubDate>Tue, 30 May 2023 21:12:34 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-recursion01/</guid>
+    <description><![CDATA[go-work (figure) 🔥Golang算法 - 递归 递归： 在运行的过程中调用自己 递归函数 关键点 在同一函数调用的函数 在递归函数中指定一个退出条件总是好的 它可以检查不必]]></description>
+</item>
+<item>
     <title>Golang Context 底层原理</title>
     <link>https://f1aming007.github.io/golang-context/</link>
     <pubDate>Mon, 29 May 2023 17:00:08 &#43;0800</pubDate>
@@ -127,14 +135,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/golang-mongodb/</guid>
     <description><![CDATA[MongoDB MongoDB介绍 mongoDB是基于分布式文件存储的数据库，是一个介于关系型数据库和非关系数据库之间的产品 mongoDB将一条数据存储为]]></description>
-</item>
-<item>
-    <title>Golang Redis</title>
-    <link>https://f1aming007.github.io/golang-redis/</link>
-    <pubDate>Tue, 23 May 2023 16:16:11 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-redis/</guid>
-    <description><![CDATA[Redis Redis 介绍 Redis是一个开源的内存数据库，提供了多种不同的数据结构， 通过复制、持久化/客户端分片等特性， 方便的将Redis 拓展成一个包含数百]]></description>
 </item>
 </channel>
 </rss>
