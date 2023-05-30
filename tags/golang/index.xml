@@ -10,7 +10,15 @@
     <pubDate>Tue, 30 May 2023 21:12:34 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/golang-recursion01/</guid>
-    <description><![CDATA[go-work (figure) 🔥Golang算法 - 递归 递归： 在运行的过程中调用自己 递归函数 关键点 在同一函数调用的函数 在递归函数中指定一个退出条件总是好的 它可以检查不必]]></description>
+    <description><![CDATA[<figure><figcaption>
+            <h4>go-work (figure)</h4>
+        </figcaption>
+</figure>
+
+<h1 id="golang算法---递归">🔥Golang算法 - 递归</h1>
+<ul>
+<li>递归： 在运行的过程中调用自己</li>
+</ul>]]></description>
 </item>
 <item>
     <title>Golang Context 底层原理</title>
