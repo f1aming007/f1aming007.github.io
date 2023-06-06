@@ -4,7 +4,24 @@
         <link>https://f1aming007.github.io/posts/</link>
         <description>All Posts | flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 03 Jun 2023 11:07:17 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 06 Jun 2023 17:08:46 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Git Tag</title>
+    <link>https://f1aming007.github.io/git-tag/</link>
+    <pubDate>Tue, 06 Jun 2023 17:08:46 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/git-tag/</guid>
+    <description><![CDATA[<figure><figcaption>
+            <h4>git tag (figure)</h4>
+        </figcaption>
+</figure>
+
+<h1 id="git-tag-标签管理">🚀git tag 标签管理</h1>
+<ul>
+<li>可以在版本库中打一个标签，确定打标签的版本</li>
+<li>标签就是版本库的快照</li>
+</ul>]]></description>
+</item>
+<item>
     <title>Git Skill</title>
     <link>https://f1aming007.github.io/git-skill/</link>
     <pubDate>Sat, 03 Jun 2023 11:07:17 &#43;0800</pubDate>
@@ -151,14 +168,6 @@
 <li>获取应用的资源使用情况</li>
 <li>拿到应用的实时日志， 进行问题的诊断和分析</li>
 </ol>]]></description>
-</item>
-<item>
-    <title>Golang Etcd</title>
-    <link>https://f1aming007.github.io/golang-etcd/</link>
-    <pubDate>Tue, 23 May 2023 22:02:20 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-etcd/</guid>
-    <description><![CDATA[Etcd etcd 是一个开源的， 高可用的分布式的 key-value 存储系统， 可以用于配制共享和服务的注册和发现 etcd具有的特点 完全复制： 集群中的每个阶段都可以使用完整的]]></description>
 </item>
 </channel>
 </rss>

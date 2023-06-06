@@ -4,7 +4,24 @@
         <link>https://f1aming007.github.io/tags/git/</link>
         <description>git - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 03 Jun 2023 11:07:17 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/git/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 06 Jun 2023 17:08:46 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/git/" rel="self" type="application/rss+xml" /><item>
+    <title>Git Tag</title>
+    <link>https://f1aming007.github.io/git-tag/</link>
+    <pubDate>Tue, 06 Jun 2023 17:08:46 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/git-tag/</guid>
+    <description><![CDATA[<figure><figcaption>
+            <h4>git tag (figure)</h4>
+        </figcaption>
+</figure>
+
+<h1 id="git-tag-标签管理">🚀git tag 标签管理</h1>
+<ul>
+<li>可以在版本库中打一个标签，确定打标签的版本</li>
+<li>标签就是版本库的快照</li>
+</ul>]]></description>
+</item>
+<item>
     <title>Git Skill</title>
     <link>https://f1aming007.github.io/git-skill/</link>
     <pubDate>Sat, 03 Jun 2023 11:07:17 &#43;0800</pubDate>
