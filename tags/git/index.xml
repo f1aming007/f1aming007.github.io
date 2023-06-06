@@ -1,0 +1,34 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>git - Tag - flamingo</title>
+        <link>https://f1aming007.github.io/tags/git/</link>
+        <description>git - Tag - flamingo</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 03 Jun 2023 11:07:17 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/git/" rel="self" type="application/rss+xml" /><item>
+    <title>Git Skill</title>
+    <link>https://f1aming007.github.io/git-skill/</link>
+    <pubDate>Sat, 03 Jun 2023 11:07:17 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/git-skill/</guid>
+    <description><![CDATA[<figure><figcaption>
+            <h4>git (figure)</h4>
+        </figcaption>
+</figure>
+
+<h1 id="git-常用命令和技巧">🚀git 常用命令和技巧</h1>
+<ul>
+<li>列举一些常用的git命令和一些小技巧</li>
+</ul>
+<blockquote>
+<p>统一概念</p>
+</blockquote>
+<ul>
+<li><strong>工作区</strong>： 该动（增删文件和内容）</li>
+<li><strong>暂存区</strong>： 输入命令，git add 改动的文件名，此次改动就放到了 ‘暂存区’</li>
+<li><strong>本地仓库</strong>： 输入命令：git commit 此次修改的描述，此次改动就放到了本地仓库，每个 commit，我叫它为一个版本</li>
+<li><strong>远程仓库</strong>： 输入命令：git push 远程仓库，此次改动就放到了远程仓库（GitHub 等)</li>
+<li><strong>commit-id</strong>：输出命令：git log，最上面那行 commit xxxxxx，后面的字符串就是 commit-id</li>
+</ul>]]></description>
+</item>
+</channel>
+</rss>

@@ -4,9 +4,35 @@
         <link>https://f1aming007.github.io/</link>
         <description>flamingo Hugo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 30 May 2023 21:12:34 &#43;0800</lastBuildDate>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 03 Jun 2023 11:07:17 &#43;0800</lastBuildDate>
             <atom:link href="https://f1aming007.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Git Skill</title>
+    <link>https://f1aming007.github.io/git-skill/</link>
+    <pubDate>Sat, 03 Jun 2023 11:07:17 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/git-skill/</guid>
+    <description><![CDATA[<figure><figcaption>
+            <h4>git (figure)</h4>
+        </figcaption>
+</figure>
+
+<h1 id="git-常用命令和技巧">🚀git 常用命令和技巧</h1>
+<ul>
+<li>列举一些常用的git命令和一些小技巧</li>
+</ul>
+<blockquote>
+<p>统一概念</p>
+</blockquote>
+<ul>
+<li><strong>工作区</strong>： 该动（增删文件和内容）</li>
+<li><strong>暂存区</strong>： 输入命令，git add 改动的文件名，此次改动就放到了 ‘暂存区’</li>
+<li><strong>本地仓库</strong>： 输入命令：git commit 此次修改的描述，此次改动就放到了本地仓库，每个 commit，我叫它为一个版本</li>
+<li><strong>远程仓库</strong>： 输入命令：git push 远程仓库，此次改动就放到了远程仓库（GitHub 等)</li>
+<li><strong>commit-id</strong>：输出命令：git log，最上面那行 commit xxxxxx，后面的字符串就是 commit-id</li>
+</ul>]]></description>
+</item>
+<item>
     <title>Golang Recursion</title>
     <link>https://f1aming007.github.io/golang-recursion01/</link>
     <pubDate>Tue, 30 May 2023 21:12:34 &#43;0800</pubDate>
@@ -135,14 +161,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/golang-etcd/</guid>
     <description><![CDATA[Etcd etcd 是一个开源的， 高可用的分布式的 key-value 存储系统， 可以用于配制共享和服务的注册和发现 etcd具有的特点 完全复制： 集群中的每个阶段都可以使用完整的]]></description>
-</item>
-<item>
-    <title>Golang MangoDB</title>
-    <link>https://f1aming007.github.io/golang-mongodb/</link>
-    <pubDate>Tue, 23 May 2023 16:57:24 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-mongodb/</guid>
-    <description><![CDATA[MongoDB MongoDB介绍 mongoDB是基于分布式文件存储的数据库，是一个介于关系型数据库和非关系数据库之间的产品 mongoDB将一条数据存储为]]></description>
 </item>
 </channel>
 </rss>
