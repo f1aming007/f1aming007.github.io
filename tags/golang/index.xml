@@ -4,7 +4,26 @@
         <link>https://f1aming007.github.io/tags/golang/</link>
         <description>golang - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 30 May 2023 21:12:34 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Wed, 07 Jun 2023 09:59:23 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Divide_Conquer</title>
+    <link>https://f1aming007.github.io/golang-divide_conquer/</link>
+    <pubDate>Wed, 07 Jun 2023 09:59:23 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-divide_conquer/</guid>
+    <description><![CDATA[<p></p>
+<h1 id="golang算法---dc-算法">🔥Golang算法 - D&amp;C 算法</h1>
+<ul>
+<li>Devide &amp; Conquer</li>
+</ul>
+<blockquote>
+<p>D &amp; C 的步骤</p>
+</blockquote>
+<ol>
+<li>找到一个简单的基线条件（Base Case）</li>
+<li>把问题分开处理。直到它变为极限条件</li>
+</ol>]]></description>
+</item>
+<item>
     <title>Golang Recursion</title>
     <link>https://f1aming007.github.io/golang-recursion01/</link>
     <pubDate>Tue, 30 May 2023 21:12:34 &#43;0800</pubDate>
@@ -120,14 +139,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/golang-redis/</guid>
     <description><![CDATA[Redis Redis 介绍 Redis是一个开源的内存数据库，提供了多种不同的数据结构， 通过复制、持久化/客户端分片等特性， 方便的将Redis 拓展成一个包含数百]]></description>
-</item>
-<item>
-    <title>Golang Sqlx</title>
-    <link>https://f1aming007.github.io/golang-sqlx/</link>
-    <pubDate>Tue, 23 May 2023 10:44:35 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-sqlx/</guid>
-    <description><![CDATA[sqlx 库的使用 sqlx 的介绍 sqlx 是内置database/sql 软件包的基础上提供了一组拓展 兼容sql原生包，提供了更加优雅的查询，插入函数 sqlx 安装 1 go get github.com/jmoiron/sqlx]]></description>
 </item>
 </channel>
 </rss>
