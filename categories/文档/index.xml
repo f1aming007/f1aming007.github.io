@@ -4,7 +4,29 @@
         <link>https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/</link>
         <description>文档 - Category - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Wed, 07 Jun 2023 09:59:23 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 08 Jun 2023 10:51:25 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Quicksort</title>
+    <link>https://f1aming007.github.io/golang-quicksort/</link>
+    <pubDate>Thu, 08 Jun 2023 10:51:25 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-quicksort/</guid>
+    <description><![CDATA[<p></p>
+<h1 id="golang算法---快速排序quicksort">🔥Golang算法 - 快速排序（Quicksort）</h1>
+<ul>
+<li>不需要排序的数组（Base case 基线条件）
+<ul>
+<li>[],空数组</li>
+<li>[s], 单元素数组</li>
+</ul>
+</li>
+<li>容易排序的数组
+<ul>
+<li>[a,b],两个元素的数组，只需坚持它们之间的大小即可，调整位置</li>
+</ul>
+</li>
+</ul>]]></description>
+</item>
+<item>
     <title>Golang Divide_Conquer</title>
     <link>https://f1aming007.github.io/golang-divide_conquer/</link>
     <pubDate>Wed, 07 Jun 2023 09:59:23 &#43;0800</pubDate>
@@ -158,20 +180,6 @@
     <guid>https://f1aming007.github.io/golang-portscan/</guid>
     <description><![CDATA[<p></p>
 <h1 id="golang-tcp-端口扫描">Golang TCP 端口扫描</h1>]]></description>
-</item>
-<item>
-    <title>K8s GVK_GVR</title>
-    <link>https://f1aming007.github.io/k8s-gvk_gvr/</link>
-    <pubDate>Fri, 26 May 2023 09:44:00 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/k8s-gvk_gvr/</guid>
-    <description><![CDATA[<p></p>
-<h1 id="k8s-gvkfvr">K8s-GVK&amp;FVR</h1>
-<h2 id="gvk--gvr-介绍">GVK &amp; GVR 介绍</h2>
-<ul>
-<li>GVK —— group 、version、 kind</li>
-<li>GVR —— group 、version 、resource</li>
-</ul>]]></description>
 </item>
 </channel>
 </rss>

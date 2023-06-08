@@ -4,55 +4,61 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>Golang Divide_Conquer - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Golang Divide_Conquer" />
+        <title>Golang Quicksort - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Golang Quicksort" />
 <meta property="og:description" content="
-🔥Golang算法 - D&amp;C 算法
+🔥Golang算法 - 快速排序（Quicksort）
 
-Devide &amp; Conquer
+不需要排序的数组（Base case 基线条件）
+
+[],空数组
+[s], 单元素数组
 
 
-D &amp; C 的步骤
+容易排序的数组
+
+[a,b],两个元素的数组，只需坚持它们之间的大小即可，调整位置
 
 
-找到一个简单的基线条件（Base Case）
-把问题分开处理。直到它变为极限条件
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://f1aming007.github.io/golang-divide_conquer/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-06-07T09:59:23+08:00" />
-<meta property="article:modified_time" content="2023-06-07T09:59:23+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta property="og:url" content="https://f1aming007.github.io/golang-quicksort/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-06-08T10:51:25+08:00" />
+<meta property="article:modified_time" content="2023-06-08T10:51:25+08:00" /><meta property="og:site_name" content="flamingo" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
 
-<meta name="twitter:title" content="Golang Divide_Conquer"/>
+<meta name="twitter:title" content="Golang Quicksort"/>
 <meta name="twitter:description" content="
-🔥Golang算法 - D&amp;C 算法
+🔥Golang算法 - 快速排序（Quicksort）
 
-Devide &amp; Conquer
+不需要排序的数组（Base case 基线条件）
+
+[],空数组
+[s], 单元素数组
 
 
-D &amp; C 的步骤
+容易排序的数组
+
+[a,b],两个元素的数组，只需坚持它们之间的大小即可，调整位置
 
 
-找到一个简单的基线条件（Base Case）
-把问题分开处理。直到它变为极限条件
 "/>
 <meta name="application-name" content="我的网站">
 <meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/golang-divide_conquer/" /><link rel="prev" href="https://f1aming007.github.io/git-tag/" /><link rel="next" href="https://f1aming007.github.io/golang-quicksort/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/golang-quicksort/" /><link rel="prev" href="https://f1aming007.github.io/golang-divide_conquer/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Golang Divide_Conquer",
+        "headline": "Golang Quicksort",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/f1aming007.github.io\/golang-divide_conquer\/"
-        },"genre": "posts","keywords": "golang, 算法","wordcount":  209 ,
-        "url": "https:\/\/f1aming007.github.io\/golang-divide_conquer\/","datePublished": "2023-06-07T09:59:23+08:00","dateModified": "2023-06-07T09:59:23+08:00","publisher": {
+            "@id": "https:\/\/f1aming007.github.io\/golang-quicksort\/"
+        },"genre": "posts","keywords": "golang, 算法","wordcount":  512 ,
+        "url": "https:\/\/f1aming007.github.io\/golang-quicksort\/","datePublished": "2023-06-08T10:51:25+08:00","dateModified": "2023-06-08T10:51:25+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -137,10 +143,10 @@ D &amp; C 的步骤
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Golang Divide_Conquer</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Golang Quicksort</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-07">2023-06-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;209 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-08">2023-06-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;512 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -148,61 +154,60 @@ D &amp; C 的步骤
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#例子">例子</a></li>
-    <li><a href="#代码示例">代码示例</a></li>
+    <li><a href="#使用quicksort-排序数组">使用Quicksort 排序数组</a></li>
+    <li><a href="#使用quicksourt--排序数组的步骤">使用Quicksourt  排序数组的步骤</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="https://images.unsplash.com/photo-1685538382974-a0b07102ef16?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80"
-        data-srcset="https://images.unsplash.com/photo-1685538382974-a0b07102ef16?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80, https://images.unsplash.com/photo-1685538382974-a0b07102ef16?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80 1.5x, https://images.unsplash.com/photo-1685538382974-a0b07102ef16?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80 2x"
+        data-src="https://images.unsplash.com/photo-1685853995266-d095653bc6d1?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80"
+        data-srcset="https://images.unsplash.com/photo-1685853995266-d095653bc6d1?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80, https://images.unsplash.com/photo-1685853995266-d095653bc6d1?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80 1.5x, https://images.unsplash.com/photo-1685853995266-d095653bc6d1?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80 2x"
         data-sizes="auto"
-        alt="https://images.unsplash.com/photo-1685538382974-a0b07102ef16?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80"
+        alt="https://images.unsplash.com/photo-1685853995266-d095653bc6d1?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80"
         title="Minion" /></p>
-<h1 id="golang算法---dc-算法">🔥Golang算法 - D&amp;C 算法</h1>
+<h1 id="golang算法---快速排序quicksort">🔥Golang算法 - 快速排序（Quicksort）</h1>
 <ul>
-<li>Devide &amp; Conquer</li>
+<li>不需要排序的数组（Base case 基线条件）
+<ul>
+<li>[],空数组</li>
+<li>[s], 单元素数组</li>
 </ul>
-<blockquote>
-<p>D &amp; C 的步骤</p>
-</blockquote>
+</li>
+<li>容易排序的数组
+<ul>
+<li>[a,b],两个元素的数组，只需坚持它们之间的大小即可，调整位置</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用quicksort-排序数组">使用Quicksort 排序数组</h2>
+<ul>
+<li>3个元素的数组（例如[23, 19, 35]）
+<ul>
+<li>使用D &amp; C策略， 简化为基线条件（Base case）</li>
+</ul>
 <ol>
-<li>找到一个简单的基线条件（Base Case）</li>
-<li>把问题分开处理。直到它变为极限条件</li>
+<li>从数组中随便找一个元素， 例如35， 这个元素叫做<strong>pivot</strong>(基准元素)</li>
+<li>找到比pivot小的元素，找到比pivot大的元素， 这叫做分区：[23, 19],(35),[]</li>
+<li>如果左右两个子数组已排好序（达到基线条件）， 结果： 左边 + [pivot] + 右边</li>
+<li>如果左右两个子数组没有已排好序（没有达到基线条件）， 那么： quiksort左边 + [pivot] + quicksort右边</li>
 </ol>
-<h2 id="例子">例子</h2>
-<ul>
-<li>需求： 将数组[1,3,5,7,9]求和</li>
-<li>思路1： 使用循环（例如for循环）</li>
-<li>思路2:  D &amp; C策略
-<ul>
-<li>基线条件： 空数组[], 其和为0，</li>
-<li>递归：[1,3,5,7,9]
-<ul>
-<li>1 + SUM([3,5,7,9])
-<ul>
-<li>3 + SUM([5,7,9])
-<ul>
-<li>5 + SUM([7,9])
-<ul>
-<li>7 + SUM([9])
-<ul>
-<li>9 + SUM([])</li>
-</ul>
 </li>
 </ul>
+<h2 id="使用quicksourt--排序数组的步骤">使用Quicksourt  排序数组的步骤</h2>
+<ol>
+<li>选择一个pivot</li>
+<li>将数组分为两个子数组
+<ol>
+<li>左侧数组的元素都比pivot小</li>
+<li>右侧数组的元素都比pivot大</li>
+</ol>
 </li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="代码示例">代码示例</h2>
+<li>在两个子数组上递归的调用quicksort</li>
+</ol>
+<blockquote>
+<p>代码示例01</p>
+</blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -220,6 +225,17 @@ D &amp; C 的步骤
 </span><span class="lnt">13
 </span><span class="lnt">14
 </span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
@@ -227,34 +243,45 @@ D &amp; C 的步骤
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">totals</span> <span class="o">:=</span> <span class="nf">sum</span><span class="p">([]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">})</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">totals</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">arr</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">12</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">328</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">81</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">result</span> <span class="o">:=</span> <span class="nf">quicksort</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">sum</span><span class="p">(</span><span class="nx">arr</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">quicksort</span><span class="p">(</span><span class="nx">arr</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">&lt;</span> <span class="mi">2</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">arr</span>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nf">sum</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">pivot</span> <span class="o">:=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span> <span class="p">[]</span><span class="kt">int</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ele</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">ele</span> <span class="o">&lt;=</span> <span class="nx">pivot</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">left</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">left</span><span class="p">,</span> <span class="nx">ele</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">right</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">right</span><span class="p">,</span> <span class="nx">ele</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nb">append</span><span class="p">(</span><span class="nf">quicksort</span><span class="p">(</span><span class="nx">left</span><span class="p">),</span> <span class="nb">append</span><span class="p">([]</span><span class="kt">int</span><span class="p">{</span><span class="nx">pivot</span><span class="p">},</span> <span class="nf">quicksort</span><span class="p">(</span><span class="nx">right</span><span class="p">)</span><span class="o">...</span><span class="p">)</span><span class="o">...</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>参考视频
-<div class="bilibili"><iframe src="//player.bilibili.com/player.html?bvid=BV1Eq4y1N7jR&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div>
+<div class="bilibili"><iframe src="//player.bilibili.com/player.html?bvid=BV1k34y1S71P&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div>
 </p>
 </blockquote></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2023-06-07</span>
+                <span>Updated on 2023-06-08</span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/golang-divide_conquer/index.md" target="_blank">Read Markdown</a>
+                            <a class="link-to-markdown" href="/golang-quicksort/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/golang-divide_conquer/" data-title="Golang Divide_Conquer" data-via="xxxx" data-hashtags="golang,算法"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/golang-divide_conquer/" data-hashtag="golang"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/golang-divide_conquer/" data-title="Golang Divide_Conquer"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/golang-divide_conquer/" data-title="Golang Divide_Conquer"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/golang-divide_conquer/" data-title="Golang Divide_Conquer"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/golang-quicksort/" data-title="Golang Quicksort" data-via="xxxx" data-hashtags="golang,算法"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/golang-quicksort/" data-hashtag="golang"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/golang-quicksort/" data-title="Golang Quicksort"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/golang-quicksort/" data-title="Golang Quicksort"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/golang-quicksort/" data-title="Golang Quicksort"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
@@ -266,8 +293,7 @@ D &amp; C 的步骤
         </section>
     </div>
 
-    <div class="post-nav"><a href="/git-tag/" class="prev" rel="prev" title="Git Tag"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Git Tag</a>
-            <a href="/golang-quicksort/" class="next" rel="next" title="Golang Quicksort">Golang Quicksort<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+    <div class="post-nav"><a href="/golang-divide_conquer/" class="prev" rel="prev" title="Golang Divide_Conquer"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Golang Divide_Conquer</a></div>
 </div>
 </article></div>
             </main><footer class="footer">
