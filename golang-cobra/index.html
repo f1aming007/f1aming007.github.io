@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Golang Cobra - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Golang Cobra" />
+<meta property="og:description" content="# golang-cobra
+
+介绍
+
+cobra 是一个命令行程序库
+提供了脚手架，用于生成基于cobra的应用程序框架
+
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/golang-cobra/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-06-08T16:38:13+08:00" />
+<meta property="article:modified_time" content="2023-06-08T16:38:13+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="Golang Cobra"/>
+<meta name="twitter:description" content="# golang-cobra
+
+介绍
+
+cobra 是一个命令行程序库
+提供了脚手架，用于生成基于cobra的应用程序框架
+
+
+"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/golang-cobra/" /><link rel="prev" href="https://f1aming007.github.io/golang-quicksort/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Golang Cobra",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/golang-cobra\/"
+        },"genre": "posts","keywords": "golang, go第三方库","wordcount":  2036 ,
+        "url": "https:\/\/f1aming007.github.io\/golang-cobra\/","datePublished": "2023-06-08T16:38:13+08:00","dateModified": "2023-06-08T16:38:13+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Golang Cobra</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-08">2023-06-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2036 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#安装使用">安装&amp;使用</a></li>
+    <li><a href="#特性">特性</a>
+      <ul>
+        <li><a href="#基本概念">基本概念</a></li>
+      </ul>
+    </li>
+    <li><a href="#命令">命令</a></li>
+    <li><a href="#选项">选项</a></li>
+    <li><a href="#脚手架">脚手架</a>
+      <ul>
+        <li><a href="#给项目添加命令">给项目添加命令</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://images.unsplash.com/photo-1483389127117-b6a2102724ae?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1548&amp;q=80"
+        data-srcset="https://images.unsplash.com/photo-1483389127117-b6a2102724ae?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1548&amp;q=80, https://images.unsplash.com/photo-1483389127117-b6a2102724ae?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1548&amp;q=80 1.5x, https://images.unsplash.com/photo-1483389127117-b6a2102724ae?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1548&amp;q=80 2x"
+        data-sizes="auto"
+        alt="https://images.unsplash.com/photo-1483389127117-b6a2102724ae?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1548&amp;q=80"
+        title="Minion" /># golang-cobra</p>
+<ul>
+<li><strong>介绍</strong>
+<ul>
+<li>cobra 是一个命令行程序库</li>
+<li>提供了脚手架，用于生成基于cobra的应用程序框架</li>
+</ul>
+</li>
+</ul>
+<h2 id="安装使用">安装&amp;使用</h2>
+<p>安装 cobra</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">go get github.com/spf13/cobra/cobra
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>实现一个git 模拟命令, 通过<em>os/exec</em> 库调用外部程序执行真实的git命令
+目录结构如下</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tree
+</span></span><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── cmd
+</span></span><span class="line"><span class="cl">│   ├── helper.go
+</span></span><span class="line"><span class="cl">│   ├── root.go
+</span></span><span class="line"><span class="cl">│   └── version.go
+</span></span><span class="line"><span class="cl">└── main.go
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>root.go</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">cmd</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;errors&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;github.com/spf13/cobra&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">rootCmd</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">cobra</span><span class="p">.</span><span class="nx">Command</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Use</span><span class="p">:</span>   <span class="s">&#34;git&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Short</span><span class="p">:</span> <span class="s">&#34;Git is a distributed version control system.&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Long</span><span class="p">:</span> <span class="s">`Git is a free and open source distributed version control system
+</span></span></span><span class="line"><span class="cl"><span class="s">designed to handle everything from small to very large projects 
+</span></span></span><span class="line"><span class="cl"><span class="s">with speed and efficiency.`</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Run</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">cmd</span> <span class="o">*</span><span class="nx">cobra</span><span class="p">.</span><span class="nx">Command</span><span class="p">,</span> <span class="nx">args</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nf">Error</span><span class="p">(</span><span class="nx">cmd</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;unrecognized command&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Execute</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rootCmd</span><span class="p">.</span><span class="nf">Execute</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>version.go</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">cmd</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;os&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;github.com/spf13/cobra&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">versionCmd</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">cobra</span><span class="p">.</span><span class="nx">Command</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Use</span><span class="p">:</span>   <span class="s">&#34;version&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Short</span><span class="p">:</span> <span class="s">&#34;version subcommand show git version info.&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">Run</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">cmd</span> <span class="o">*</span><span class="nx">cobra</span><span class="p">.</span><span class="nx">Command</span><span class="p">,</span> <span class="nx">args</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">output</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">ExecuteCommand</span><span class="p">(</span><span class="s">&#34;git&#34;</span><span class="p">,</span> <span class="s">&#34;version&#34;</span><span class="p">,</span> <span class="nx">args</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nf">Error</span><span class="p">(</span><span class="nx">cmd</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprint</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">,</span> <span class="nx">output</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rootCmd</span><span class="p">.</span><span class="nf">AddCommand</span><span class="p">(</span><span class="nx">versionCmd</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>main.go</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;demo/dajun/cobra/cmd&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">cmd</span><span class="p">.</span><span class="nf">Execute</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>helper.go</p>
+</blockquote>
+<ul>
+<li>封装了调用外部程序和错误处理函数</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">package cmd
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">import <span class="o">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;os&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;os/exec&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;github.com/spf13/cobra&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">func ExecuteCommand<span class="o">(</span>name string, subname string, args ...string<span class="o">)</span> <span class="o">(</span>string, error<span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">args</span> <span class="o">=</span> append<span class="o">([]</span>string<span class="o">{</span>subname<span class="o">}</span>, args...<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	cmd :<span class="o">=</span> exec.Command<span class="o">(</span>name, args...<span class="o">)</span>
+</span></span><span class="line"><span class="cl">	bytes, err :<span class="o">=</span> cmd.CombinedOutput<span class="o">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> string<span class="o">(</span>bytes<span class="o">)</span>, err
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">func Error<span class="o">(</span>cmd *cobra.Command, args <span class="o">[]</span>string, err error<span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	fmt.Fprintf<span class="o">(</span>os.Stderr, <span class="s2">&#34;execute %s args:%v error:%v\n&#34;</span>, cmd.Name<span class="o">()</span>, args, err<span class="o">)</span>
+</span></span><span class="line"><span class="cl">	os.Exit<span class="o">(</span>1<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>每个cobra 程序都有一个根命令，可以给他添加任意多个子命令， 在version.go init函数将子命令添加到跟命令中</li>
+<li>不能直接go run main.go，这已经不是单文件程序了。如果强行要用，请使用go run .</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">go build -o main
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>cobra 自动生成的帮助信息</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./main -h
+</span></span><span class="line"><span class="cl">Git is a free and open <span class="nb">source</span> distributed version control system
+</span></span><span class="line"><span class="cl">designed to handle everything from small to very large projects 
+</span></span><span class="line"><span class="cl">with speed and efficiency.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Usage:
+</span></span><span class="line"><span class="cl">  git <span class="o">[</span>flags<span class="o">]</span>
+</span></span><span class="line"><span class="cl">  git <span class="o">[</span>command<span class="o">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Available Commands:
+</span></span><span class="line"><span class="cl">  completion  Generate the autocompletion script <span class="k">for</span> the specified shell
+</span></span><span class="line"><span class="cl">  <span class="nb">help</span>        Help about any <span class="nb">command</span>
+</span></span><span class="line"><span class="cl">  version     version subcommand show git version info.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Flags:
+</span></span><span class="line"><span class="cl">  -h, --help   <span class="nb">help</span> <span class="k">for</span> git
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Use <span class="s2">&#34;git [command] --help&#34;</span> <span class="k">for</span> more information about a <span class="nb">command</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>单个子命令的帮助信息</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./main version -h
+</span></span><span class="line"><span class="cl">version subcommand show git version info.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Usage:
+</span></span><span class="line"><span class="cl">  git version <span class="o">[</span>flags<span class="o">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Flags:
+</span></span><span class="line"><span class="cl">  -h, --help   <span class="nb">help</span> <span class="k">for</span> version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>调用子命令</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./main version
+</span></span><span class="line"><span class="cl">git version 2.39.2 <span class="o">(</span>Apple Git-143<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="特性">特性</h2>
+<p>cobra 提供非常丰富的功能</p>
+<ul>
+<li>轻松支持子命令如 <strong>app server, app fetch</strong>等</li>
+<li>完全兼容POSIX选项（包括短，长选项）；</li>
+<li>嵌套子命令</li>
+<li>全局/本地层级选项，可以在多处设置选项， 按照一定的顺序调用</li>
+<li>使用脚手架轻松胜出程序框架和命令</li>
+</ul>
+<h3 id="基本概念">基本概念</h3>
+<ul>
+<li>命令(Command): 需要执行的的操作。</li>
+<li>参数(Arg) ： 命令的参数， 即要操作的对象。</li>
+<li>选项(Flag)： 命令选项可以调整命令的行为。</li>
+</ul>
+<h2 id="命令">命令</h2>
+<p>在cobra中， 命令和子命令都是用 <code>Command</code> 结构表示的，<code>Command</code>有非常多的字段，用来制定命令的行为，</p>
+<ul>
+<li><code>Use</code>: 使用信息，即命令怎么被调用，<code>Example: add [-F file | -D dir]... [-f format] profile</code></li>
+<li><code>Short\Long</code>：命令的帮助信息，前者是简短的，后者是详细的</li>
+<li><code>Run</code>： 实际执行的操作函数</li>
+</ul>
+<p>定义新的子命令很简单， 创建一个<code>cobra.Command</code>变量， 设置一些字段，添加到根命令</p>
+<blockquote>
+<p>添加一个clone</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">cmd</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;os&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;github.com/spf13/cobra&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">cloneCmd</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">cobra</span><span class="p">.</span><span class="nx">Command</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Use</span><span class="p">:</span> <span class="s">&#34;clone url [destination]&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Short</span><span class="p">:</span> <span class="s">&#34;Clone a repository into a new directory&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Run</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">cmd</span> <span class="o">*</span><span class="nx">cobra</span><span class="p">.</span><span class="nx">Command</span><span class="p">,</span> <span class="nx">args</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">output</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">ExecuteCommand</span><span class="p">(</span><span class="s">&#34;git&#34;</span><span class="p">,</span> <span class="s">&#34;clone&#34;</span><span class="p">,</span> <span class="nx">args</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nf">Error</span><span class="p">(</span><span class="nx">cmd</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">,</span> <span class="nx">output</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">rootCmd</span><span class="p">.</span><span class="nf">AddCommand</span><span class="p">(</span><span class="nx">cloneCmd</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>Use</code>： clone url [destination]
+<ul>
+<li><code>clone</code>: 子命令</li>
+<li><code>url</code>： 参数</li>
+<li><code>destination</code> : 目标路径</li>
+</ul>
+</li>
+</ul>
+<h2 id="选项">选项</h2>
+<p>cobra 的选项分为两种</p>
+<ol>
+<li>永久选项：定义的命令和其子命令都可以使用，通过给跟命令添加一个选项定义全局选项</li>
+<li>本地选项：定义它 的命令中使用</li>
+</ol>
+<p>cobra 使用<code>pflag</code> 解析命令行选项，
+存储选项的变量需要提前定义好</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">Verbose</span> <span class="kt">bool</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">Source</span> <span class="kt">string</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>设置永久选项</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">rootCmd</span><span class="p">.</span><span class="nf">PersistentFlags</span><span class="p">().</span><span class="nf">BoolVarP</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">Verbose</span><span class="p">,</span> <span class="s">&#34;verbose&#34;</span><span class="p">,</span> <span class="s">&#34;v&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="s">&#34;verbose output&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>设置本地选项</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">localCmd</span><span class="p">.</span><span class="nf">Flags</span><span class="p">().</span><span class="nf">StringVarP</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">Source</span><span class="p">,</span> <span class="s">&#34;source&#34;</span><span class="p">,</span> <span class="s">&#34;s&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="s">&#34;Source directory to read from&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>座一个计算机功能， 支持加、减、乘、除操作。并且可以通过选项设置是否忽略非数字参数，设置除 0 是否报错。 显然，前一个选项应该放在全局选项中，后一个应该放在除法命令中
+程序结构</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">├── cmd
+</span></span><span class="line"><span class="cl">│   ├── add.go
+</span></span><span class="line"><span class="cl">│   ├── divide.go
+</span></span><span class="line"><span class="cl">│   ├── helper.go
+</span></span><span class="line"><span class="cl">│   ├── minus.go
+</span></span><span class="line"><span class="cl">│   ├── multiply.go
+</span></span><span class="line"><span class="cl">│   └── root.go
+</span></span><span class="line"><span class="cl">└── main.go
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>devide.go</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">cmd</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;strings&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;github.com/spf13/cobra&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">dividedByZeroHanding</span> <span class="kt">int</span> <span class="c1">// 除 0 如何处理
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">divideCmd</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">cobra</span><span class="p">.</span><span class="nx">Command</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Use</span><span class="p">:</span> <span class="s">&#34;divide&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Short</span><span class="p">:</span> <span class="s">&#34;Divide subcommand divide all passed args.&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Run</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">cmd</span> <span class="o">*</span><span class="nx">cobra</span><span class="p">.</span><span class="nx">Command</span><span class="p">,</span> <span class="nx">args</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">values</span> <span class="o">:=</span> <span class="nf">ConvertArgsToFloat64Slice</span><span class="p">(</span><span class="nx">args</span><span class="p">,</span> <span class="nf">ErrorHandling</span><span class="p">(</span><span class="nx">parseHandling</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">result</span> <span class="o">:=</span> <span class="nf">calc</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">DIVIDE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%s = %.2f\n&#34;</span><span class="p">,</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">args</span><span class="p">,</span> <span class="s">&#34;/&#34;</span><span class="p">),</span> <span class="nx">result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">divideCmd</span><span class="p">.</span><span class="nf">Flags</span><span class="p">().</span><span class="nf">IntVarP</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">dividedByZeroHanding</span><span class="p">,</span> <span class="s">&#34;divide_by_zero&#34;</span><span class="p">,</span> <span class="s">&#34;d&#34;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nx">PanicOnDividedByZero</span><span class="p">),</span> <span class="s">&#34;do what when divided by zero&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">rootCmd</span><span class="p">.</span><span class="nf">AddCommand</span><span class="p">(</span><span class="nx">divideCmd</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>root.go</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">var</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">parseHandling</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">rootCmd</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">cobra</span><span class="p">.</span><span class="nx">Command</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Use</span><span class="p">:</span> <span class="s">&#34;math&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Short</span><span class="p">:</span> <span class="s">&#34;Math calc the accumulative result.&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Run</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">cmd</span> <span class="o">*</span><span class="nx">cobra</span><span class="p">.</span><span class="nx">Command</span><span class="p">,</span> <span class="nx">args</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">Error</span><span class="p">(</span><span class="nx">cmd</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;unrecognized subcommand&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">rootCmd</span><span class="p">.</span><span class="nf">PersistentFlags</span><span class="p">().</span><span class="nf">IntVarP</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">parseHandling</span><span class="p">,</span> <span class="s">&#34;parse_error&#34;</span><span class="p">,</span> <span class="s">&#34;p&#34;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nx">ContinueOnParseError</span><span class="p">),</span> <span class="s">&#34;do what when parse arg error&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Execute</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">rootCmd</span><span class="p">.</span><span class="nf">Execute</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在divide.go中定义了如何处理除 0 错误的选项，在root.go中定义了如何处理解析错误的选项。选项枚举如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">const</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">ContinueOnParseError</span>  <span class="nx">ErrorHandling</span> <span class="p">=</span> <span class="mi">1</span> <span class="c1">// 解析错误尝试继续处理
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">ExitOnParseError</span>      <span class="nx">ErrorHandling</span> <span class="p">=</span> <span class="mi">2</span> <span class="c1">// 解析错误程序停止
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">PanicOnParseError</span>     <span class="nx">ErrorHandling</span> <span class="p">=</span> <span class="mi">3</span> <span class="c1">// 解析错误 panic
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">ReturnOnDividedByZero</span> <span class="nx">ErrorHandling</span> <span class="p">=</span> <span class="mi">4</span> <span class="c1">// 除0返回
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">PanicOnDividedByZero</span>  <span class="nx">ErrorHandling</span> <span class="p">=</span> <span class="mi">5</span> <span class="c1">// 除0 painc
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>测试程序</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ go build -o math
+</span></span><span class="line"><span class="cl">$ ./math add <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span>
+</span></span><span class="line"><span class="cl">1+2+3+4 <span class="o">=</span> 10.00
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ ./math minus <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span>
+</span></span><span class="line"><span class="cl">1-2-3-4 <span class="o">=</span> -8.00
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ ./math multiply <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span>
+</span></span><span class="line"><span class="cl">1*2*3*4 <span class="o">=</span> 24.00
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ ./math divide <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span>
+</span></span><span class="line"><span class="cl">1/2/3/4 <span class="o">=</span> 0.04
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>默认情况下， 解析错误被忽略，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ ./math add <span class="m">1</span> 2a 3b <span class="m">4</span>
+</span></span><span class="line"><span class="cl">1+2a+3b+4 <span class="o">=</span> 5.00
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ ./math divide <span class="m">1</span> 2a 3b <span class="m">4</span>
+</span></span><span class="line"><span class="cl">1/2a/3b/4 <span class="o">=</span> 0.25
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>设置解析失败的处理，2 表示退出程序，3 表示 panic</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./math add <span class="m">1</span> 2a 3b <span class="m">4</span> -p <span class="m">2</span>
+</span></span><span class="line"><span class="cl">invalid number: 2a
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ ./math add <span class="m">1</span> 2a 3b <span class="m">4</span> -p <span class="m">3</span>
+</span></span><span class="line"><span class="cl">panic: strconv.ParseFloat: parsing <span class="s2">&#34;2a&#34;</span>: invalid syntax
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">goroutine <span class="m">1</span> <span class="o">[</span>running<span class="o">]</span>:
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="脚手架">脚手架</h2>
+<p>始化一个新的Go模块：</p>
+<ul>
+<li>创建一个新目录</li>
+<li>cd进入那个目录</li>
+<li>run go mod init <MODNAME></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> <span class="nv">$HOME</span>/code 
+</span></span><span class="line"><span class="cl">mkdir myapp
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> myapp
+</span></span><span class="line"><span class="cl">go mod init github.com/spf13/myapp
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>cobra-cli init也可以从子目录运行</p>
+<ul>
+<li>
+<p>&ndash;author标志的作者姓名。例如cobra-cli init &ndash;author &ldquo;Steve Francia <a href="mailto:spf@spf13.com" rel="">spf@spf13.com</a>&rdquo;</p>
+</li>
+<li>
+<p>&ndash;license一起使用的许可证，例如cobra-cli init &ndash;license apache</p>
+</li>
+</ul>
+<h3 id="给项目添加命令">给项目添加命令</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cobra-cli add serve
+</span></span><span class="line"><span class="cl">cobra-cli add config
+</span></span><span class="line"><span class="cl">cobra-cli add create -p <span class="s1">&#39;configCmd&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>运行了这三个命令，你就会有一个类似于以下内容的应用程序结构：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  ▾ app/
+</span></span><span class="line"><span class="cl">    ▾ cmd/
+</span></span><span class="line"><span class="cl">        config.go
+</span></span><span class="line"><span class="cl">        create.go
+</span></span><span class="line"><span class="cl">        serve.go
+</span></span><span class="line"><span class="cl">        root.go
+</span></span><span class="line"><span class="cl">      main.go
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参考链接
+<a href="https://github.com/spf13/cobra-cli" target="_blank" rel="noopener noreffer ">https://github.com/spf13/cobra-cli</a>
+<a href="https://darjun.github.io/2020/01/17/godailylib/cobra/" target="_blank" rel="noopener noreffer ">https://darjun.github.io/2020/01/17/godailylib/cobra/</a></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-06-08</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/golang-cobra/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/golang-cobra/" data-title="Golang Cobra" data-via="xxxx" data-hashtags="golang,go第三方库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/golang-cobra/" data-hashtag="golang"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/golang-cobra/" data-title="Golang Cobra"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/golang-cobra/" data-title="Golang Cobra"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/golang-cobra/" data-title="Golang Cobra"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/golang/">golang</a>,&nbsp;<a href="/tags/go%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">go第三方库</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/golang-quicksort/" class="prev" rel="prev" title="Golang Quicksort"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Golang Quicksort</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"f1aming007","id-2":"f1aming007"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

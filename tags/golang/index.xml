@@ -4,7 +4,23 @@
         <link>https://f1aming007.github.io/tags/golang/</link>
         <description>golang - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 08 Jun 2023 10:51:25 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 08 Jun 2023 16:38:13 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Cobra</title>
+    <link>https://f1aming007.github.io/golang-cobra/</link>
+    <pubDate>Thu, 08 Jun 2023 16:38:13 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-cobra/</guid>
+    <description><![CDATA[<p># golang-cobra</p>
+<ul>
+<li><strong>介绍</strong>
+<ul>
+<li>cobra 是一个命令行程序库</li>
+<li>提供了脚手架，用于生成基于cobra的应用程序框架</li>
+</ul>
+</li>
+</ul>]]></description>
+</item>
+<item>
     <title>Golang Quicksort</title>
     <link>https://f1aming007.github.io/golang-quicksort/</link>
     <pubDate>Thu, 08 Jun 2023 10:51:25 &#43;0800</pubDate>
@@ -145,14 +161,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/golang-etcd/</guid>
     <description><![CDATA[Etcd etcd 是一个开源的， 高可用的分布式的 key-value 存储系统， 可以用于配制共享和服务的注册和发现 etcd具有的特点 完全复制： 集群中的每个阶段都可以使用完整的]]></description>
-</item>
-<item>
-    <title>Golang MangoDB</title>
-    <link>https://f1aming007.github.io/golang-mongodb/</link>
-    <pubDate>Tue, 23 May 2023 16:57:24 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-mongodb/</guid>
-    <description><![CDATA[MongoDB MongoDB介绍 mongoDB是基于分布式文件存储的数据库，是一个介于关系型数据库和非关系数据库之间的产品 mongoDB将一条数据存储为]]></description>
 </item>
 </channel>
 </rss>
