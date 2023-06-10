@@ -4,7 +4,24 @@
         <link>https://f1aming007.github.io/tags/go%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/</link>
         <description>go第三方库 - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 08 Jun 2023 16:38:13 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/go%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Fri, 09 Jun 2023 15:39:40 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/go%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Viper</title>
+    <link>https://f1aming007.github.io/golang-viper/</link>
+    <pubDate>Fri, 09 Jun 2023 15:39:40 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-viper/</guid>
+    <description><![CDATA[<p></p>
+<h1 id="golang-viper-介绍">golang-viper 介绍</h1>
+<p>viper 是一个配置解决方案，用于丰富的特性</p>
+<ul>
+<li>支持 JSON/TOML/YAML/HCL/envfile/Java properties 等多种格式的配置文件</li>
+<li>可以设置监听配置文件的修改，修改时自动加载新的配置；</li>
+<li>从环境变量、命令行选项和<code>io.Reader</code>中读取配置</li>
+<li>从远程配置系统中读取和监听修改，如 etcd/Consul；</li>
+<li>代码逻辑中显示设置健值</li>
+</ul>]]></description>
+</item>
+<item>
     <title>Golang Cobra</title>
     <link>https://f1aming007.github.io/golang-cobra/</link>
     <pubDate>Thu, 08 Jun 2023 16:38:13 &#43;0800</pubDate>

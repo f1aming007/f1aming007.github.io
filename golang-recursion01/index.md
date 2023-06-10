@@ -1,4 +1,4 @@
-# Golang Recursion
+# 🔥Golang Recursion
 
 
 {{< figure src="/images/Recursion02.png" title="go-work (figure)" >}}

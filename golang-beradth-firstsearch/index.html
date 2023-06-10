@@ -4,61 +4,37 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>🔥Golang Quicksort - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="🔥Golang Quicksort" />
+        <title>🔥Golang Beradth FirstSearch - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="🔥Golang Beradth FirstSearch" />
 <meta property="og:description" content="
 🔥Golang算法 - 快速排序（Quicksort）
-
-不需要排序的数组（Base case 基线条件）
-
-[],空数组
-[s], 单元素数组
-
-
-容易排序的数组
-
-[a,b],两个元素的数组，只需坚持它们之间的大小即可，调整位置
-
-
-" />
+广度优先算法的核心思想是：从初始节点开始，应用算符生成第一层节点，检查目标节点是否在这些后继节点中，若没有，再用产生式规则将所有第一层的节点逐一扩展，得到第二层节点，并逐一检查第二层节点中是否包含目标节点。若没有，再用算符逐一扩展第二层的所有节点……，如此依次扩展，检查下去，直到发现目标节点为止。即" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://f1aming007.github.io/golang-quicksort/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-06-08T10:51:25+08:00" />
-<meta property="article:modified_time" content="2023-06-08T10:51:25+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta property="og:url" content="https://f1aming007.github.io/golang-beradth-firstsearch/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-06-10T10:06:01+08:00" />
+<meta property="article:modified_time" content="2023-06-10T10:06:01+08:00" /><meta property="og:site_name" content="flamingo" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
 
-<meta name="twitter:title" content="🔥Golang Quicksort"/>
+<meta name="twitter:title" content="🔥Golang Beradth FirstSearch"/>
 <meta name="twitter:description" content="
 🔥Golang算法 - 快速排序（Quicksort）
-
-不需要排序的数组（Base case 基线条件）
-
-[],空数组
-[s], 单元素数组
-
-
-容易排序的数组
-
-[a,b],两个元素的数组，只需坚持它们之间的大小即可，调整位置
-
-
-"/>
+广度优先算法的核心思想是：从初始节点开始，应用算符生成第一层节点，检查目标节点是否在这些后继节点中，若没有，再用产生式规则将所有第一层的节点逐一扩展，得到第二层节点，并逐一检查第二层节点中是否包含目标节点。若没有，再用算符逐一扩展第二层的所有节点……，如此依次扩展，检查下去，直到发现目标节点为止。即"/>
 <meta name="application-name" content="我的网站">
 <meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/golang-quicksort/" /><link rel="prev" href="https://f1aming007.github.io/golang-divide_conquer/" /><link rel="next" href="https://f1aming007.github.io/golang-cobra/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/golang-beradth-firstsearch/" /><link rel="prev" href="https://f1aming007.github.io/golang-viper/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "🔥Golang Quicksort",
+        "headline": "🔥Golang Beradth FirstSearch",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/f1aming007.github.io\/golang-quicksort\/"
-        },"genre": "posts","keywords": "golang, 算法","wordcount":  512 ,
-        "url": "https:\/\/f1aming007.github.io\/golang-quicksort\/","datePublished": "2023-06-08T10:51:25+08:00","dateModified": "2023-06-08T10:51:25+08:00","publisher": {
+            "@id": "https:\/\/f1aming007.github.io\/golang-beradth-firstsearch\/"
+        },"genre": "posts","keywords": "golang, 算法","wordcount":  406 ,
+        "url": "https:\/\/f1aming007.github.io\/golang-beradth-firstsearch\/","datePublished": "2023-06-10T10:06:01+08:00","dateModified": "2023-06-10T10:06:01+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -143,10 +119,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">🔥Golang Quicksort</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">🔥Golang Beradth FirstSearch</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-08">2023-06-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;512 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-10">2023-06-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;406 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -154,59 +130,43 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#使用quicksort-排序数组">使用Quicksort 排序数组</a></li>
-    <li><a href="#使用quicksourt--排序数组的步骤">使用Quicksourt  排序数组的步骤</a></li>
+    <li><a href="#图graph是什么">图（Graph）是什么？</a></li>
+    <li><a href="#数据结构-queue">数据结构 Queue</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="https://images.unsplash.com/photo-1685853995266-d095653bc6d1?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80"
-        data-srcset="https://images.unsplash.com/photo-1685853995266-d095653bc6d1?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80, https://images.unsplash.com/photo-1685853995266-d095653bc6d1?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80 1.5x, https://images.unsplash.com/photo-1685853995266-d095653bc6d1?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80 2x"
+        data-src="https://images.unsplash.com/photo-1463171379579-3fdfb86d6285?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1740&amp;q=80"
+        data-srcset="https://images.unsplash.com/photo-1463171379579-3fdfb86d6285?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1740&amp;q=80, https://images.unsplash.com/photo-1463171379579-3fdfb86d6285?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1740&amp;q=80 1.5x, https://images.unsplash.com/photo-1463171379579-3fdfb86d6285?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1740&amp;q=80 2x"
         data-sizes="auto"
-        alt="https://images.unsplash.com/photo-1685853995266-d095653bc6d1?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80"
+        alt="https://images.unsplash.com/photo-1463171379579-3fdfb86d6285?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1740&amp;q=80"
         title="Minion" /></p>
 <h1 id="golang算法---快速排序quicksort">🔥Golang算法 - 快速排序（Quicksort）</h1>
+<p>广度优先算法的核心思想是：从初始节点开始，应用算符生成第一层节点，检查目标节点是否在这些后继节点中，若没有，再用产生式规则将所有第一层的节点逐一扩展，得到第二层节点，并逐一检查第二层节点中是否包含目标节点。若没有，再用算符逐一扩展第二层的所有节点……，如此依次扩展，检查下去，直到发现目标节点为止。即</p>
+<h2 id="图graph是什么">图（Graph）是什么？</h2>
+<p>图是用来对不同事物间如何管理进行建模的一种方式
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://data.biancheng.net/uploads/allimg/220724/2-220H4153114520.gif"
+        data-srcset="http://data.biancheng.net/uploads/allimg/220724/2-220H4153114520.gif, http://data.biancheng.net/uploads/allimg/220724/2-220H4153114520.gif 1.5x, http://data.biancheng.net/uploads/allimg/220724/2-220H4153114520.gif 2x"
+        data-sizes="auto"
+        alt="http://data.biancheng.net/uploads/allimg/220724/2-220H4153114520.gif"
+        title="Minion" /></p>
+<h2 id="数据结构-queue">数据结构 Queue</h2>
 <ul>
-<li>不需要排序的数组（Base case 基线条件）
+<li>现进来的数据先处理（FIFO）</li>
+<li>无法随机的访问Queue 里面的元素</li>
+<li>相关操作
 <ul>
-<li>[],空数组</li>
-<li>[s], 单元素数组</li>
+<li>enqueue: 添加元素</li>
+<li>dequeue: 移除元素</li>
 </ul>
 </li>
-<li>容易排序的数组
-<ul>
-<li>[a,b],两个元素的数组，只需坚持它们之间的大小即可，调整位置</li>
 </ul>
-</li>
-</ul>
-<h2 id="使用quicksort-排序数组">使用Quicksort 排序数组</h2>
-<ul>
-<li>3个元素的数组（例如[23, 19, 35]）
-<ul>
-<li>使用D &amp; C策略， 简化为基线条件（Base case）</li>
-</ul>
-<ol>
-<li>从数组中随便找一个元素， 例如35， 这个元素叫做<strong>pivot</strong>(基准元素)</li>
-<li>找到比pivot小的元素，找到比pivot大的元素， 这叫做分区：[23, 19],(35),[]</li>
-<li>如果左右两个子数组已排好序（达到基线条件）， 结果： 左边 + [pivot] + 右边</li>
-<li>如果左右两个子数组没有已排好序（没有达到基线条件）， 那么： quiksort左边 + [pivot] + quicksort右边</li>
-</ol>
-</li>
-</ul>
-<h2 id="使用quicksourt--排序数组的步骤">使用Quicksourt  排序数组的步骤</h2>
-<ol>
-<li>选择一个pivot</li>
-<li>将数组分为两个子数组
-<ol>
-<li>左侧数组的元素都比pivot小</li>
-<li>右侧数组的元素都比pivot大</li>
-</ol>
-</li>
-<li>在两个子数组上递归的调用quicksort</li>
-</ol>
 <blockquote>
-<p>代码示例01</p>
+<p>代码示例</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -236,52 +196,78 @@
 </span><span class="lnt">24
 </span><span class="lnt">25
 </span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">GraphMap</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">][]</span><span class="kt">string</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">arr</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">12</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">328</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">81</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">result</span> <span class="o">:=</span> <span class="nf">quicksort</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">quicksort</span><span class="p">(</span><span class="nx">arr</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">int</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">&lt;</span> <span class="mi">2</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">arr</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">pivot</span> <span class="o">:=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span> <span class="p">[]</span><span class="kt">int</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">graphMap</span> <span class="nx">GraphMap</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="nx">GraphMap</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">graphMap</span><span class="p">[</span><span class="s">&#34;you&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;alice&#34;</span><span class="p">,</span> <span class="s">&#34;bob&#34;</span><span class="p">,</span> <span class="s">&#34;claire&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">graphMap</span><span class="p">[</span><span class="s">&#34;bob&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;anuj&#34;</span><span class="p">,</span> <span class="s">&#34;peggy&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">graphMap</span><span class="p">[</span><span class="s">&#34;alice&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;peggy&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">graphMap</span><span class="p">[</span><span class="s">&#34;claire&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;tom&#34;</span><span class="p">,</span> <span class="s">&#34;johnny&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">graphMap</span><span class="p">[</span><span class="s">&#34;anuj&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">graphMap</span><span class="p">[</span><span class="s">&#34;peggy&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">graphMap</span><span class="p">[</span><span class="s">&#34;tom&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">graphMap</span><span class="p">[</span><span class="s">&#34;johnny&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ele</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">ele</span> <span class="o">&lt;=</span> <span class="nx">pivot</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">left</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">left</span><span class="p">,</span> <span class="nx">ele</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">searchQueue</span> <span class="o">:=</span> <span class="nx">graphMap</span><span class="p">[</span><span class="s">&#34;you&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">searchQueue</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="kd">var</span> <span class="nx">person</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">person</span><span class="p">,</span> <span class="nx">searchQueue</span> <span class="p">=</span> <span class="nx">searchQueue</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">searchQueue</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nf">personIsTom</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%s is the man\n&#34;</span><span class="p">,</span> <span class="nx">person</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">searchQueue</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">searchQueue</span><span class="p">,</span> <span class="nx">graphMap</span><span class="p">[</span><span class="nx">person</span><span class="p">]</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
 </span></span><span class="line"><span class="cl">		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">right</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">right</span><span class="p">,</span> <span class="nx">ele</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Not Found&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span>
 </span></span><span class="line"><span class="cl">		<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nb">append</span><span class="p">(</span><span class="nf">quicksort</span><span class="p">(</span><span class="nx">left</span><span class="p">),</span> <span class="nb">append</span><span class="p">([]</span><span class="kt">int</span><span class="p">{</span><span class="nx">pivot</span><span class="p">},</span> <span class="nf">quicksort</span><span class="p">(</span><span class="nx">right</span><span class="p">)</span><span class="o">...</span><span class="p">)</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">personIsTom</span><span class="p">(</span><span class="nx">p</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">p</span> <span class="o">==</span> <span class="s">&#34;tom&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>参考视频
-<div class="bilibili"><iframe src="//player.bilibili.com/player.html?bvid=BV1k34y1S71P&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div>
+<div class="bilibili"><iframe src="//player.bilibili.com/player.html?bvid=BBV1rq4y197zx&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div>
 </p>
 </blockquote></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2023-06-08</span>
+                <span>Updated on 2023-06-10</span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/golang-quicksort/index.md" target="_blank">Read Markdown</a>
+                            <a class="link-to-markdown" href="/golang-beradth-firstsearch/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/golang-quicksort/" data-title="🔥Golang Quicksort" data-via="xxxx" data-hashtags="golang,算法"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/golang-quicksort/" data-hashtag="golang"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/golang-quicksort/" data-title="🔥Golang Quicksort"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/golang-quicksort/" data-title="🔥Golang Quicksort"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/golang-quicksort/" data-title="🔥Golang Quicksort"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/golang-beradth-firstsearch/" data-title="🔥Golang Beradth FirstSearch" data-via="xxxx" data-hashtags="golang,算法"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/golang-beradth-firstsearch/" data-hashtag="golang"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/golang-beradth-firstsearch/" data-title="🔥Golang Beradth FirstSearch"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/golang-beradth-firstsearch/" data-title="🔥Golang Beradth FirstSearch"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/golang-beradth-firstsearch/" data-title="🔥Golang Beradth FirstSearch"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
@@ -293,8 +279,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/golang-divide_conquer/" class="prev" rel="prev" title="🔥Golang Divide_Conquer"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>🔥Golang Divide_Conquer</a>
-            <a href="/golang-cobra/" class="next" rel="next" title="Golang Cobra">Golang Cobra<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+    <div class="post-nav"><a href="/golang-viper/" class="prev" rel="prev" title="Golang Viper"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Golang Viper</a></div>
 </div>
 </article></div>
             </main><footer class="footer">

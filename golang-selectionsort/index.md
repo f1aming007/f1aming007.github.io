@@ -1,4 +1,4 @@
-# Golang Selection Sort
+# 🔥Golang Selection Sort
 
 
 {{< figure src="/images/golang-selection.png" title="go-work (figure)" >}}

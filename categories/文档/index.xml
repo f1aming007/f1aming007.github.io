@@ -4,7 +4,34 @@
         <link>https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/</link>
         <description>文档 - Category - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 08 Jun 2023 16:38:13 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 10 Jun 2023 10:06:01 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+    <title>🔥Golang Beradth FirstSearch</title>
+    <link>https://f1aming007.github.io/golang-beradth-firstsearch/</link>
+    <pubDate>Sat, 10 Jun 2023 10:06:01 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-beradth-firstsearch/</guid>
+    <description><![CDATA[<p></p>
+<h1 id="golang算法---快速排序quicksort">🔥Golang算法 - 快速排序（Quicksort）</h1>
+<p>广度优先算法的核心思想是：从初始节点开始，应用算符生成第一层节点，检查目标节点是否在这些后继节点中，若没有，再用产生式规则将所有第一层的节点逐一扩展，得到第二层节点，并逐一检查第二层节点中是否包含目标节点。若没有，再用算符逐一扩展第二层的所有节点……，如此依次扩展，检查下去，直到发现目标节点为止。即</p>]]></description>
+</item>
+<item>
+    <title>Golang Viper</title>
+    <link>https://f1aming007.github.io/golang-viper/</link>
+    <pubDate>Fri, 09 Jun 2023 15:39:40 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-viper/</guid>
+    <description><![CDATA[<p></p>
+<h1 id="golang-viper-介绍">golang-viper 介绍</h1>
+<p>viper 是一个配置解决方案，用于丰富的特性</p>
+<ul>
+<li>支持 JSON/TOML/YAML/HCL/envfile/Java properties 等多种格式的配置文件</li>
+<li>可以设置监听配置文件的修改，修改时自动加载新的配置；</li>
+<li>从环境变量、命令行选项和<code>io.Reader</code>中读取配置</li>
+<li>从远程配置系统中读取和监听修改，如 etcd/Consul；</li>
+<li>代码逻辑中显示设置健值</li>
+</ul>]]></description>
+</item>
+<item>
     <title>Golang Cobra</title>
     <link>https://f1aming007.github.io/golang-cobra/</link>
     <pubDate>Thu, 08 Jun 2023 16:38:13 &#43;0800</pubDate>
@@ -21,7 +48,7 @@
 </ul>]]></description>
 </item>
 <item>
-    <title>Golang Quicksort</title>
+    <title>🔥Golang Quicksort</title>
     <link>https://f1aming007.github.io/golang-quicksort/</link>
     <pubDate>Thu, 08 Jun 2023 10:51:25 &#43;0800</pubDate>
     <author>flamingo</author>
@@ -43,7 +70,7 @@
 </ul>]]></description>
 </item>
 <item>
-    <title>Golang Divide_Conquer</title>
+    <title>🔥Golang Divide_Conquer</title>
     <link>https://f1aming007.github.io/golang-divide_conquer/</link>
     <pubDate>Wed, 07 Jun 2023 09:59:23 &#43;0800</pubDate>
     <author>flamingo</author>
@@ -105,7 +132,7 @@
 </ul>]]></description>
 </item>
 <item>
-    <title>Golang Recursion</title>
+    <title>🔥Golang Recursion</title>
     <link>https://f1aming007.github.io/golang-recursion01/</link>
     <pubDate>Tue, 30 May 2023 21:12:34 &#43;0800</pubDate>
     <author>flamingo</author>
@@ -143,7 +170,7 @@
 </ul>]]></description>
 </item>
 <item>
-    <title>Golang Selection Sort</title>
+    <title>🔥Golang Selection Sort</title>
     <link>https://f1aming007.github.io/golang-selectionsort/</link>
     <pubDate>Mon, 29 May 2023 15:05:16 &#43;0800</pubDate>
     <author>flamingo</author>
@@ -159,33 +186,6 @@
 <li>然后，再从剩余未排序元素中继续寻找最小（大）元素，</li>
 <li>然后放到已排序序列的末尾。</li>
 <li>以此类推，直到所有元素均排序完毕。</li>
-</ul>]]></description>
-</item>
-<item>
-    <title>🚀Golang BinarySearch</title>
-    <link>https://f1aming007.github.io/golang-binarysearch/</link>
-    <pubDate>Sat, 27 May 2023 11:35:01 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-binarysearch/</guid>
-    <description><![CDATA[<p></p>
-<h1 id="golang算法--二分算法binary-search">🔥Golang算法- 二分算法（Binary Search）</h1>
-<ul>
-<li>输入：<strong>排好序</strong> 的集合</li>
-<li>如果要查询的元素在集合中： 返回位置（索引）</li>
-<li>否则：返回空</li>
-</ul>]]></description>
-</item>
-<item>
-    <title>Golang 命令行参数os.Args</title>
-    <link>https://f1aming007.github.io/golang-args/</link>
-    <pubDate>Sat, 27 May 2023 10:18:12 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-args/</guid>
-    <description><![CDATA[<p></p>
-<h1 id="golang-命令行参数osargs">Golang 命令行参数os.Args</h1>
-<ul>
-<li>如何制作命令行应用</li>
-<li>如何使用os.Args 获取命令行参数</li>
 </ul>]]></description>
 </item>
 </channel>

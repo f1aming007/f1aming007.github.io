@@ -4,8 +4,18 @@
         <link>https://f1aming007.github.io/tags/%E7%AE%97%E6%B3%95/</link>
         <description>算法 - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 08 Jun 2023 10:51:25 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/%E7%AE%97%E6%B3%95/" rel="self" type="application/rss+xml" /><item>
-    <title>Golang Quicksort</title>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 10 Jun 2023 10:06:01 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/%E7%AE%97%E6%B3%95/" rel="self" type="application/rss+xml" /><item>
+    <title>🔥Golang Beradth FirstSearch</title>
+    <link>https://f1aming007.github.io/golang-beradth-firstsearch/</link>
+    <pubDate>Sat, 10 Jun 2023 10:06:01 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-beradth-firstsearch/</guid>
+    <description><![CDATA[<p></p>
+<h1 id="golang算法---快速排序quicksort">🔥Golang算法 - 快速排序（Quicksort）</h1>
+<p>广度优先算法的核心思想是：从初始节点开始，应用算符生成第一层节点，检查目标节点是否在这些后继节点中，若没有，再用产生式规则将所有第一层的节点逐一扩展，得到第二层节点，并逐一检查第二层节点中是否包含目标节点。若没有，再用算符逐一扩展第二层的所有节点……，如此依次扩展，检查下去，直到发现目标节点为止。即</p>]]></description>
+</item>
+<item>
+    <title>🔥Golang Quicksort</title>
     <link>https://f1aming007.github.io/golang-quicksort/</link>
     <pubDate>Thu, 08 Jun 2023 10:51:25 &#43;0800</pubDate>
     <author>flamingo</author>
@@ -27,7 +37,7 @@
 </ul>]]></description>
 </item>
 <item>
-    <title>Golang Divide_Conquer</title>
+    <title>🔥Golang Divide_Conquer</title>
     <link>https://f1aming007.github.io/golang-divide_conquer/</link>
     <pubDate>Wed, 07 Jun 2023 09:59:23 &#43;0800</pubDate>
     <author>flamingo</author>
@@ -46,7 +56,7 @@
 </ol>]]></description>
 </item>
 <item>
-    <title>Golang Recursion</title>
+    <title>🔥Golang Recursion</title>
     <link>https://f1aming007.github.io/golang-recursion01/</link>
     <pubDate>Tue, 30 May 2023 21:12:34 &#43;0800</pubDate>
     <author>flamingo</author>
@@ -62,7 +72,7 @@
 </ul>]]></description>
 </item>
 <item>
-    <title>Golang Selection Sort</title>
+    <title>🔥Golang Selection Sort</title>
     <link>https://f1aming007.github.io/golang-selectionsort/</link>
     <pubDate>Mon, 29 May 2023 15:05:16 &#43;0800</pubDate>
     <author>flamingo</author>
