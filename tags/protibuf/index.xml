@@ -1,0 +1,21 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>protibuf - Tag - flamingo</title>
+        <link>https://f1aming007.github.io/tags/protibuf/</link>
+        <description>protibuf - Tag - flamingo</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 01 Jul 2023 09:37:21 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/protibuf/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Protobuf Base</title>
+    <link>https://f1aming007.github.io/golang-protobuf-base/</link>
+    <pubDate>Sat, 01 Jul 2023 09:37:21 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-protobuf-base/</guid>
+    <description><![CDATA[<p></p>
+<h1 id="-grpc-教程--protobuf-基础">🔥 gRpc 教程- protobuf 基础</h1>
+<ul>
+<li><strong>序列化协议</strong>： <code>grpc</code> 使用 <code>protobuf</code>, 首先使用protobuf 定义服务，然后使用这个文件来生成客户端和服务端的代码， 因为pb是跨语言的， 因此使用服务端和客户端语言并不一致也可以相互序列化和反序列化</li>
+<li><strong>网络传输层</strong>： grpc使用的是<code>http2.0协议</code>，</li>
+</ul>]]></description>
+</item>
+</channel>
+</rss>

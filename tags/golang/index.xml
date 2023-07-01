@@ -4,7 +4,20 @@
         <link>https://f1aming007.github.io/tags/golang/</link>
         <description>golang - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 10 Jun 2023 10:06:01 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 01 Jul 2023 09:37:21 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Protobuf Base</title>
+    <link>https://f1aming007.github.io/golang-protobuf-base/</link>
+    <pubDate>Sat, 01 Jul 2023 09:37:21 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-protobuf-base/</guid>
+    <description><![CDATA[<p></p>
+<h1 id="-grpc-教程--protobuf-基础">🔥 gRpc 教程- protobuf 基础</h1>
+<ul>
+<li><strong>序列化协议</strong>： <code>grpc</code> 使用 <code>protobuf</code>, 首先使用protobuf 定义服务，然后使用这个文件来生成客户端和服务端的代码， 因为pb是跨语言的， 因此使用服务端和客户端语言并不一致也可以相互序列化和反序列化</li>
+<li><strong>网络传输层</strong>： grpc使用的是<code>http2.0协议</code>，</li>
+</ul>]]></description>
+</item>
+<item>
     <title>🔥Golang Beradth FirstSearch</title>
     <link>https://f1aming007.github.io/golang-beradth-firstsearch/</link>
     <pubDate>Sat, 10 Jun 2023 10:06:01 &#43;0800</pubDate>
@@ -132,11 +145,12 @@
     <pubDate>Mon, 29 May 2023 15:05:16 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/golang-selectionsort/</guid>
-    <description><![CDATA[<figure><figcaption>
-            <h4>go-work (figure)</h4>
-        </figcaption>
-</figure>
+    <description><![CDATA[<pre><code><figure><figcaption>
+                <h4>go-work (figure)</h4>
+            </figcaption>
+    </figure>
 
+</code></pre>
 <h1 id="golang算法--选择排序selection-sort">🔥Golang算法- 选择排序（Selection Sort)</h1>
 <ul>
 <li>在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，</li>
@@ -157,19 +171,6 @@
 <li>输入：<strong>排好序</strong> 的集合</li>
 <li>如果要查询的元素在集合中： 返回位置（索引）</li>
 <li>否则：返回空</li>
-</ul>]]></description>
-</item>
-<item>
-    <title>Golang 命令行参数os.Args</title>
-    <link>https://f1aming007.github.io/golang-args/</link>
-    <pubDate>Sat, 27 May 2023 10:18:12 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-args/</guid>
-    <description><![CDATA[<p></p>
-<h1 id="golang-命令行参数osargs">Golang 命令行参数os.Args</h1>
-<ul>
-<li>如何制作命令行应用</li>
-<li>如何使用os.Args 获取命令行参数</li>
 </ul>]]></description>
 </item>
 </channel>

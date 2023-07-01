@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Golang Protobuf Base - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Golang Protobuf Base" />
+<meta property="og:description" content="
+🔥 gRpc 教程- protobuf 基础
+
+序列化协议： grpc 使用 protobuf, 首先使用protobuf 定义服务，然后使用这个文件来生成客户端和服务端的代码， 因为pb是跨语言的， 因此使用服务端和客户端语言并不一致也可以相互序列化和反序列化
+网络传输层： grpc使用的是http2.0协议，
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/golang-protobuf-base/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-01T09:37:21+08:00" />
+<meta property="article:modified_time" content="2023-07-01T09:37:21+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="Golang Protobuf Base"/>
+<meta name="twitter:description" content="
+🔥 gRpc 教程- protobuf 基础
+
+序列化协议： grpc 使用 protobuf, 首先使用protobuf 定义服务，然后使用这个文件来生成客户端和服务端的代码， 因为pb是跨语言的， 因此使用服务端和客户端语言并不一致也可以相互序列化和反序列化
+网络传输层： grpc使用的是http2.0协议，
+"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/golang-protobuf-base/" /><link rel="prev" href="https://f1aming007.github.io/golang-beradth-firstsearch/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Golang Protobuf Base",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/golang-protobuf-base\/"
+        },"genre": "posts","keywords": "golang, rpc, protibuf","wordcount":  1438 ,
+        "url": "https:\/\/f1aming007.github.io\/golang-protobuf-base\/","datePublished": "2023-07-01T09:37:21+08:00","dateModified": "2023-07-01T09:37:21+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Golang Protobuf Base</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-07-01">2023-07-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1438 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#protobuf-idl">Protobuf IDL</a></li>
+    <li><a href="#定义消息类型">定义消息类型</a></li>
+    <li><a href="#复合类型">复合类型</a>
+      <ul>
+        <li><a href="#数组">数组</a></li>
+        <li><a href="#枚举">枚举</a></li>
+        <li><a href="#服务">服务</a></li>
+        <li><a href="#使用其他消息类型">使用其他消息类型</a></li>
+      </ul>
+    </li>
+    <li><a href="#protoc使用">protoc使用</a></li>
+    <li><a href="#安装">安装</a>
+      <ul>
+        <li><a href="#使用">使用</a></li>
+        <li><a href="#搜索路径参数">搜索路径参数</a></li>
+        <li><a href="#语言插件参数">语言插件参数</a></li>
+        <li><a href="#proto文件位置参数">proto文件位置参数</a></li>
+      </ul>
+    </li>
+    <li><a href="#golang插件">golang插件</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://images.unsplash.com/photo-1661956601349-f61c959a8fd4?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80"
+        data-srcset="https://images.unsplash.com/photo-1661956601349-f61c959a8fd4?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80, https://images.unsplash.com/photo-1661956601349-f61c959a8fd4?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80 1.5x, https://images.unsplash.com/photo-1661956601349-f61c959a8fd4?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80 2x"
+        data-sizes="auto"
+        alt="https://images.unsplash.com/photo-1661956601349-f61c959a8fd4?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1742&amp;q=80"
+        title="Minion" /></p>
+<h1 id="-grpc-教程--protobuf-基础">🔥 gRpc 教程- protobuf 基础</h1>
+<ul>
+<li><strong>序列化协议</strong>： <code>grpc</code> 使用 <code>protobuf</code>, 首先使用protobuf 定义服务，然后使用这个文件来生成客户端和服务端的代码， 因为pb是跨语言的， 因此使用服务端和客户端语言并不一致也可以相互序列化和反序列化</li>
+<li><strong>网络传输层</strong>： grpc使用的是<code>http2.0协议</code>，</li>
+</ul>
+<h2 id="protobuf-idl">Protobuf IDL</h2>
+<p>序列化通俗来说就是把内存的一段数据转化为二进制并存储或者通过网络传输， 读取磁盘或另一端收到后可以在内存中重建这段数据</p>
+<ol>
+<li><code>protobuf</code> 协议是跨语言跨平台的序列化协议</li>
+<li><code>protobuf</code> 本身并不是和<code>gPRC</code>绑定的， 它可以被用于非RPC场景， 如内存等</li>
+<li><code>json</code>、<code>xml</code> 都是一种序列化方式， 只是他们不需要提前预定义 idl， 且具备可读性，</li>
+</ol>
+<p><a href="https://protobuf.dev/programming-guides/proto3/" target="_blank" rel="noopener noreffer ">https://protobuf.dev/programming-guides/proto3/</a></p>
+<h2 id="定义消息类型">定义消息类型</h2>
+<p><code>protobuf</code>里最基础的类型就是 <code>message</code>, 每一个<code>message</code>都会有一个或者多个字段（<code>field</code>）， 其中字段包含如下元素</p>
+<ul>
+<li><strong>类型</strong>： 类型不仅可以是标量类型（int、string等），也可以是复合类型（enum等），也可以是其他message</li>
+<li><strong>字段名</strong>： 字段名比较推荐的是使用下划线/分隔名称</li>
+<li><strong>字段编号</strong>： 一个message内每一个字段编号都必须唯一的，在编码后其实传递的是这个编号而不是字段名</li>
+<li><strong>字段规则</strong>：消息字段可以是以下字段之一
+<ul>
+<li>singular：格式正确的消息可以有零个或一个字段（但不能超过一个）。使用 proto3 语法时，如果未为给定字段指定其他字段规则，则这是默认字段规则</li>
+<li>optional：与 singular 相同，不过您可以检查该值是否明确设置</li>
+<li>repeated：在格式正确的消息中，此字段类型可以重复零次或多次。系统会保留重复值的顺序</li>
+<li>map：这是一个成对的键值对字段</li>
+</ul>
+</li>
+<li><strong>保留字段</strong>：为了避免再次使用到已移除的字段可以设定保留字段。如果任何未来用户尝试使用这些字段标识符，协议缓冲区编译器就会报错</li>
+</ul>
+<h2 id="复合类型">复合类型</h2>
+<h3 id="数组">数组</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="line"><span class="cl"><span class="kd">message</span> <span class="nc">SearchResponse</span> <span class="p">{</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="k">repeated</span> <span class="n">Result</span> <span class="n">results</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="p">}</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="kd">message</span> <span class="nc">Result</span> <span class="p">{</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="kt">string</span> <span class="n">url</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="kt">string</span> <span class="n">title</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="k">repeated</span> <span class="kt">string</span> <span class="n">snippets</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="p">}</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="枚举">枚举</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="line"><span class="cl"><span class="kd">message</span> <span class="nc">SearchRequest</span> <span class="p">{</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="kt">string</span> <span class="n">query</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="kt">int32</span> <span class="n">page_number</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="kt">int32</span> <span class="n">result_per_page</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="kd">enum</span> <span class="n">Corpus</span> <span class="p">{</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="n">UNIVERSAL</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="n">WEB</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="n">IMAGES</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="n">LOCAL</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="n">NEWS</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="n">PRODUCTS</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>    <span class="n">VIDEO</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="p">}</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="n">Corpus</span> <span class="n">corpus</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="p">}</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="服务">服务</h3>
+<p>定义的method仅能有一个入参和出参数。如果需要传递多个参数需要定义成message</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="line"><span class="cl"><span class="kd">service</span> <span class="n">SearchService</span> <span class="p">{</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="k">rpc</span> <span class="n">Search</span><span class="p">(</span><span class="n">SearchRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">SearchResponse</span><span class="p">);</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="p">}</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="使用其他消息类型">使用其他消息类型</h3>
+<p>使用import引用另外一个文件的pb</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="line"><span class="cl"><span class="n">syntax</span> <span class="o">=</span> <span class="s">&#34;proto3&#34;</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">import</span> <span class="s">&#34;google/protobuf/wrappers.proto&#34;</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="kn">package</span> <span class="nn">ecommerce</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="kd">message</span> <span class="nc">Order</span> <span class="p">{</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="kt">string</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="k">repeated</span> <span class="kt">string</span> <span class="n">items</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="kt">string</span> <span class="n">description</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="kt">float</span> <span class="n">price</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span>  <span class="n">google.protobuf.StringValue</span> <span class="n">destination</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="p">}</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="protoc使用">protoc使用</h2>
+<p>protoc就是protobuf的编译器，它把proto文件编译成不同的语言</p>
+<h2 id="安装">安装</h2>
+<ul>
+<li>Linux, using apt or apt-get, for example:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ apt install -y protobuf-compiler
+</span></span><span class="line"><span class="cl">$ protoc --version  <span class="c1"># Ensure compiler version is 3+</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>MacOS, using Homebrew[1]:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ brew install protobuf
+</span></span><span class="line"><span class="cl">$ protoc --version  <span class="c1"># Ensure compiler version is 3+</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="使用">使用</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ protoc --help
+</span></span><span class="line"><span class="cl">Usage: protoc <span class="o">[</span>OPTION<span class="o">]</span> PROTO_FILES
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  -IPATH, --proto_path<span class="o">=</span>PATH   指定搜索路径
+</span></span><span class="line"><span class="cl">  --plugin<span class="o">=</span>EXECUTABLE:
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  ....
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">  --cpp_out<span class="o">=</span>OUT_DIR           Generate C++ header and source.
+</span></span><span class="line"><span class="cl">  --csharp_out<span class="o">=</span>OUT_DIR        Generate C# <span class="nb">source</span> file.
+</span></span><span class="line"><span class="cl">  --java_out<span class="o">=</span>OUT_DIR          Generate Java <span class="nb">source</span> file.
+</span></span><span class="line"><span class="cl">  --js_out<span class="o">=</span>OUT_DIR            Generate JavaScript source.
+</span></span><span class="line"><span class="cl">  --objc_out<span class="o">=</span>OUT_DIR          Generate Objective C header and source.
+</span></span><span class="line"><span class="cl">  --php_out<span class="o">=</span>OUT_DIR           Generate PHP <span class="nb">source</span> file.
+</span></span><span class="line"><span class="cl">  --python_out<span class="o">=</span>OUT_DIR        Generate Python <span class="nb">source</span> file.
+</span></span><span class="line"><span class="cl">  --ruby_out<span class="o">=</span>OUT_DIR          Generate Ruby <span class="nb">source</span> file
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">   @&lt;filename&gt;                proto文件的具体位置
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="搜索路径参数">搜索路径参数</h3>
+<ul>
+<li>第一个比较重要的参数就是搜索路径参数，即上述展示的-IPATH, &ndash;proto_path=PATH。它表示的是我们要在哪个路径下搜索.proto文件，这个参数既可以用-I指定，也可以使用&ndash;proto_path=指定</li>
+</ul>
+<h3 id="语言插件参数">语言插件参数</h3>
+<p>Language
+C++ (include C++ runtime and protoc)
+Java
+Python
+Objective-C
+C#
+Ruby
+PHP</p>
+<h3 id="proto文件位置参数">proto文件位置参数</h3>
+<p>proto文件位置参数即上述的@<filename>参数，指定了我们proto文件的具体位置，如proto1/greeter/greeter.proto</p>
+<h2 id="golang插件">golang插件</h2>
+<p><strong>安装</strong>
+非内置的语言支持就得自己单独安装语言插件，比如&ndash;go_out=对应的是protoc-gen-go，安装命令如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 最新版</span>
+</span></span><span class="line"><span class="cl">$ go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 指定版本</span>
+</span></span><span class="line"><span class="cl">$ go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.3.0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>生成代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ protoc --proto_path<span class="o">=</span>src --go_out<span class="o">=</span>out --go_opt<span class="o">=</span><span class="nv">paths</span><span class="o">=</span>source_relative foo.proto bar/baz.proto
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-07-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/golang-protobuf-base/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/golang-protobuf-base/" data-title="Golang Protobuf Base" data-via="xxxx" data-hashtags="golang,rpc,protibuf"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/golang-protobuf-base/" data-hashtag="golang"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/golang-protobuf-base/" data-title="Golang Protobuf Base"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/golang-protobuf-base/" data-title="Golang Protobuf Base"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/golang-protobuf-base/" data-title="Golang Protobuf Base"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/golang/">golang</a>,&nbsp;<a href="/tags/rpc/">rpc</a>,&nbsp;<a href="/tags/protibuf/">protibuf</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/golang-beradth-firstsearch/" class="prev" rel="prev" title="🔥Golang Beradth FirstSearch"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>🔥Golang Beradth FirstSearch</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"f1aming007","id-2":"f1aming007"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

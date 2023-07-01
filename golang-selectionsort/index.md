@@ -1,7 +1,7 @@
 # 🔥Golang Selection Sort
 
 
-{{< figure src="/images/golang-selection.png" title="go-work (figure)" >}}
+    {{< figure src="/images/golang-selection.png" title="go-work (figure)" >}}
 # 🔥Golang算法- 选择排序（Selection Sort)
 * 在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，
 * 然后，再从剩余未排序元素中继续寻找最小（大）元素，
