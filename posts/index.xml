@@ -4,7 +4,43 @@
         <link>https://f1aming007.github.io/posts/</link>
         <description>All Posts | flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 01 Jul 2023 09:37:21 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 05 Aug 2023 08:51:09 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang Iota</title>
+    <link>https://f1aming007.github.io/golang-iota/</link>
+    <pubDate>Sat, 05 Aug 2023 08:51:09 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-iota/</guid>
+    <description><![CDATA[<h1 id="iota-介绍">Iota 介绍</h1>
+<ul>
+<li>在常量声明中，预先声明的标识符<code>iota</code>代表连续的无类型的整数常量， 他的值是该常量声明中对应<code>ConstSpec</code>的索引，从零开始计数。</li>
+<li>iota： 可以在常量声明中自动创建一系列连续的整数值，值从零开始， 不需要手动指定每个常量的值</li>
+</ul>]]></description>
+</item>
+<item>
+    <title>Redfish Api</title>
+    <link>https://f1aming007.github.io/redfish-api/</link>
+    <pubDate>Sat, 08 Jul 2023 09:57:04 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/redfish-api/</guid>
+    <description><![CDATA[Redfish Api Redfish 利用常见的互联网和web 服务标准将信息直接提供给相关的工具链 IPMI 是一种较早的带外管理管理工具，仅限最小公共集命令集（开机/关机/重启/温]]></description>
+</item>
+<item>
+    <title>Golang Protobuf MessageMode</title>
+    <link>https://f1aming007.github.io/golang-protobuf-messagemode/</link>
+    <pubDate>Sat, 01 Jul 2023 11:02:39 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-protobuf-messagemode/</guid>
+    <description><![CDATA[<h1 id="minionhttpsimagesunsplashcomphoto-1661956603025-8310b2e3036dixlibrb-403ixidm3wxmja3fdf8mhxwag90by1wywdlfhx8fgvufdb8fhx8fa3d3dautoformatfitcropw1740q80"></h1>
+<h1 id="-grpc-教程--protobuf-通信模式">🔥 gRpc 教程- protobuf 通信模式</h1>
+<p><strong>四种通信模式</strong></p>
+<ol>
+<li>Simple RPC</li>
+<li>Server-Streaming RPC</li>
+<li>Client-Streaming RPC</li>
+<li>Bidirectionnal-Streaming RPC</li>
+</ol>]]></description>
+</item>
+<item>
     <title>Golang Protobuf Base</title>
     <link>https://f1aming007.github.io/golang-protobuf-base/</link>
     <pubDate>Sat, 01 Jul 2023 09:37:21 &#43;0800</pubDate>
@@ -116,70 +152,6 @@
 <ul>
 <li>可以在版本库中打一个标签，确定打标签的版本</li>
 <li>标签就是版本库的快照</li>
-</ul>]]></description>
-</item>
-<item>
-    <title>Git Skill</title>
-    <link>https://f1aming007.github.io/git-skill/</link>
-    <pubDate>Sat, 03 Jun 2023 11:07:17 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/git-skill/</guid>
-    <description><![CDATA[<figure><figcaption>
-            <h4>git (figure)</h4>
-        </figcaption>
-</figure>
-
-<h1 id="git-常用命令和技巧">🚀git 常用命令和技巧</h1>
-<ul>
-<li>列举一些常用的git命令和一些小技巧</li>
-</ul>
-<blockquote>
-<p>统一概念</p>
-</blockquote>
-<ul>
-<li><strong>工作区</strong>： 该动（增删文件和内容）</li>
-<li><strong>暂存区</strong>： 输入命令，git add 改动的文件名，此次改动就放到了 ‘暂存区’</li>
-<li><strong>本地仓库</strong>： 输入命令：git commit 此次修改的描述，此次改动就放到了本地仓库，每个 commit，我叫它为一个版本</li>
-<li><strong>远程仓库</strong>： 输入命令：git push 远程仓库，此次改动就放到了远程仓库（GitHub 等)</li>
-<li><strong>commit-id</strong>：输出命令：git log，最上面那行 commit xxxxxx，后面的字符串就是 commit-id</li>
-</ul>]]></description>
-</item>
-<item>
-    <title>🔥Golang Recursion</title>
-    <link>https://f1aming007.github.io/golang-recursion01/</link>
-    <pubDate>Tue, 30 May 2023 21:12:34 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-recursion01/</guid>
-    <description><![CDATA[<figure><figcaption>
-            <h4>go-work (figure)</h4>
-        </figcaption>
-</figure>
-
-<h1 id="golang算法---递归">🔥Golang算法 - 递归</h1>
-<ul>
-<li>递归： 在运行的过程中调用自己</li>
-</ul>]]></description>
-</item>
-<item>
-    <title>Golang Context 底层原理</title>
-    <link>https://f1aming007.github.io/golang-context/</link>
-    <pubDate>Mon, 29 May 2023 17:00:08 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-context/</guid>
-    <description><![CDATA[<figure><figcaption>
-            <h4>go-work (figure)</h4>
-        </figcaption>
-</figure>
-
-<h1 id="golang-context-实现原理">Golang context 实现原理</h1>
-<ul>
-<li>context的主要功能
-<ul>
-<li>异步场景中用于实现并发协调</li>
-<li>对goroutine 的生命周期控制</li>
-<li>有一定的数据存储能力</li>
-</ul>
-</li>
 </ul>]]></description>
 </item>
 </channel>

@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>redfish-api - Tag - flamingo</title>
+        <link>https://f1aming007.github.io/tags/redfish-api/</link>
+        <description>redfish-api - Tag - flamingo</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 08 Jul 2023 09:57:04 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/redfish-api/" rel="self" type="application/rss+xml" /><item>
+    <title>Redfish Api</title>
+    <link>https://f1aming007.github.io/redfish-api/</link>
+    <pubDate>Sat, 08 Jul 2023 09:57:04 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/redfish-api/</guid>
+    <description><![CDATA[Redfish Api Redfish 利用常见的互联网和web 服务标准将信息直接提供给相关的工具链 IPMI 是一种较早的带外管理管理工具，仅限最小公共集命令集（开机/关机/重启/温]]></description>
+</item>
+</channel>
+</rss>

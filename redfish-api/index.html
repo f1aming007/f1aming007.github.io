@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Redfish Api - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Redfish Api" />
+<meta property="og:description" content="Redfish Api Redfish 利用常见的互联网和web 服务标准将信息直接提供给相关的工具链 IPMI 是一种较早的带外管理管理工具，仅限最小公共集命令集（开机/关机/重启/温" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/redfish-api/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-08T09:57:04+08:00" />
+<meta property="article:modified_time" content="2023-07-08T09:57:04+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="Redfish Api"/>
+<meta name="twitter:description" content="Redfish Api Redfish 利用常见的互联网和web 服务标准将信息直接提供给相关的工具链 IPMI 是一种较早的带外管理管理工具，仅限最小公共集命令集（开机/关机/重启/温"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/redfish-api/" /><link rel="prev" href="https://f1aming007.github.io/golang-protobuf-messagemode/" /><link rel="next" href="https://f1aming007.github.io/golang-iota/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Redfish Api",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/redfish-api\/"
+        },"genre": "posts","keywords": "redfish-api","wordcount":  1130 ,
+        "url": "https:\/\/f1aming007.github.io\/redfish-api\/","datePublished": "2023-07-08T09:57:04+08:00","dateModified": "2023-07-08T09:57:04+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Redfish Api</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-07-08">2023-07-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1130 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#redfish应用场景">Redfish应用场景</a></li>
+    <li><a href="#选择resthttp以及json">选择REST、HTTP以及JSON</a></li>
+    <li><a href="#golang-的sdk">golang 的SDK</a></li>
+    <li><a href="#redfish实践">Redfish实践</a></li>
+    <li><a href="#supermicro-redfish-特点">Supermicro Redfish 特点</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="redfish-api">Redfish Api</h1>
+<ul>
+<li>
+<p>Redfish 利用常见的互联网和web 服务标准将信息直接提供给相关的工具链</p>
+</li>
+<li>
+<p>IPMI 是一种较早的带外管理管理工具，仅限<code>最小公共集</code>命令集（开机/关机/重启/温度值/文本控制台）还是需要带内管理软件</p>
+</li>
+<li>
+<p>当管控设备多的时候， 需要统一管理， 需要对接不同供应商的API， 基础的IMPI功能不好满足横向扩展环境，需要更便捷的方式调用服务器高级管理功能新的需求</p>
+</li>
+<li>
+<p><code>Redfish</code>可扩展平台管理API是一种新的规范，使用RESTful语句来访问定义在模型格式的数据，用于执行带外系统管理</p>
+</li>
+</ul>
+<h2 id="redfish应用场景">Redfish应用场景</h2>
+<p>用户期望能够批量管理服务器，比如笔者想一次性给100个服务器安装系统，并且这100个服务器并不都是同一厂商，不同厂商的IPMI操作都不一样，比如Dell是iDRAC，你还需要专门学习iDRAC使用和各种对接，这会带来很多困扰。而Redfish标准的出现彻底改变这种情况，它是凌驾于所有服务器之上的一个标准，对服务器的基本操作都是统一的，并且是基于Restful API的方式实现</p>
+<h2 id="选择resthttp以及json">选择REST、HTTP以及JSON</h2>
+<p>除了REST、HTTP和JSON之外，Redfish还采用常见的OData v4约定来描述模式、URL约定和命名，以及JSON有效负载中常见属性的结构。越来越多的通用客户端库、应用程序和工具生态系统使用Redfish。
+它有多简单?下面显示了使用Redfish从服务器检索序列号的示例Python代码：此示例中的输出如下所示</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">awData</span><span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="err">‘</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168.1.135</span><span class="o">/</span><span class="n">redfish</span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">Systems</span><span class="o">/</span><span class="mi">1</span><span class="err">’</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="n">jsonData</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rawData</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">jsonData</span><span class="p">[</span><span class="err">‘</span><span class="n">SerialNumber</span><span class="err">’</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mi">1</span><span class="n">A87CA442K</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="golang-的sdk">golang 的SDK</h2>
+<p><a href="https://github.com/Nordix/go-redfish" target="_blank" rel="noopener noreffer ">https://github.com/Nordix/go-redfish</a></p>
+<ul>
+<li>封装客户端</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">cfg</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">redfish</span><span class="p">.</span><span class="nx">Configuration</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">BasePath</span><span class="p">:</span>      <span class="s">&#34;http://localhost:8000&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">DefaultHeader</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">UserAgent</span><span class="p">:</span>     <span class="s">&#34;go-redfish/client&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">redfishApi</span> <span class="o">:=</span> <span class="nx">redfish</span><span class="p">.</span><span class="nf">NewAPIClient</span><span class="p">(</span><span class="nx">cfg</span><span class="p">).</span><span class="nx">DefaultApi</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>列出可用的计算机系统</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">sl</span><span class="p">,</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">redfishApi</span><span class="p">.</span><span class="nf">ListSystems</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>重置计算机系统</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">system_id</span> <span class="o">:=</span> <span class="s">&#34;dd9fd064-263b-469c-91d4-d45f341fe2c5&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">systemReq</span> <span class="o">:=</span> <span class="nx">redfish</span><span class="p">.</span><span class="nx">ComputerSystem</span><span class="p">{</span><span class="nx">ResetType</span><span class="p">:</span> <span class="s">&#34;ForceRestart&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">reset_resp</span><span class="p">,</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">_</span> <span class="p">=</span> <span class="nx">redfishApi</span><span class="p">.</span><span class="nf">ResetSystem</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">system_id</span><span class="p">,</span> <span class="nx">reset_type</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>给计算器插入虚拟媒体</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">manager_id</span> <span class="o">:=</span> <span class="s">&#34;58893887-8974-2487-2389-841168418919&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">insertReq</span> <span class="o">:=</span> <span class="nx">redfish</span><span class="p">.</span><span class="nx">InsertMediaRequestBody</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">insertReq</span><span class="p">.</span><span class="nx">Image</span> <span class="p">=</span> <span class="s">&#34;http://releases.ubuntu.com/19.04/ubuntu-19.04-live-server-amd64.iso&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">insertReq</span><span class="p">.</span><span class="nx">Inserted</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl"><span class="nx">redfishApi</span><span class="p">.</span><span class="nf">InsertVirtualMedia</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">manager_id</span><span class="p">,</span> <span class="s">&#34;Cd&#34;</span><span class="p">,</span> <span class="nx">insertReq</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>为下次启动设置启动设备</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">system_id</span> <span class="o">:=</span> <span class="s">&#34;dd9fd064-263b-469c-91d4-d45f341fe2c5&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">systemReq</span> <span class="o">:=</span> <span class="nx">redfish</span><span class="p">.</span><span class="nx">ComputerSystem</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">systemReq</span><span class="p">.</span><span class="nx">Boot</span><span class="p">.</span><span class="nx">BootSourceOverrideTarget</span> <span class="p">=</span> <span class="s">&#34;Cd&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">redfishApi</span><span class="p">.</span><span class="nf">SetSystem</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">system_id</span><span class="p">,</span> <span class="nx">systemReq</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="redfish实践">Redfish实践</h2>
+<ul>
+<li>
+<p><a href="https://pythonhosted.org/python-redfish/readme.html" target="_blank" rel="noopener noreffer ">The python-redfish project</a></p>
+</li>
+<li>
+<p><a href="https://bbs.huaweicloud.com/forum/thread-40434-1-1.html" target="_blank" rel="noopener noreffer ">Python环境redfish接口获取泰山服务器和鲲鹏CPU信息</a></p>
+</li>
+<li>
+<p>redfish是当前主流的服务器监控协议，通过redfish协议可以通过带外管理通道获取服务器状态和详细硬件信息</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pip</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">redfish</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">redfish</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="n">login_host</span><span class="o">=</span><span class="s2">&#34;https://10.93.20.10&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">login_account</span><span class="o">=</span><span class="s2">&#34;ADMIN&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">login_password</span><span class="o">=</span><span class="s2">&#34;ADMIN&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">REDFISH_OBJ</span> <span class="o">=</span> <span class="n">redfish</span><span class="o">.</span><span class="n">redfish_client</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="n">login_host</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">login_account</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">login_password</span><span class="p">,</span> <span class="n">default_prefix</span><span class="o">=</span><span class="s1">&#39;/redfish/v1&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">REDFISH_OBJ</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">auth</span><span class="o">=</span><span class="s2">&#34;session&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">response</span> <span class="o">=</span> <span class="n">REDFISH_OBJ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;/redfish/v1/Systems/1&#34;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">REDFISH_OBJ</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a href="https://www.supermicro.org.cn/zh_cn/solutions/management-software/redfish" target="_blank" rel="noopener noreffer ">参考链接</a></p>
+<h2 id="supermicro-redfish-特点">Supermicro Redfish 特点</h2>
+<ul>
+<li>获取系统/机箱信息</li>
+<li>管理用户账号和权限</li>
+<li>BMC配置（AD、LDAP、SNMP、SMTP、RADIUS、Fan mode、Mouse mode、NTP、Snooping 等等）</li>
+<li>BIOS 配置</li>
+<li>开机顺序变更</li>
+<li>RAID 储存装置管理（For Broadcom 3108, 3008, 3216, 3616 &amp; Marvel SE9230）</li>
+<li>磁盘管理</li>
+<li>获取 NIC MAC 信息（NIC 资讯）</li>
+<li>BMC／BIOS／3108韧体更新</li>
+<li>获取温度／电源／传感器讯息</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-07-08</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/redfish-api/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/redfish-api/" data-title="Redfish Api" data-via="xxxx" data-hashtags="redfish-api"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/redfish-api/" data-hashtag="redfish-api"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/redfish-api/" data-title="Redfish Api"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/redfish-api/" data-title="Redfish Api"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/redfish-api/" data-title="Redfish Api"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/redfish-api/">redfish-api</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/golang-protobuf-messagemode/" class="prev" rel="prev" title="Golang Protobuf MessageMode"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Golang Protobuf MessageMode</a>
+            <a href="/golang-iota/" class="next" rel="next" title="Golang Iota">Golang Iota<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"f1aming007","id-2":"f1aming007"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
