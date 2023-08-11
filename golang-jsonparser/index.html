@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Golang Jsonparser - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Golang Jsonparser" />
+<meta property="og:description" content="Jsonparser 开源的JSON包 号称比JSON包性能高10倍，内存分配优化到0，提高JSON操作的性能 jsonparser 的性能在很大程度上取决于使用情况，当不需要处理完成" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/golang-jsonparser/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-08-11T09:01:37+08:00" />
+<meta property="article:modified_time" content="2023-08-11T09:01:37+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="Golang Jsonparser"/>
+<meta name="twitter:description" content="Jsonparser 开源的JSON包 号称比JSON包性能高10倍，内存分配优化到0，提高JSON操作的性能 jsonparser 的性能在很大程度上取决于使用情况，当不需要处理完成"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/golang-jsonparser/" /><link rel="prev" href="https://f1aming007.github.io/golang-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Golang Jsonparser",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/golang-jsonparser\/"
+        },"genre": "posts","keywords": "golang, go第三方库","wordcount":  1081 ,
+        "url": "https:\/\/f1aming007.github.io\/golang-jsonparser\/","datePublished": "2023-08-11T09:01:37+08:00","dateModified": "2023-08-11T09:01:37+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Golang Jsonparser</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-11">2023-08-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1081 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#方法对应关系">方法对应关系</a></li>
+    <li><a href="#代码实现">代码实现</a>
+      <ul>
+        <li><a href="#数据类型">数据类型</a></li>
+      </ul>
+    </li>
+    <li><a href="#辅助方法">辅助方法</a></li>
+    <li><a href="#searchkeys-状态机">searchKeys 状态机</a>
+      <ul>
+        <li><a href="#状态机组成部分">状态机组成部分</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="jsonparser-开源的json包">Jsonparser 开源的JSON包</h1>
+<p>号称比JSON包性能高10倍，内存分配优化到0，提高JSON操作的性能
+<code>jsonparser</code> 的性能在很大程度上取决于使用情况，当不需要处理完成记录而只需要处理某几个字段时（尤其是访问第三方接口时，大多数情况下只需要几个字段）性能表现的非常好</p>
+<h2 id="方法对应关系">方法对应关系</h2>
+<p><code>jsonparser</code>标准库JSON工作方式不同，不会 <code>编码/解码</code> 整个数据结构， 而是按需操作</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>标准库</th>
+<th>jsonparser</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>编码</td>
+<td>Marshal</td>
+<td>Set</td>
+</tr>
+<tr>
+<td>解码</td>
+<td>Unmarshal</td>
+<td>Get</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>jsonparser</code> 在Get 的基础上封装了很多针对单个字段的使用方法，例如</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;log&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;github.com/buger/jsonparser&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// JSON 字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">dataJson</span> <span class="p">=</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">`
+</span></span></span><span class="line"><span class="cl"><span class="s">{
+</span></span></span><span class="line"><span class="cl"><span class="s">  &#34;person&#34;: {
+</span></span></span><span class="line"><span class="cl"><span class="s">    &#34;name&#34;: {
+</span></span></span><span class="line"><span class="cl"><span class="s">      &#34;first&#34;: &#34;Leonid&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s">      &#34;last&#34;: &#34;Bugaev&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s">      &#34;fullName&#34;: &#34;Leonid Bugaev&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">    },
+</span></span></span><span class="line"><span class="cl"><span class="s">    &#34;github&#34;: {
+</span></span></span><span class="line"><span class="cl"><span class="s">      &#34;handle&#34;: &#34;buger&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s">      &#34;followers&#34;: 109
+</span></span></span><span class="line"><span class="cl"><span class="s">    },
+</span></span></span><span class="line"><span class="cl"><span class="s">    &#34;avatars&#34;: [
+</span></span></span><span class="line"><span class="cl"><span class="s">      { &#34;url&#34;: &#34;https://avatars1.githubusercontent.com/u/14009?v=3&amp;s=460&#34;, &#34;type&#34;: &#34;thumbnail&#34; }
+</span></span></span><span class="line"><span class="cl"><span class="s">    ]
+</span></span></span><span class="line"><span class="cl"><span class="s">  },
+</span></span></span><span class="line"><span class="cl"><span class="s">  &#34;company&#34;: {
+</span></span></span><span class="line"><span class="cl"><span class="s">    &#34;name&#34;: &#34;Acme&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">  }
+</span></span></span><span class="line"><span class="cl"><span class="s">}
+</span></span></span><span class="line"><span class="cl"><span class="s">`</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 解析对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">github</span> <span class="o">:=</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Handle</span>    <span class="kt">string</span> <span class="s">`json:&#34;handle&#34;`</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Followers</span> <span class="kt">int</span>    <span class="s">`json:&#34;followers&#34;`</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">jsonparser</span><span class="p">.</span><span class="nf">ObjectEach</span><span class="p">(</span><span class="nx">dataJson</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">key</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">value</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">dataType</span> <span class="nx">jsonparser</span><span class="p">.</span><span class="nx">ValueType</span><span class="p">,</span> <span class="nx">offset</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">switch</span> <span class="nb">string</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="s">&#34;handle&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">github</span><span class="p">.</span><span class="nx">Handle</span> <span class="p">=</span> <span class="nb">string</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="s">&#34;followers&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">followers</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">jsonparser</span><span class="p">.</span><span class="nf">ParseInt</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">github</span><span class="p">.</span><span class="nx">Followers</span> <span class="p">=</span> <span class="nb">int</span><span class="p">(</span><span class="nx">followers</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span> <span class="s">&#34;person&#34;</span><span class="p">,</span> <span class="s">&#34;github&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;github = %+v\n\n&#34;</span><span class="p">,</span> <span class="nx">github</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// 编码结构体
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">githubJson</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">jsonparser</span><span class="p">.</span><span class="nf">Set</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">`{}`</span><span class="p">),</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">`{&#34;handle: %s&#34;, &#34;followers&#34;: &#34;%d&#34;}`</span><span class="p">,</span> <span class="nx">github</span><span class="p">.</span><span class="nx">Handle</span><span class="p">,</span> <span class="nx">github</span><span class="p">.</span><span class="nx">Followers</span><span class="p">)),</span> <span class="s">&#34;github&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;github json = %s\n\n&#34;</span><span class="p">,</span> <span class="nx">githubJson</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// 解析多个 key
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">paths</span> <span class="o">:=</span> <span class="p">[][]</span><span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span><span class="s">&#34;person&#34;</span><span class="p">,</span> <span class="s">&#34;name&#34;</span><span class="p">,</span> <span class="s">&#34;fullName&#34;</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span><span class="s">&#34;person&#34;</span><span class="p">,</span> <span class="s">&#34;avatars&#34;</span><span class="p">,</span> <span class="s">&#34;[0]&#34;</span><span class="p">,</span> <span class="s">&#34;url&#34;</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span><span class="s">&#34;company&#34;</span><span class="p">,</span> <span class="s">&#34;name&#34;</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">jsonparser</span><span class="p">.</span><span class="nf">EachKey</span><span class="p">(</span><span class="nx">dataJson</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">i</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">bytes</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">valueType</span> <span class="nx">jsonparser</span><span class="p">.</span><span class="nx">ValueType</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">switch</span> <span class="nx">i</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;fullName = %s\n&#34;</span><span class="p">,</span> <span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;avatars[0].url = %s\n&#34;</span><span class="p">,</span> <span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;company.name = %s\n\n&#34;</span><span class="p">,</span> <span class="nx">bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span> <span class="nx">paths</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// 解析整数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">n</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">jsonparser</span><span class="p">.</span><span class="nf">GetInt</span><span class="p">(</span><span class="nx">dataJson</span><span class="p">,</span> <span class="s">&#34;person&#34;</span><span class="p">,</span> <span class="s">&#34;github&#34;</span><span class="p">,</span> <span class="s">&#34;followers&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;n = %d\n\n&#34;</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// 解析字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">name</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">jsonparser</span><span class="p">.</span><span class="nf">GetString</span><span class="p">(</span><span class="nx">dataJson</span><span class="p">,</span> <span class="s">&#34;company&#34;</span><span class="p">,</span> <span class="s">&#34;name&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;name = %s\n&#34;</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="代码实现">代码实现</h2>
+<p><code>jsonparser</code> 的核心代码全部放在了一个文件中 <code>parser.go</code>, 我们主要关注两种操作的实现:
+<code>解码GET</code> 和 <code>编码Set</code></p>
+<h3 id="数据类型">数据类型</h3>
+<p><code>jsonparser</code> 将合法的JSON数据类型简单进行常量映射</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// JSON 数据类型常量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">ValueType</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">const</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl"> <span class="nx">NotExist</span> <span class="p">=</span> <span class="nf">ValueType</span><span class="p">(</span><span class="kc">iota</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> <span class="nx">String</span>
+</span></span><span class="line"><span class="cl"> <span class="nx">Number</span>
+</span></span><span class="line"><span class="cl"> <span class="nx">Object</span>
+</span></span><span class="line"><span class="cl"> <span class="nx">Array</span>
+</span></span><span class="line"><span class="cl"> <span class="nx">Boolean</span>
+</span></span><span class="line"><span class="cl"> <span class="nx">Null</span>
+</span></span><span class="line"><span class="cl"> <span class="nx">Unknown</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>为了规避 GC, 用于 JSON 字符串转义分配的 <code>[]byte</code> 切片容量上限，超过这个上限值后，转义结果会被分配到 堆上 引发 GC， 也就是 []byte 切片的长度超过 64 之后，会被分配到 堆上</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 规避 GC 的切片容量上限常量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">const</span> <span class="nx">unescapeStackBufSize</span> <span class="p">=</span> <span class="mi">64</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="辅助方法">辅助方法</h2>
+<ul>
+<li>stringEnd 尝试寻找当前字符串的结尾，也就是 &ldquo;, 支持转义的情况，例如 &quot;</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">stringEnd</span><span class="p">(</span><span class="nx">data</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>blockEnd 尝试寻找当前数组或对象的结尾，数组的开始和结尾表示为 [ 和 ], 对象的开始和结尾表示为 { 和 }。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">blockEnd</span><span class="p">(</span><span class="nx">data</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">openSym</span> <span class="kt">byte</span><span class="p">,</span> <span class="nx">closeSym</span> <span class="kt">byte</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="searchkeys-状态机">searchKeys 状态机</h2>
+<p>searchKeys 方法是整个 解析操作 的核心方法，内部实现类似于 有限状态机 机制，通过将 JSON 字符串作为输入参数，并根据定义的状态转换规则逐个解析字符， 结果返回解析到的索引，或者 -1 (解析失败)。</p>
+<h3 id="状态机组成部分">状态机组成部分</h3>
+<ul>
+<li>输入参数： 存储解析的JSON字符串</li>
+<li>解析器： 解析 JSON 字符串并返回相应的数据结构 (<code>searchKeys</code> 方法返回的是 <code>[]byte</code>)</li>
+<li>状态转移表： 定义状态转换规则，包括当前状态、下一个字符以及下一个状态 (<code>searchKeys</code> 主要是通过上面提到的辅助方法来完成的)</li>
+<li>状态栈 : 记录状态转换过程中的状态 (<code>searchKeys</code> 用了几个变量来记录状态，例如 <code>keyLevel</code>, <code>level</code>, <code>ln</code>, <code>lk</code> 等)</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/16917184230445.jpg"
+        data-srcset="media/16917184230445.jpg, media/16917184230445.jpg 1.5x, media/16917184230445.jpg 2x"
+        data-sizes="auto"
+        alt="media/16917184230445.jpg"
+        title="media/16917184230445.jpg" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-08-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/golang-jsonparser/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/golang-jsonparser/" data-title="Golang Jsonparser" data-via="xxxx" data-hashtags="golang,go第三方库"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/golang-jsonparser/" data-hashtag="golang"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/golang-jsonparser/" data-title="Golang Jsonparser"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/golang-jsonparser/" data-title="Golang Jsonparser"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/golang-jsonparser/" data-title="Golang Jsonparser"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/golang/">golang</a>,&nbsp;<a href="/tags/go%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">go第三方库</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/golang-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="prev" rel="prev" title="Golang 设计模式 单例模式"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Golang 设计模式 单例模式</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"f1aming007","id-2":"f1aming007"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

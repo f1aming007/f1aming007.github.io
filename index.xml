@@ -4,9 +4,31 @@
         <link>https://f1aming007.github.io/</link>
         <description>flamingo Hugo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 05 Aug 2023 08:51:09 &#43;0800</lastBuildDate>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Fri, 11 Aug 2023 09:01:37 &#43;0800</lastBuildDate>
             <atom:link href="https://f1aming007.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Golang Jsonparser</title>
+    <link>https://f1aming007.github.io/golang-jsonparser/</link>
+    <pubDate>Fri, 11 Aug 2023 09:01:37 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-jsonparser/</guid>
+    <description><![CDATA[Jsonparser 开源的JSON包 号称比JSON包性能高10倍，内存分配优化到0，提高JSON操作的性能 jsonparser 的性能在很大程度上取决于使用情况，当不需要处理完成]]></description>
+</item>
+<item>
+    <title>Golang 设计模式 单例模式</title>
+    <link>https://f1aming007.github.io/golang-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
+    <pubDate>Sat, 05 Aug 2023 11:10:22 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/golang-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
+    <description><![CDATA[<h1 id="单例模式">单例模式</h1>
+<ul>
+<li>单例模式宏观介绍</li>
+<li>饿汉式单例模式实现思路</li>
+<li>懒汉式单例模式实现推演</li>
+<li>Golang 单例工具 sync.Once 源码解析</li>
+</ul>]]></description>
+</item>
+<item>
     <title>Golang Iota</title>
     <link>https://f1aming007.github.io/golang-iota/</link>
     <pubDate>Sat, 05 Aug 2023 08:51:09 &#43;0800</pubDate>
@@ -118,42 +140,6 @@
 <li>[a,b],两个元素的数组，只需坚持它们之间的大小即可，调整位置</li>
 </ul>
 </li>
-</ul>]]></description>
-</item>
-<item>
-    <title>🔥Golang Divide_Conquer</title>
-    <link>https://f1aming007.github.io/golang-divide_conquer/</link>
-    <pubDate>Wed, 07 Jun 2023 09:59:23 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-divide_conquer/</guid>
-    <description><![CDATA[<p></p>
-<h1 id="golang算法---dc-算法">🔥Golang算法 - D&amp;C 算法</h1>
-<ul>
-<li>Devide &amp; Conquer</li>
-</ul>
-<blockquote>
-<p>D &amp; C 的步骤</p>
-</blockquote>
-<ol>
-<li>找到一个简单的基线条件（Base Case）</li>
-<li>把问题分开处理。直到它变为极限条件</li>
-</ol>]]></description>
-</item>
-<item>
-    <title>Git Tag</title>
-    <link>https://f1aming007.github.io/git-tag/</link>
-    <pubDate>Tue, 06 Jun 2023 17:08:46 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/git-tag/</guid>
-    <description><![CDATA[<figure><figcaption>
-            <h4>git tag (figure)</h4>
-        </figcaption>
-</figure>
-
-<h1 id="git-tag-标签管理">🚀git tag 标签管理</h1>
-<ul>
-<li>可以在版本库中打一个标签，确定打标签的版本</li>
-<li>标签就是版本库的快照</li>
 </ul>]]></description>
 </item>
 </channel>
