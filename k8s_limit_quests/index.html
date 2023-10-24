@@ -57,7 +57,7 @@ Namespace LimitRange
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/f1aming007.github.io\/k8s_limit_quests\/"
-        },"genre": "posts","keywords": "k8s","wordcount":  1061 ,
+        },"genre": "posts","keywords": "k8s","wordcount":  2722 ,
         "url": "https:\/\/f1aming007.github.io\/k8s_limit_quests\/","datePublished": "2023-10-24T10:50:47+08:00","dateModified": "2023-10-24T10:50:47+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -145,8 +145,8 @@ Namespace LimitRange
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">K8s_limit_quests</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-10-24">2023-10-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1061 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-10-24">2023-10-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2722 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -160,8 +160,11 @@ Namespace LimitRange
     <li><a href="#kubernetes-limits">Kubernetes Limits</a></li>
     <li><a href="#cpu的特殊性">CPU的特殊性</a></li>
     <li><a href="#内存的特殊性">内存的特殊性</a></li>
+    <li><a href="#最佳实践">最佳实践</a></li>
     <li><a href="#namespace-resourcequta">Namespace ResourceQuta</a></li>
     <li><a href="#namespace-limitrange">Namespace LimitRange</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考文档">参考文档</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><img
@@ -304,10 +307,175 @@ Namespace LimitRange
         title="https://sysdig.com/wp-content/uploads/image4.png" /></li>
 </ul>
 <h2 id="kubernetes-limits">Kubernetes Limits</h2>
+<p>Kubernetes 将Limits定义为一个容器使用的最大资源量
+这意味着容器的消耗量永远不能超过指定的内存量或CPU量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">limits</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="m">0.5</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">100Mi</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Limits通常用于一下场景：</p>
+<ul>
+<li>当把Pod分配给一个节点时，如果没有设置请求，默认情况下，Kubernetes将分配请求=限制</li>
+<li>在运行时， Kubernetes 将检查Pod中的容器所消耗的资源量是否过于限制所显示的数量</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHIibIs6HKDOWLmV6oO5L44y267jWUB5oDEEmXqolOGSoic8q4HD6wpshvQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"
+        data-srcset="https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHIibIs6HKDOWLmV6oO5L44y267jWUB5oDEEmXqolOGSoic8q4HD6wpshvQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1, https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHIibIs6HKDOWLmV6oO5L44y267jWUB5oDEEmXqolOGSoic8q4HD6wpshvQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1 1.5x, https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHIibIs6HKDOWLmV6oO5L44y267jWUB5oDEEmXqolOGSoic8q4HD6wpshvQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1 2x"
+        data-sizes="auto"
+        alt="https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHIibIs6HKDOWLmV6oO5L44y267jWUB5oDEEmXqolOGSoic8q4HD6wpshvQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"
+        title="https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHIibIs6HKDOWLmV6oO5L44y267jWUB5oDEEmXqolOGSoic8q4HD6wpshvQ/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" /></p>
 <h2 id="cpu的特殊性">CPU的特殊性</h2>
+<p>CPU是一种可压缩的资源，这意味他可以被拉伸，一满足所有的需求，如果进程要求的太多的CPU，其中一些将被节制</p>
+<p>CPU代表计算处理时间，以核为单位</p>
+<ul>
+<li>你可以用毫微米（m）来表示比一个核心更小的数量（例如，500米是半个核心）</li>
+<li>最小的数量时1m</li>
+<li>一个节点可能有一个以上的核心可用， 所以请求CPU&gt;1时kennel的</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHICGD30ZXm7Ty8T0h3H2U9vTg3MHJicYm2avEcqQC0uvTDmWWdWIN2bCw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"
+        data-srcset="https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHICGD30ZXm7Ty8T0h3H2U9vTg3MHJicYm2avEcqQC0uvTDmWWdWIN2bCw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1, https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHICGD30ZXm7Ty8T0h3H2U9vTg3MHJicYm2avEcqQC0uvTDmWWdWIN2bCw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1 1.5x, https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHICGD30ZXm7Ty8T0h3H2U9vTg3MHJicYm2avEcqQC0uvTDmWWdWIN2bCw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1 2x"
+        data-sizes="auto"
+        alt="https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHICGD30ZXm7Ty8T0h3H2U9vTg3MHJicYm2avEcqQC0uvTDmWWdWIN2bCw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"
+        title="https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHICGD30ZXm7Ty8T0h3H2U9vTg3MHJicYm2avEcqQC0uvTDmWWdWIN2bCw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" /></p>
 <h2 id="内存的特殊性">内存的特殊性</h2>
+<p>内存时一种不可压缩的资源，意味着它不能像CPU那样被拉伸，如果一个进程没有得到足够的内存来工作， 这个进程就会被杀死</p>
+<p>在Kubernetes中，内存的单位是字节。</p>
+<ul>
+<li>你可以用，E，P，T，G，M，k来代表Exabyte，Petabyte，Terabyte，Gigabyte，Megabyte和kilobyte，尽管只有最后四个是常用的。(例如，500M, 4G)</li>
+<li>不要用小写的m表示内存（这代表Millibytes，低得离谱）</li>
+<li>你可以用Mi来定义Mebibytes，其余的也可以用Ei、Pi、Ti来定义（例如，500Mi）</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHI3icibXBHv8yNorck4gbm1kh4KYA5UvLic0Y4zbeMrwWhJFbDSxHj6Zv7A/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"
+        data-srcset="https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHI3icibXBHv8yNorck4gbm1kh4KYA5UvLic0Y4zbeMrwWhJFbDSxHj6Zv7A/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1, https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHI3icibXBHv8yNorck4gbm1kh4KYA5UvLic0Y4zbeMrwWhJFbDSxHj6Zv7A/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1 1.5x, https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHI3icibXBHv8yNorck4gbm1kh4KYA5UvLic0Y4zbeMrwWhJFbDSxHj6Zv7A/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1 2x"
+        data-sizes="auto"
+        alt="https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHI3icibXBHv8yNorck4gbm1kh4KYA5UvLic0Y4zbeMrwWhJFbDSxHj6Zv7A/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1"
+        title="https://mmbiz.qpic.cn/mmbiz_jpg/iaqrvickekLVQtpcicU66M5NrHgs8ib7NDHI3icibXBHv8yNorck4gbm1kh4KYA5UvLic0Y4zbeMrwWhJFbDSxHj6Zv7A/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" /></p>
+<h2 id="最佳实践">最佳实践</h2>
+<p>在Kubernetes中， 你应该很少使用限制来控制你的资源的使用，这是因为如果你想避免使用饥饿（确保每个重要的进程都能得到它的份额）， 应该首先使用请求</p>
+<p>通过设置限制，你只是防止进程在特殊情况下检索额外的资源，在内存方面造成OOM杀戮，在CPU方面造成Throttling（进程将需要等待CPU可以再次使用）</p>
+<p>如果一个Pod的所有请求中设置一个等于限制的请求值，该Pod将获得保证的服务质量</p>
+<p>还需要注意的是， 资源使用量高于请求的Pod更有可能被驱逐，所以设置非常低的请求会造成弊大于利。</p>
 <h2 id="namespace-resourcequta">Namespace ResourceQuta</h2>
-<h2 id="namespace-limitrange">Namespace LimitRange</h2></div><div class="post-footer" id="post-footer">
+<p>由于命名空间的存在，我们可以将Kubernetes资源隔离到不同的组，也称为租户</p>
+<p>通过ResourceQuota， 可以为整个命令空间设置一个内存或CPU限制，确保其中的实体不能消耗超过这个数量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ResourceQuota</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">mem-cpu-demo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">hard</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">requests.cpu</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">requests.memory</span><span class="p">:</span><span class="w"> </span><span class="l">1Gi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">limits.cpu</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">limits.memory</span><span class="p">:</span><span class="w"> </span><span class="l">2Gi</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>requests.cpu：这个命名空间中所有请求的最大CPU数量。</li>
+<li>requests.memory：这个命名空间中所有请求的最大内存量。</li>
+<li>limits.cpu：这个命名空间中所有限制的最大CPU数量。</li>
+<li>limits.memory：这个命名空间中所有限制的总和的最大内存量。</li>
+</ul>
+<h2 id="namespace-limitrange">Namespace LimitRange</h2>
+<p>如果我们想限制一个命名空间可分配的资源总量，ResourceQuotas很有用。但如果我们想给里面的元素提供默认值，会发生什么？</p>
+<p>LimitRanges是一种Kubernetes策略，它限制了命名空间中每个实体的资源设置。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">LimitRange</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cpu-resource-constraint</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">limits</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">default</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l">500m</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">defaultRequest</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l">500m</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">min</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l">100m</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">max</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;1&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">Container</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>default。如果没有指定，创建的容器将有这个值。</li>
+<li>min: 创建的容器不能有比这更小的限制或请求。</li>
+<li>max: 创建的容器不能有大于此值的限制或请求。</li>
+</ul>
+<p>以后， 如果创建一个没有设置请求或限制的新的Pod， LimitRange会自动为其所有的容器设置这些值。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w"> </span><span class="nt">Limits</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w">  </span><span class="l">500m</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">Requests</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w">  </span><span class="l">100m</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="总结">总结</h2>
+<p>kubernetes集群选择最佳的限制是关键，以便获得最佳的能源消耗和成本</p>
+<p>为我们的Pod分配过多的资源可能会导致成本激增。</p>
+<p>规模过小或专用于极少的CPU或内存将导致应用程序不能正常运行，甚至Pod被驱逐。</p>
+<h2 id="参考文档">参考文档</h2>
+<p>【1】https://sysdig.com/blog/kubernetes-pod-pending-problems/
+【2】https://sysdig.com/blog/troubleshoot-kubernetes-oom/
+【3】https://sysdig.com/blog/kubernetes-pod-evicted/
+原文：https://sysdig.com/blog/kubernetes-limits-requests/</p></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
