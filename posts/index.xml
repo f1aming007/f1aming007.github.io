@@ -10,7 +10,8 @@
     <pubDate>Tue, 24 Oct 2023 10:50:47 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/k8s_limit_quests/</guid>
-    <description><![CDATA[<h1 id="kubernetes-的-limits-和-requests">Kubernetes 的 Limits 和 Requests</h1>
+    <description><![CDATA[<p></p>
+<h1 id="kubernetes-的-limits-和-requests">Kubernetes 的 Limits 和 Requests</h1>
 <p>在k8s适应容器时， 要知道所涉及的资源时什么以及如何需要他们，有些进程比其他进程需要更多的CPU和内存
 知道这些之后， 才能正确的配置我们的容器和pod</p>
 <ul>
