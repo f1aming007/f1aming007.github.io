@@ -4,7 +4,15 @@
         <link>https://f1aming007.github.io/tags/k8s/</link>
         <description>k8s - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 24 Oct 2023 10:50:47 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 07 Dec 2023 09:55:17 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+    <title>K8s Logs</title>
+    <link>https://f1aming007.github.io/k8s-logs/</link>
+    <pubDate>Thu, 07 Dec 2023 09:55:17 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/k8s-logs/</guid>
+    <description><![CDATA[kubenertes 日志查看工具 kubetail kubetail kubetail是一个bash脚本， 可以将多个pod的日志聚合到一个输出流中，并且支持彩色输出和条件过滤 1 2 3 4 5 6 7 8 9]]></description>
+</item>
+<item>
     <title>K8s_limit_quests</title>
     <link>https://f1aming007.github.io/k8s_limit_quests/</link>
     <pubDate>Tue, 24 Oct 2023 10:50:47 &#43;0800</pubDate>
@@ -102,14 +110,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/stateful/</guid>
     <description><![CDATA[StatefulSet 概念 StatefulSet 的设计其实非常容器理解， 它把真实世界里的应用状态， 抽象为两个情况 拓扑状态：这种情况意味着， 应用的多个实例之间不是完全对等的关系， 这些]]></description>
-</item>
-<item>
-    <title>Kubernets-DaemonSet</title>
-    <link>https://f1aming007.github.io/daemonset/</link>
-    <pubDate>Sat, 20 May 2023 11:25:48 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/daemonset/</guid>
-    <description><![CDATA[DaemonSet 主要作用 在kubernetes集群里， 运行一个Daemon Pod， 所以， 这个Pod有如下三个特征 这个Pod运载kubernetes集群里的]]></description>
 </item>
 </channel>
 </rss>

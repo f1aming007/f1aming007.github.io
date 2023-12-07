@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>K8s Logs - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="K8s Logs" />
+<meta property="og:description" content="kubenertes 日志查看工具 kubetail kubetail kubetail是一个bash脚本， 可以将多个pod的日志聚合到一个输出流中，并且支持彩色输出和条件过滤 1 2 3 4 5 6 7 8 9" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/k8s-logs/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-12-07T09:55:17+08:00" />
+<meta property="article:modified_time" content="2023-12-07T09:55:17+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="K8s Logs"/>
+<meta name="twitter:description" content="kubenertes 日志查看工具 kubetail kubetail kubetail是一个bash脚本， 可以将多个pod的日志聚合到一个输出流中，并且支持彩色输出和条件过滤 1 2 3 4 5 6 7 8 9"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/k8s-logs/" /><link rel="prev" href="https://f1aming007.github.io/k8s_limit_quests/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "K8s Logs",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/k8s-logs\/"
+        },"genre": "posts","keywords": "k8s","wordcount":  1393 ,
+        "url": "https:\/\/f1aming007.github.io\/k8s-logs\/","datePublished": "2023-12-07T09:55:17+08:00","dateModified": "2023-12-07T09:55:17+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">K8s Logs</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-07">2023-12-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1393 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#kubetail">kubetail</a></li>
+    <li><a href="#安装">安装</a>
+      <ul>
+        <li><a href="#homebrew">Homebrew</a></li>
+        <li><a href="#linux">Linux</a></li>
+        <li><a href="#zsh-plugin">zsh plugin</a></li>
+      </ul>
+    </li>
+    <li><a href="#使用">使用</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#工具安装">工具安装</a></li>
+    <li><a href="#介绍了工具的使用方式">介绍了工具的使用方式</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="kubenertes-日志查看工具">kubenertes 日志查看工具</h1>
+<h2 id="kubetail">kubetail</h2>
+<p><a href="https://github.com/johanhaleby/kubetail" target="_blank" rel="noopener noreffer ">kubetail</a></p>
+<p>kubetail是一个bash脚本， 可以将多个pod的日志聚合到一个输出流中，并且支持彩色输出和条件过滤</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"> liuhongfeng  kubetail -h
+</span></span><span class="line"><span class="cl">kubetail &lt;search term&gt; <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-c<span class="o">]</span> <span class="o">[</span>-n<span class="o">]</span> <span class="o">[</span>-t<span class="o">]</span> <span class="o">[</span>-l<span class="o">]</span> <span class="o">[</span>-f<span class="o">]</span> <span class="o">[</span>-d<span class="o">]</span> <span class="o">[</span>-P<span class="o">]</span> <span class="o">[</span>-p<span class="o">]</span> <span class="o">[</span>-s<span class="o">]</span> <span class="o">[</span>-b<span class="o">]</span> <span class="o">[</span>-e<span class="o">]</span> <span class="o">[</span>-j<span class="o">]</span> <span class="o">[</span>-k<span class="o">]</span> <span class="o">[</span>-z<span class="o">]</span> <span class="o">[</span>-v<span class="o">]</span> <span class="o">[</span>-r<span class="o">]</span> <span class="o">[</span>-i<span class="o">]</span> -- tail multiple Kubernetes pod logs at the same <span class="nb">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">where:
+</span></span><span class="line"><span class="cl">    -h, --help              Show this <span class="nb">help</span> text.
+</span></span><span class="line"><span class="cl">    -c, --container         The name of the container to tail in the pod <span class="o">(</span><span class="k">if</span> multiple containers are defined in the pod<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">                            Defaults to all containers in the pod. Can be used multiple times.
+</span></span><span class="line"><span class="cl">    -t, --context           The k8s context. ex. int1-context. Relies on ~/.kube/config <span class="k">for</span> the contexts.
+</span></span><span class="line"><span class="cl">    -l, --selector          Label selector. If used the pod name is ignored.
+</span></span><span class="line"><span class="cl">    -n, --namespace         The Kubernetes namespace where the pods are located. Defaults to <span class="s2">&#34;go-zero-baremetal&#34;</span>.
+</span></span><span class="line"><span class="cl">    -f, --follow            Specify <span class="k">if</span> the logs should be streamed. <span class="o">(</span>true<span class="p">|</span><span class="nb">false</span><span class="o">)</span> Defaults to true.
+</span></span><span class="line"><span class="cl">    -d, --dry-run           Print the names of the matched pods and containers, <span class="k">then</span> exit.
+</span></span><span class="line"><span class="cl">    -P, --prefix            Specify <span class="k">if</span> add the pod name prefix before each line. <span class="o">(</span>true<span class="p">|</span><span class="nb">false</span><span class="o">)</span> Defaults to true.
+</span></span><span class="line"><span class="cl">    -p, --previous          Return logs <span class="k">for</span> the previous instances of the pods, <span class="k">if</span> available. <span class="o">(</span>true<span class="p">|</span><span class="nb">false</span><span class="o">)</span> Defaults to false.
+</span></span><span class="line"><span class="cl">    -s, --since             Only <span class="k">return</span> logs newer than a relative duration like 5s, 2m, or 3h. Defaults to 10s.
+</span></span><span class="line"><span class="cl">    -b, --line-buffered     This flags indicates to use line-buffered. <span class="o">(</span>true<span class="p">|</span><span class="nb">false</span><span class="o">)</span> Defaults to false.
+</span></span><span class="line"><span class="cl">    -e, --regex             The <span class="nb">type</span> of name matching to use <span class="o">(</span>regex<span class="p">|</span>substring<span class="o">)</span>. Defaults to substring.
+</span></span><span class="line"><span class="cl">    -j, --jq                If your output is json - use this jq-selector to parse it. Defaults to <span class="s2">&#34;&#34;</span>.
+</span></span><span class="line"><span class="cl">                            example: --jq <span class="s2">&#34;.logger + \&#34; \&#34; + .message&#34;</span>
+</span></span><span class="line"><span class="cl">    -k, --colored-output    Use colored output <span class="o">(</span>pod<span class="p">|</span>line<span class="p">|</span><span class="nb">false</span><span class="o">)</span>.
+</span></span><span class="line"><span class="cl">                            <span class="nv">pod</span> <span class="o">=</span> only color pod name, <span class="nv">line</span> <span class="o">=</span> color entire line, <span class="nb">false</span> <span class="o">=</span> don<span class="s1">&#39;t use any colors.
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            Defaults to line.
+</span></span></span><span class="line"><span class="cl"><span class="s1">    -z, --skip-colors       Comma-separated list of colors to not use in output.
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            If you have green foreground on black, this will skip dark grey and some greens: -z 2,8,10
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            Defaults to: 7,8.
+</span></span></span><span class="line"><span class="cl"><span class="s1">        --timestamps        Show timestamps for each log line. (true|false) Defaults to false.
+</span></span></span><span class="line"><span class="cl"><span class="s1">        --tail              Lines of recent log file to display. Defaults to -1, showing all log lines.
+</span></span></span><span class="line"><span class="cl"><span class="s1">    -v, --version           Prints the kubetail version.
+</span></span></span><span class="line"><span class="cl"><span class="s1">    -r, --cluster           The name of the kubeconfig cluster to use.
+</span></span></span><span class="line"><span class="cl"><span class="s1">    -i, --show-color-index  Show the color index before the pod name prefix that is shown before each log line.
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            Normally only the pod name is added as a prefix before each line, for example &#34;[app-5b7ff6cbcd-bjv8n]&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            but if &#34;show-color-index&#34; is true then color index is added as well: &#34;[1:app-5b7ff6cbcd-bjv8n]&#34;.
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            This is useful if you have color blindness or if you want to know which colors to exclude (see &#34;--skip-colors&#34;).
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            Defaults to false.
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">examples:
+</span></span></span><span class="line"><span class="cl"><span class="s1">    kubetail my-pod-v1
+</span></span></span><span class="line"><span class="cl"><span class="s1">    kubetail my-pod-v1 -c my-container
+</span></span></span><span class="line"><span class="cl"><span class="s1">    kubetail my-pod-v1 -t int1-context -c my-container
+</span></span></span><span class="line"><span class="cl"><span class="s1">    kubetail &#39;</span><span class="o">(</span>service<span class="p">|</span>consumer<span class="p">|</span>thing<span class="o">)</span><span class="err">&#39;</span> -e regex
+</span></span><span class="line"><span class="cl">    kubetail -l <span class="nv">service</span><span class="o">=</span>my-service
+</span></span><span class="line"><span class="cl">    kubetail --selector <span class="nv">service</span><span class="o">=</span>my-service --since 10m
+</span></span><span class="line"><span class="cl">    kubetail --tail <span class="m">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="安装">安装</h2>
+<p>Just download the <a href="https://raw.githubusercontent.com/johanhaleby/kubetail/master/kubetail" target="_blank" rel="noopener noreffer ">kubetail</a> file (or any of the <a href="https://github.com/johanhaleby/kubetail/releases" target="_blank" rel="noopener noreffer ">releases</a>) and you&rsquo;re good to go.</p>
+<h3 id="homebrew">Homebrew</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ brew tap johanhaleby/kubetail <span class="o">&amp;&amp;</span> brew install kubetail
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="linux">Linux</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># download and to go</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># https://github.com/johanhaleby/kubetail/releases</span>
+</span></span><span class="line"><span class="cl">$ wget https://raw.githubusercontent.com/johanhaleby/kubetail/master/kubetail
+</span></span><span class="line"><span class="cl">$ chmod +x kubetail
+</span></span><span class="line"><span class="cl">$ cp kubetail /usr/local/bi
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="zsh-plugin">zsh plugin</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># oh-my-zsh</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> ~/.oh-my-zsh/custom/plugins/
+</span></span><span class="line"><span class="cl">$ git clone https://github.com/johanhaleby/kubetail.git kubetail
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ vim ~/.zshrc
+</span></span><span class="line"><span class="cl"><span class="nv">plugins</span><span class="o">=(</span> ... kubetail <span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ <span class="nb">source</span> ~/.zshrc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="使用">使用</h2>
+<p><strong>展示命名空间下的pod</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># show all your pods</span>
+</span></span><span class="line"><span class="cl">$ kubectl get pods -n <span class="nb">test</span>
+</span></span><span class="line"><span class="cl">NAME                   READY     STATUS    RESTARTS   AGE
+</span></span><span class="line"><span class="cl">app1-v1-aba8y          1/1       Running   <span class="m">0</span>          1d
+</span></span><span class="line"><span class="cl">app1-v1-gc4st          1/1       Running   <span class="m">0</span>          1d
+</span></span><span class="line"><span class="cl">app1-v1-m8acl          1/1       Running   <span class="m">0</span>          6d
+</span></span><span class="line"><span class="cl">app1-v1-s20d0          1/1       Running   <span class="m">0</span>          1d
+</span></span><span class="line"><span class="cl">app2-v31-9pbpn         1/1       Running   <span class="m">0</span>          1d
+</span></span><span class="line"><span class="cl">app2-v31-q74wg         1/1       Running   <span class="m">0</span>          1d
+</span></span><span class="line"><span class="cl">my-demo-v5-0fa8o       1/1       Running   <span class="m">0</span>          3h
+</span></span><span class="line"><span class="cl">my-demo-v5-yhren       1/1       Running   <span class="m">0</span>          <span class="m">2</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>一次追踪两个“app2”的日志</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ kubetail app2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>仅追踪多个pod的特定容器的，指定容器</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ kubetail app2 -c container1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>使用-c 追踪多个特定容器</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ kubetail app2 -c container1 -c container2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>同时追随多个pod，使用逗号分隔</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ kubetail app1,app2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>对于高级匹配，您可以使用正则表达式：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ kubetail <span class="s2">&#34;^app1|.*my-demo.*&#34;</span> --regex
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>要尾随特定命名空间内的日志，请确保在为容器和应用程序提供值后附加命名空间标志：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ kubetail app2 -c container1 -n namespace1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>使用-k参数，指定kubetail如何使用颜色</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ kubetail app2 -k pod
+</span></span><span class="line"><span class="cl"><span class="c1"># pod： 只有pod名称着色且其他输出均使用终端默认颜色</span>
+</span></span><span class="line"><span class="cl">$ kubetail app2 -k line
+</span></span><span class="line"><span class="cl"><span class="c1"># line： 整行是彩色的(默认)</span>
+</span></span><span class="line"><span class="cl">$ kubetail app2 -k <span class="nb">false</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># false: 所有输出都不着色</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="starn-工具">starn 工具</h1>
+<blockquote>
+<p>kubernetes 多pod和container日志追踪
+Stern 是使用 Go 语言开发的一款开箱即用的简单工具，它可以将多个 Pod 中的日志信息聚合到一起进行展示，并支持彩色输出和条件过滤</p>
+</blockquote>
+<h2 id="工具安装">工具安装</h2>
+<p>Homebrew</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ brew install stern
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Linux</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># download and to go</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># https://github.com/wercker/stern/tags</span>
+</span></span><span class="line"><span class="cl">$ wget https://github.com/wercker/stern/releases/download/1.11.0/stern_linux_amd64
+</span></span><span class="line"><span class="cl">$ chmod +x stern_linux_amd64
+</span></span><span class="line"><span class="cl">$ mv stern_linux_amd64 /usr/local/bin
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>zsh plugin</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># bash-completion</span>
+</span></span><span class="line"><span class="cl">$ brew install bash-completion
+</span></span><span class="line"><span class="cl">$ <span class="nb">source</span> &lt;<span class="o">(</span>brew --prefix<span class="o">)</span>/etc/bash-completion
+</span></span><span class="line"><span class="cl">$ <span class="nb">source</span> &lt;<span class="o">(</span>stern --completion<span class="o">=</span>bash<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># .zshrc</span>
+</span></span><span class="line"><span class="cl">$ <span class="nb">source</span> &lt;<span class="o">(</span>stern --completion<span class="o">=</span>zsh<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="介绍了工具的使用方式">介绍了工具的使用方式</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 查看默认名称空间下的所有Pod日志</span>
+</span></span><span class="line"><span class="cl">$ stern  .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看 Pod 中指定容器的日志</span>
+</span></span><span class="line"><span class="cl">$ stern app2 --container container1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看指定命名空间中容器的日志</span>
+</span></span><span class="line"><span class="cl">$ stern app2 --namespace namespace1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看指定命名空间中除指定容器外的所有容器的日志</span>
+</span></span><span class="line"><span class="cl">$ stern --namespace namespace1 --exclude-container container1 .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看指定时间范围内容器的日志(15分钟内)</span>
+</span></span><span class="line"><span class="cl">$ stern app2 -t --since 15m
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看所有命名空间中符合指定标签容器的日志</span>
+</span></span><span class="line"><span class="cl">$ stern --all-namespaces -l <span class="nv">run</span><span class="o">=</span>nginx
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查找前端Pod中版本为canary的日志</span>
+</span></span><span class="line"><span class="cl">$ stern frontend --selector <span class="nv">release</span><span class="o">=</span>canary
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 将日志消息通过管道传输到jq命令</span>
+</span></span><span class="line"><span class="cl">$ stern backend -o json <span class="p">|</span> jq .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 仅输出日志消息本身</span>
+</span></span><span class="line"><span class="cl">$ stern backend -o raw
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 使用自定义模板输出</span>
+</span></span><span class="line"><span class="cl">$ stern --template <span class="s1">&#39;{{.Message}} ({{.Namespace}}/{{.PodName}}/{{.ContainerName}})&#39;</span> backend
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 使用stern提供的颜色的自定义模板输出</span>
+</span></span><span class="line"><span class="cl">$ stern --template <span class="s1">&#39;{{.Message}} ({{.Namespace}}/{{color .PodColor .PodName}}/{{color .ContainerColor .ContainerName}})&#39;</span> backend
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-12-07</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/k8s-logs/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/k8s-logs/" data-title="K8s Logs" data-via="xxxx" data-hashtags="k8s"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/k8s-logs/" data-hashtag="k8s"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/k8s-logs/" data-title="K8s Logs"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/k8s-logs/" data-title="K8s Logs"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/k8s-logs/" data-title="K8s Logs"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/k8s_limit_quests/" class="prev" rel="prev" title="K8s_limit_quests"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>K8s_limit_quests</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"f1aming007","id-2":"f1aming007"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
