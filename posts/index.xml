@@ -5,7 +5,7 @@
         <description>All Posts | flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
             <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 09 Dec 2023 15:30:21 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/posts/" rel="self" type="application/rss+xml" /><item>
-    <title>Kuberenetes Loki</title>
+    <title>Kubernetes Loki</title>
     <link>https://f1aming007.github.io/kuberenetes-loki/</link>
     <pubDate>Sat, 09 Dec 2023 15:30:21 &#43;0800</pubDate>
     <author>flamingo</author>
@@ -18,7 +18,7 @@
     <pubDate>Thu, 07 Dec 2023 09:55:17 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/k8s-logs/</guid>
-    <description><![CDATA[<h1 id="kubenertes-日志查看工具">kubenertes 日志查看工具</h1>
+    <description><![CDATA[<h1 id="kubernetes-日志查看工具">kubernetes 日志查看工具</h1>
 <h2 id="kubetail">kubetail</h2>
 <p><a href="https://github.com/johanhaleby/kubetail" target="_blank" rel="noopener noreffer ">kubetail</a></p>
 <p>kubetail是一个bash脚本， 可以将多个pod的日志聚合到一个输出流中，并且支持彩色输出和条件过滤</p>]]></description>

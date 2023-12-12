@@ -1,4 +1,4 @@
-# Kuberenetes Loki
+# Kubernetes Loki
 
 
 # 日志聚合分析系统-Loki

@@ -1,7 +1,7 @@
 # K8s Logs
 
 
-# kubenertes 日志查看工具
+# kubernetes 日志查看工具
 
 ## kubetail
 
