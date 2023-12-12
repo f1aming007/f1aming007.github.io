@@ -4,13 +4,23 @@
         <link>https://f1aming007.github.io/tags/k8s/</link>
         <description>k8s - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 09 Dec 2023 15:30:21 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 12 Dec 2023 13:39:10 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+    <title>Kuberenetes Kubectl</title>
+    <link>https://f1aming007.github.io/kuberenetes-kubectl/</link>
+    <pubDate>Tue, 12 Dec 2023 13:39:10 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/kuberenetes-kubectl/</guid>
+    <description><![CDATA[kubernetes 常用运维 kubectl命令 环境上下文切换 切换集群 1 2 3 4 5 6 # 获取所有的 contexts kubectl config get-contexts # 切换到指定的 context kubectl config use-context &lt;CONTEXT-NAME&gt; 设置默认的namespace 1 2 3]]></description>
+</item>
+<item>
     <title>Kubernetes Loki</title>
     <link>https://f1aming007.github.io/kuberenetes-loki/</link>
     <pubDate>Sat, 09 Dec 2023 15:30:21 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/kuberenetes-loki/</guid>
-    <description><![CDATA[日志聚合分析系统-Loki loki 是Grafana的开源项目，是一个水平可扩展，高可用性，多租户的日志聚合系统， 为每个日志流编制一组标签，专门为 Prometheus]]></description>
+    <description><![CDATA[<h1 id="日志聚合分析系统-loki">日志聚合分析系统-Loki</h1>
+<p>loki 是Grafana的开源项目，是一个水平可扩展，高可用性，多租户的日志聚合系统，
+为每个日志流编制一组标签，专门为 Prometheus 和 Kubernetes 用户做了相关优化</p>]]></description>
 </item>
 <item>
     <title>K8s Logs</title>
@@ -105,14 +115,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/</guid>
     <description><![CDATA[声明式API与Kubernetes编码范式 kubectl create 再replace的操作， 称为命令式配置文件操作 声明式API https://hugbz2.51cg3.co/archives/25451 /https://hugbz2.51cg3.co/archives/4081/ kuberctl apply 命令就是 声明式API apply 与 re]]></description>
-</item>
-<item>
-    <title>Kubernets-Job_Cronjob</title>
-    <link>https://f1aming007.github.io/job_cronjob/</link>
-    <pubDate>Sat, 20 May 2023 11:26:50 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/job_cronjob/</guid>
-    <description><![CDATA[Job 与 CronJob Job API 1 2 3 4 5 6 7 8 9 10 11 12 13 apiVersion: batch/v1 kind: Job metadata: name: pi spec: template: spec: containers: - name: pi image: resouer/ubuntu-bc command: [&#34;sh&#34;, &#34;-c&#34;, &#34;echo &#39;scale=10000; 4*a(1)&#39; | bc -l &#34;] restartPolicy: Never backoffLimit: 4 计算π值的容器。而通过 scale=10000]]></description>
 </item>
 </channel>
 </rss>

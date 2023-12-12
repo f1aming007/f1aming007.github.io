@@ -4,15 +4,25 @@
         <link>https://f1aming007.github.io/</link>
         <description>flamingo Hugo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 09 Dec 2023 15:30:21 &#43;0800</lastBuildDate>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 12 Dec 2023 13:39:10 &#43;0800</lastBuildDate>
             <atom:link href="https://f1aming007.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Kuberenetes Kubectl</title>
+    <link>https://f1aming007.github.io/kuberenetes-kubectl/</link>
+    <pubDate>Tue, 12 Dec 2023 13:39:10 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/kuberenetes-kubectl/</guid>
+    <description><![CDATA[kubernetes 常用运维 kubectl命令 环境上下文切换 切换集群 1 2 3 4 5 6 # 获取所有的 contexts kubectl config get-contexts # 切换到指定的 context kubectl config use-context &lt;CONTEXT-NAME&gt; 设置默认的namespace 1 2 3]]></description>
+</item>
+<item>
     <title>Kubernetes Loki</title>
     <link>https://f1aming007.github.io/kuberenetes-loki/</link>
     <pubDate>Sat, 09 Dec 2023 15:30:21 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/kuberenetes-loki/</guid>
-    <description><![CDATA[日志聚合分析系统-Loki loki 是Grafana的开源项目，是一个水平可扩展，高可用性，多租户的日志聚合系统， 为每个日志流编制一组标签，专门为 Prometheus]]></description>
+    <description><![CDATA[<h1 id="日志聚合分析系统-loki">日志聚合分析系统-Loki</h1>
+<p>loki 是Grafana的开源项目，是一个水平可扩展，高可用性，多租户的日志聚合系统，
+为每个日志流编制一组标签，专门为 Prometheus 和 Kubernetes 用户做了相关优化</p>]]></description>
 </item>
 <item>
     <title>K8s Logs</title>
@@ -117,16 +127,6 @@
 <li><strong>序列化协议</strong>： <code>grpc</code> 使用 <code>protobuf</code>, 首先使用protobuf 定义服务，然后使用这个文件来生成客户端和服务端的代码， 因为pb是跨语言的， 因此使用服务端和客户端语言并不一致也可以相互序列化和反序列化</li>
 <li><strong>网络传输层</strong>： grpc使用的是<code>http2.0协议</code>，</li>
 </ul>]]></description>
-</item>
-<item>
-    <title>🔥Golang Beradth FirstSearch</title>
-    <link>https://f1aming007.github.io/golang-beradth-firstsearch/</link>
-    <pubDate>Sat, 10 Jun 2023 10:06:01 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-beradth-firstsearch/</guid>
-    <description><![CDATA[<p></p>
-<h1 id="golang算法---快速排序quicksort">🔥Golang算法 - 快速排序（Quicksort）</h1>
-<p>广度优先算法的核心思想是：从初始节点开始，应用算符生成第一层节点，检查目标节点是否在这些后继节点中，若没有，再用产生式规则将所有第一层的节点逐一扩展，得到第二层节点，并逐一检查第二层节点中是否包含目标节点。若没有，再用算符逐一扩展第二层的所有节点……，如此依次扩展，检查下去，直到发现目标节点为止。即</p>]]></description>
 </item>
 </channel>
 </rss>
