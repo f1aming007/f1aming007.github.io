@@ -8,6 +8,7 @@
 [kubetail](https://github.com/johanhaleby/kubetail)
 
 kubetail是一个bash脚本， 可以将多个pod的日志聚合到一个输出流中，并且支持彩色输出和条件过滤
+<!--more-->
 
 ```bash
  liuhongfeng  kubetail -h
@@ -206,3 +207,5 @@ $ stern --template '{{.Message}} ({{.Namespace}}/{{.PodName}}/{{.ContainerName}}
 # 使用stern提供的颜色的自定义模板输出
 $ stern --template '{{.Message}} ({{.Namespace}}/{{color .PodColor .PodName}}/{{color .ContainerColor .ContainerName}})' backend
 ```
+
+

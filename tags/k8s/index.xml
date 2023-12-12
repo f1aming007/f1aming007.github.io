@@ -4,13 +4,24 @@
         <link>https://f1aming007.github.io/tags/k8s/</link>
         <description>k8s - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 07 Dec 2023 09:55:17 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Sat, 09 Dec 2023 15:30:21 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+    <title>Kuberenetes Loki</title>
+    <link>https://f1aming007.github.io/kuberenetes-loki/</link>
+    <pubDate>Sat, 09 Dec 2023 15:30:21 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/kuberenetes-loki/</guid>
+    <description><![CDATA[日志聚合分析系统-Loki loki 是Grafana的开源项目，是一个水平可扩展，高可用性，多租户的日志聚合系统， 为每个日志流编制一组标签，专门为 Prometheus]]></description>
+</item>
+<item>
     <title>K8s Logs</title>
     <link>https://f1aming007.github.io/k8s-logs/</link>
     <pubDate>Thu, 07 Dec 2023 09:55:17 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/k8s-logs/</guid>
-    <description><![CDATA[kubenertes 日志查看工具 kubetail kubetail kubetail是一个bash脚本， 可以将多个pod的日志聚合到一个输出流中，并且支持彩色输出和条件过滤 1 2 3 4 5 6 7 8 9]]></description>
+    <description><![CDATA[<h1 id="kubenertes-日志查看工具">kubenertes 日志查看工具</h1>
+<h2 id="kubetail">kubetail</h2>
+<p><a href="https://github.com/johanhaleby/kubetail" target="_blank" rel="noopener noreffer ">kubetail</a></p>
+<p>kubetail是一个bash脚本， 可以将多个pod的日志聚合到一个输出流中，并且支持彩色输出和条件过滤</p>]]></description>
 </item>
 <item>
     <title>K8s_limit_quests</title>
@@ -102,14 +113,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/job_cronjob/</guid>
     <description><![CDATA[Job 与 CronJob Job API 1 2 3 4 5 6 7 8 9 10 11 12 13 apiVersion: batch/v1 kind: Job metadata: name: pi spec: template: spec: containers: - name: pi image: resouer/ubuntu-bc command: [&#34;sh&#34;, &#34;-c&#34;, &#34;echo &#39;scale=10000; 4*a(1)&#39; | bc -l &#34;] restartPolicy: Never backoffLimit: 4 计算π值的容器。而通过 scale=10000]]></description>
-</item>
-<item>
-    <title>Kubernets-StatefulSet</title>
-    <link>https://f1aming007.github.io/stateful/</link>
-    <pubDate>Sat, 20 May 2023 11:26:22 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/stateful/</guid>
-    <description><![CDATA[StatefulSet 概念 StatefulSet 的设计其实非常容器理解， 它把真实世界里的应用状态， 抽象为两个情况 拓扑状态：这种情况意味着， 应用的多个实例之间不是完全对等的关系， 这些]]></description>
 </item>
 </channel>
 </rss>

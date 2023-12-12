@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Kuberenetes Loki - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Kuberenetes Loki" />
+<meta property="og:description" content="日志聚合分析系统-Loki loki 是Grafana的开源项目，是一个水平可扩展，高可用性，多租户的日志聚合系统， 为每个日志流编制一组标签，专门为 Prometheus" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/kuberenetes-loki/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-12-09T15:30:21+08:00" />
+<meta property="article:modified_time" content="2023-12-09T15:30:21+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="Kuberenetes Loki"/>
+<meta name="twitter:description" content="日志聚合分析系统-Loki loki 是Grafana的开源项目，是一个水平可扩展，高可用性，多租户的日志聚合系统， 为每个日志流编制一组标签，专门为 Prometheus"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/kuberenetes-loki/" /><link rel="prev" href="https://f1aming007.github.io/k8s-logs/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kuberenetes Loki",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/kuberenetes-loki\/"
+        },"genre": "posts","keywords": "k8s","wordcount":  2504 ,
+        "url": "https:\/\/f1aming007.github.io\/kuberenetes-loki\/","datePublished": "2023-12-09T15:30:21+08:00","dateModified": "2023-12-09T15:30:21+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kuberenetes Loki</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-09">2023-12-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2504 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#loki的优势">Loki的优势</a></li>
+    <li><a href="#整体架构">整体架构</a>
+      <ul>
+        <li><a href="#distributor">Distributor</a></li>
+        <li><a href="#ingester">Ingester</a></li>
+        <li><a href="#负责读的组件则是querier">负责读的组件则是Querier：</a></li>
+      </ul>
+    </li>
+    <li><a href="#搭建使用">搭建使用</a>
+      <ul>
+        <li><a href="#一通过helm部署">一、通过Helm部署：</a></li>
+      </ul>
+    </li>
+    <li><a href="#开始helm安装前需要注意几个点">开始helm安装前需要注意几个点</a></li>
+    <li><a href="#promtail服务在构建时会自动挂载">promtail服务在构建时会自动挂载</a></li>
+    <li><a href="#开始安装">开始安装</a></li>
+    <li><a href="#开始使用loki">开始使用Loki</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="日志聚合分析系统-loki">日志聚合分析系统-Loki</h1>
+<p>loki 是Grafana的开源项目，是一个水平可扩展，高可用性，多租户的日志聚合系统，
+为每个日志流编制一组标签，专门为 Prometheus 和 Kubernetes 用户做了相关优化</p>
+<h2 id="loki的优势">Loki的优势</h2>
+<ul>
+<li>不对日志进行全文索引，通过压缩非结构化日志和仅索引元数据</li>
+<li>通过与Prometheus 相同的标签记录对日志进行索引和分组，</li>
+<li>适合存储 Kubernetes Pod 日志，比如pod 标签之类的元数据会被自动删除和编入索引</li>
+<li>受 Grafana 原生支持，与 Prometheus 配合更加方便</li>
+</ul>
+<h2 id="整体架构">整体架构</h2>
+<figure><img src="/images/loki01.png"/><figcaption>
+            <h4>loki01</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17021090927978.jpg"
+        data-srcset="media/17021090927978.jpg, media/17021090927978.jpg 1.5x, media/17021090927978.jpg 2x"
+        data-sizes="auto"
+        alt="media/17021090927978.jpg"
+        title="media/17021090927978.jpg" /></p>
+<p>Loki 的组成部分</p>
+<ul>
+<li>Loki 为主服务器， 负责存储日志和处理查询</li>
+<li>Prometail 是代理， 负责手机日志并将其发送给Loki</li>
+<li>Grafana 用来UI展示。</li>
+</ul>
+<p>Loki使用与Prometheus 相同的服务发现和标签重新标记库。编写了 Promtail。在 Kubernetes 中 Promtail 以 DaemonSet 方式运行在每个节点中，通过 Kubernetes API 得到日志的正确元数据，并将它们发送到Loki，如下图：</p>
+<figure><img src="/images/loki02.png"/><figcaption>
+            <h4>loki02</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17021100059277.jpg"
+        data-srcset="media/17021100059277.jpg, media/17021100059277.jpg 1.5x, media/17021100059277.jpg 2x"
+        data-sizes="auto"
+        alt="media/17021100059277.jpg"
+        title="media/17021100059277.jpg" />
+Loki种主要组件有 DIstributor， Ingester和Querier</p>
+<blockquote>
+<p>负责写入的组件有Distributor和Ingester两个</p>
+</blockquote>
+<figure><img src="/images/loki03.png"/><figcaption>
+            <h4>loki03</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17021104600500.jpg"
+        data-srcset="media/17021104600500.jpg, media/17021104600500.jpg 1.5x, media/17021104600500.jpg 2x"
+        data-sizes="auto"
+        alt="media/17021104600500.jpg"
+        title="media/17021104600500.jpg" /></p>
+<h3 id="distributor">Distributor</h3>
+<p>Promtaif 一旦将日志发给Loki， DIstributor就是第一个接收日志的组件。 由于 日志的写入量可能很大，所以不能再它传入时并行写入数据库， 要先进行批处理和压缩数据。</p>
+<ol>
+<li>Distributor 接收到HTTP请求，用于存储流数据</li>
+<li>通过 hash 环对数据流进行hash</li>
+<li>通过 hash 算法计算出应该发送到哪个Ingester后， 发送数据流</li>
+<li>Ingester新建Chunks或将数据追加到已有的Chunk上</li>
+</ol>
+<figure><img src="/images/loki04.png"/><figcaption>
+            <h4>loki04</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17021116320056.jpg"
+        data-srcset="media/17021116320056.jpg, media/17021116320056.jpg 1.5x, media/17021116320056.jpg 2x"
+        data-sizes="auto"
+        alt="media/17021116320056.jpg"
+        title="media/17021116320056.jpg" /></p>
+<h3 id="ingester">Ingester</h3>
+<p>ingester 接收到日志开始构建 Chunk</p>
+<figure><img src="/images/loki05.png"/><figcaption>
+            <h4>loki05</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17021116832070.jpg"
+        data-srcset="media/17021116832070.jpg, media/17021116832070.jpg 1.5x, media/17021116832070.jpg 2x"
+        data-sizes="auto"
+        alt="media/17021116832070.jpg"
+        title="media/17021116832070.jpg" />
+ingester 是一个有状态组件， 负责构建和刷新Chunk，当 Chunk达到一定数量或者时间后，刷新到存储中去， 每个流日志对应一个Ingester。index 和Chunk 各自使用单独的数据库， 因为他们存储额数据类型不同。</p>
+<h3 id="负责读的组件则是querier">负责读的组件则是Querier：</h3>
+<figure><img src="/images/loki06.png"/><figcaption>
+            <h4>loki06</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17021120333900.jpg"
+        data-srcset="media/17021120333900.jpg, media/17021120333900.jpg 1.5x, media/17021120333900.jpg 2x"
+        data-sizes="auto"
+        alt="media/17021120333900.jpg"
+        title="media/17021120333900.jpg" /></p>
+<p>读取就 比较简单， 由Querier 负责 给定一个时间和标签选择器，也就是收到读请求：</p>
+<ol>
+<li>Querier 收到HTTP读请求</li>
+<li>Querier 将请求发送至Ingester读取还未写入Chunks的内存数据</li>
+<li>随后再去index+chunks中查找数据</li>
+<li>Querier 遍历所有数据并进行去重处理，再返回最终结果</li>
+</ol>
+<h2 id="搭建使用">搭建使用</h2>
+<p>上边主要介绍的Loki的工作流程及组件，下面我们实际搭建操作下：</p>
+<p>Loki项目地址：https://github.com/grafana/loki/</p>
+<p>官网：https://grafana.com/oss/loki/</p>
+<h3 id="一通过helm部署">一、通过Helm部署：</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">## 添加chart</span>
+</span></span><span class="line"><span class="cl">helm repo add loki https://grafana.github.io/loki/charts
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 更新chart</span>
+</span></span><span class="line"><span class="cl">helm repo update 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 将loki template下载到本地</span>
+</span></span><span class="line"><span class="cl">helm fetch loki/loki-stack
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 解压并自定义修改参数</span>
+</span></span><span class="line"><span class="cl">tar zxvf loki-stack-2.0.2.tgz
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> loki-stack/ <span class="nv">$$</span> ls
+</span></span><span class="line"><span class="cl">charts  Chart.yaml  README.md  requirements.lock  requirements.yaml  templates  values.yaml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> charts/ <span class="nv">$$</span> ls
+</span></span><span class="line"><span class="cl">filebeat  fluent-bit  grafana  logstash  loki  prometheus  promtail
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="开始helm安装前需要注意几个点">开始helm安装前需要注意几个点</h2>
+<p>1、可以修改values.yaml文件，指定是否开启Grafana、Prometheus等服务，默认不开启的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">loki</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">promtail</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">fluent-bit</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">grafana</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">sidecar</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">datasources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="m">6.7.0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">prometheus</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>修改Grafana的values.yaml，使其Service暴露方式为NodePort(默认为ClusterIp)：
+vim charts/grafana/values.yaml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">service</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">NodePort</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">nodePort</span><span class="p">:</span><span class="w"> </span><span class="m">30002</span><span class="w">  </span><span class="c"># 端口范围：30000-32767</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">3000</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># targetPort: 4181 To be used with a proxy extraContainer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">portName</span><span class="p">:</span><span class="w"> </span><span class="l">service</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>还有一处账号密码可以自定义修改下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># Administrator credentials when not using an existing secret (see below)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">adminUser</span><span class="p">:</span><span class="w"> </span><span class="l">admin</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">adminPassword</span><span class="p">:</span><span class="w"> </span><span class="l">admin</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="promtail服务在构建时会自动挂载">promtail服务在构建时会自动挂载</h2>
+<ol>
+<li>宿主机docker 主目录下的 container目录，一般默认都为/var/lib/docker/containers</li>
+<li>pod的日志目录， 一般默认在/var/log/pods</li>
+</ol>
+<p>这就需要特别注意一下，如果是修改过docker默认的存储路径的，需要将mount的路径进行修改，promtail找不到对应的容器日志</p>
+<p>具体docker 存储路径，可以使用docker info 命令查询
+vim charts/promtail/values.yaml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># @default -- See `values.yaml`</span>
+</span></span><span class="line"><span class="cl">defaultVolumes:
+</span></span><span class="line"><span class="cl">  - name: run
+</span></span><span class="line"><span class="cl">    hostPath:
+</span></span><span class="line"><span class="cl">      path: /run/promtail
+</span></span><span class="line"><span class="cl">  - name: containers
+</span></span><span class="line"><span class="cl">    hostPath:
+</span></span><span class="line"><span class="cl">      path: /var/lib/containers
+</span></span><span class="line"><span class="cl">  - name: pods
+</span></span><span class="line"><span class="cl">    hostPath:
+</span></span><span class="line"><span class="cl">      path: /var/log/pods
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># -- Default volume mounts. Corresponds to `volumes`.</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># @default -- See `values.yaml`</span>
+</span></span><span class="line"><span class="cl">defaultVolumeMounts:
+</span></span><span class="line"><span class="cl">  - name: run
+</span></span><span class="line"><span class="cl">    mountPath: /run/promtail
+</span></span><span class="line"><span class="cl">  - name: containers
+</span></span><span class="line"><span class="cl">    mountPath: /var/lib/containers
+</span></span><span class="line"><span class="cl">    readOnly: <span class="nb">true</span>
+</span></span><span class="line"><span class="cl">  - name: pods
+</span></span><span class="line"><span class="cl">    mountPath: /var/log/pods
+</span></span><span class="line"><span class="cl">    readOnly: <span class="nb">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="开始安装">开始安装</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">volumes:
+</span></span><span class="line"><span class="cl">- name: docker
+</span></span><span class="line"><span class="cl">  hostPath:
+</span></span><span class="line"><span class="cl">    path: /data/lib/docker/containers  <span class="c1">## 我的是放在了data下</span>
+</span></span><span class="line"><span class="cl">- name: pods
+</span></span><span class="line"><span class="cl">  hostPath:
+</span></span><span class="line"><span class="cl">    path: /var/log/pods
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">volumeMounts:
+</span></span><span class="line"><span class="cl">- name: docker
+</span></span><span class="line"><span class="cl">  mountPath: /data/lib/docker/containers  <span class="c1">## 挂载点也要进行修改</span>
+</span></span><span class="line"><span class="cl">  readOnly: <span class="nb">true</span>
+</span></span><span class="line"><span class="cl">- name: pods
+</span></span><span class="line"><span class="cl">  mountPath: /var/log/pods
+</span></span><span class="line"><span class="cl">  readOnly: <span class="nb">true</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">开始安装：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">helm install -n loki --namespace loki -f values.yaml ../loki-stack
+</span></span><span class="line"><span class="cl">2020/11/11 17:18:54 Warning: Merging destination map <span class="k">for</span> chart <span class="s1">&#39;logstash&#39;</span>. The destination item <span class="s1">&#39;filters&#39;</span> is a table and ignoring the <span class="nb">source</span> <span class="s1">&#39;filters&#39;</span> as it has a non-table value of: &lt;nil&gt;
+</span></span><span class="line"><span class="cl">NAME:   loki
+</span></span><span class="line"><span class="cl">LAST DEPLOYED: Wed Nov <span class="m">11</span> 17:18:53 <span class="m">2020</span>
+</span></span><span class="line"><span class="cl">NAMESPACE: loki
+</span></span><span class="line"><span class="cl">STATUS: DEPLOYED
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">RESOURCES:
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1/ClusterRole
+</span></span><span class="line"><span class="cl">NAME                       AGE
+</span></span><span class="line"><span class="cl">loki-promtail-clusterrole  1s
+</span></span><span class="line"><span class="cl">loki-grafana-clusterrole   <span class="nv">1s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1/ClusterRoleBinding
+</span></span><span class="line"><span class="cl">NAME                              AGE
+</span></span><span class="line"><span class="cl">loki-promtail-clusterrolebinding  1s
+</span></span><span class="line"><span class="cl">loki-grafana-clusterrolebinding   <span class="nv">1s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1/ConfigMap
+</span></span><span class="line"><span class="cl">NAME                  DATA  AGE
+</span></span><span class="line"><span class="cl">loki-grafana          <span class="m">1</span>     1s
+</span></span><span class="line"><span class="cl">loki-grafana-test     <span class="m">1</span>     1s
+</span></span><span class="line"><span class="cl">loki-loki-stack       <span class="m">1</span>     1s
+</span></span><span class="line"><span class="cl">loki-loki-stack-test  <span class="m">1</span>     1s
+</span></span><span class="line"><span class="cl">loki-promtail         <span class="m">1</span>     <span class="nv">1s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1/DaemonSet
+</span></span><span class="line"><span class="cl">NAME           DESIRED  CURRENT  READY  UP-TO-DATE  AVAILABLE  NODE SELECTOR  AGE
+</span></span><span class="line"><span class="cl">loki-promtail  <span class="m">2</span>        <span class="m">2</span>        <span class="m">0</span>      <span class="m">2</span>           <span class="m">0</span>          &lt;none&gt;         <span class="nv">1s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1/Deployment
+</span></span><span class="line"><span class="cl">NAME          READY  UP-TO-DATE  AVAILABLE  AGE
+</span></span><span class="line"><span class="cl">loki-grafana  0/1    <span class="m">1</span>           <span class="m">0</span>          <span class="nv">1s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1/Pod<span class="o">(</span>related<span class="o">)</span>
+</span></span><span class="line"><span class="cl">NAME                         READY  STATUS             RESTARTS  AGE
+</span></span><span class="line"><span class="cl">loki-0                       0/1    ContainerCreating  <span class="m">0</span>         2s
+</span></span><span class="line"><span class="cl">loki-grafana-56bf5d8d-8zcgp  0/1    Init:0/1           <span class="m">0</span>         2s
+</span></span><span class="line"><span class="cl">loki-promtail-6r24r          0/1    ContainerCreating  <span class="m">0</span>         2s
+</span></span><span class="line"><span class="cl">loki-promtail-fvnfc          0/1    ContainerCreating  <span class="m">0</span>         <span class="nv">2s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1/Role
+</span></span><span class="line"><span class="cl">NAME               AGE
+</span></span><span class="line"><span class="cl">loki-promtail      1s
+</span></span><span class="line"><span class="cl">loki-grafana-test  1s
+</span></span><span class="line"><span class="cl">loki               <span class="nv">1s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1/RoleBinding
+</span></span><span class="line"><span class="cl">NAME               AGE
+</span></span><span class="line"><span class="cl">loki-promtail      1s
+</span></span><span class="line"><span class="cl">loki-grafana-test  1s
+</span></span><span class="line"><span class="cl">loki               <span class="nv">1s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1/Secret
+</span></span><span class="line"><span class="cl">NAME          TYPE    DATA  AGE
+</span></span><span class="line"><span class="cl">loki          Opaque  <span class="m">1</span>     1s
+</span></span><span class="line"><span class="cl">loki-grafana  Opaque  <span class="m">3</span>     <span class="nv">1s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1/Service
+</span></span><span class="line"><span class="cl">NAME           TYPE       CLUSTER-IP      EXTERNAL-IP  PORT<span class="o">(</span>S<span class="o">)</span>       AGE
+</span></span><span class="line"><span class="cl">loki           ClusterIP  10.109.216.219  &lt;none&gt;       3100/TCP      1s
+</span></span><span class="line"><span class="cl">loki-grafana   NodePort   10.100.203.138  &lt;none&gt;       80:30002/TCP  1s
+</span></span><span class="line"><span class="cl">loki-headless  ClusterIP  None            &lt;none&gt;       3100/TCP      <span class="nv">1s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1/ServiceAccount
+</span></span><span class="line"><span class="cl">NAME               SECRETS  AGE
+</span></span><span class="line"><span class="cl">loki               <span class="m">1</span>        1s
+</span></span><span class="line"><span class="cl">loki-grafana       <span class="m">1</span>        1s
+</span></span><span class="line"><span class="cl">loki-grafana-test  <span class="m">1</span>        1s
+</span></span><span class="line"><span class="cl">loki-promtail      <span class="m">1</span>        <span class="nv">1s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1/StatefulSet
+</span></span><span class="line"><span class="cl">NAME  READY  AGE
+</span></span><span class="line"><span class="cl">loki  0/1    <span class="nv">1s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1beta1/PodSecurityPolicy
+</span></span><span class="line"><span class="cl">NAME               PRIV   CAPS      SELINUX           RUNASUSER  FSGROUP    SUPGROUP  READONLYROOTFS  VOLUMES
+</span></span><span class="line"><span class="cl">loki               <span class="nb">false</span>  RunAsAny  MustRunAsNonRoot  MustRunAs  MustRunAs  <span class="nb">true</span>      configMap,emptyDir,persistentVolumeClaim,secret,projected,downwardAPI
+</span></span><span class="line"><span class="cl">loki-grafana       <span class="nb">false</span>  RunAsAny  RunAsAny          RunAsAny   RunAsAny   <span class="nb">false</span>     configMap,emptyDir,projected,secret,downwardAPI,persistentVolumeClaim
+</span></span><span class="line"><span class="cl">loki-grafana-test  <span class="nb">false</span>  RunAsAny  RunAsAny          RunAsAny   RunAsAny   <span class="nb">false</span>     configMap,downwardAPI,emptyDir,projected,secret
+</span></span><span class="line"><span class="cl">loki-promtail      <span class="nb">false</span>  RunAsAny  RunAsAny          RunAsAny   RunAsAny   <span class="nb">true</span>      secret,configMap,hostPath,projected,downwardAPI,emptyDir
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1beta1/Role
+</span></span><span class="line"><span class="cl">NAME          AGE
+</span></span><span class="line"><span class="cl">loki-grafana  <span class="nv">1s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">==</span>&gt; v1beta1/RoleBinding
+</span></span><span class="line"><span class="cl">NAME          AGE
+</span></span><span class="line"><span class="cl">loki-grafana  1s
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>创建完成后，通过暴露的svc访问Grafana：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>root@Centos8 loki-stack<span class="o">]</span><span class="c1"># kubectl get svc -n loki </span>
+</span></span><span class="line"><span class="cl">NAME            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>        AGE
+</span></span><span class="line"><span class="cl">loki            ClusterIP   10.109.216.219   &lt;none&gt;        3100/TCP       113s
+</span></span><span class="line"><span class="cl">loki-grafana    NodePort    10.100.203.138   &lt;none&gt;        80:30002/TCP   113s
+</span></span><span class="line"><span class="cl">loki-headless   ClusterIP   None             &lt;none&gt;        3100/TCP       113s
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="开始使用loki">开始使用Loki</h2>
+<p>通过服务器ip+30002 访问， 登陆成功，
+如果是安装Loki时采用的以上方法，开启了Grafana，那系统会自动配置好Data sources，应该不会有什么问题。</p>
+<p>但是，如果是手动搭建的Grafana，需要手动添加Data Sources时，一定注意：</p>
+<p>数据源名称中的Loki，L一定要是大写！！！</p>
+<p>如果不是大写，会导致连接不到Loki源，一般回报错：Error connecting to datasource: Loki: Bad Gateway. 502</p>
+<p>如果是Loki，L大写</p>
+<figure><img src="/images/loki07.png"/><figcaption>
+            <h4>loki07</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17023498019869.jpg"
+        data-srcset="media/17023498019869.jpg, media/17023498019869.jpg 1.5x, media/17023498019869.jpg 2x"
+        data-sizes="auto"
+        alt="media/17023498019869.jpg"
+        title="media/17023498019869.jpg" /></p>
+<p>数据源添加完毕后，开始查看日志</p>
+<p>点击Explore，可以看到选择labels的地方
+<figure><img src="/images/loki08.png"/><figcaption>
+            <h4>loki08</h4>
+        </figcaption>
+</figure>
+
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17023499430391.jpg"
+        data-srcset="media/17023499430391.jpg, media/17023499430391.jpg 1.5x, media/17023499430391.jpg 2x"
+        data-sizes="auto"
+        alt="media/17023499430391.jpg"
+        title="media/17023499430391.jpg" /></p>
+<p>以下是labels的展现形式</p>
+<p><figure><img src="/images/loki09.png"/><figcaption>
+            <h4>loki09</h4>
+        </figcaption>
+</figure>
+
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17023499603207.jpg"
+        data-srcset="media/17023499603207.jpg, media/17023499603207.jpg 1.5x, media/17023499603207.jpg 2x"
+        data-sizes="auto"
+        alt="media/17023499603207.jpg"
+        title="media/17023499603207.jpg" /></p>
+<p>选择一个app:grafana的标签查看一下</p>
+<p><figure><img src="/images/loki10.png"/><figcaption>
+            <h4>loki10</h4>
+        </figcaption>
+</figure>
+
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17023499843419.jpg"
+        data-srcset="media/17023499843419.jpg, media/17023499843419.jpg 1.5x, media/17023499843419.jpg 2x"
+        data-sizes="auto"
+        alt="media/17023499843419.jpg"
+        title="media/17023499843419.jpg" /></p>
+<blockquote>
+<p>默认 Loki会将stdout（正常输出）类型和stderr（错误输出）类型全部展示出来</p>
+</blockquote>
+<p>除了这种办法，还可以直接通过上边的搜索栏，进行自定义的筛选，具体的语法问题，可以再自行查询学习。</p>
+<p>还可以查看 Prometheus 的 metrics 信息</p>
+<p><figure><img src="/images/loki11.png"/><figcaption>
+            <h4>loki11</h4>
+        </figcaption>
+</figure>
+
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17023505724162.jpg"
+        data-srcset="media/17023505724162.jpg, media/17023505724162.jpg 1.5x, media/17023505724162.jpg 2x"
+        data-sizes="auto"
+        alt="media/17023505724162.jpg"
+        title="media/17023505724162.jpg" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-12-09</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/kuberenetes-loki/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/kuberenetes-loki/" data-title="Kuberenetes Loki" data-via="xxxx" data-hashtags="k8s"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/kuberenetes-loki/" data-hashtag="k8s"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/kuberenetes-loki/" data-title="Kuberenetes Loki"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/kuberenetes-loki/" data-title="Kuberenetes Loki"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/kuberenetes-loki/" data-title="Kuberenetes Loki"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/k8s-logs/" class="prev" rel="prev" title="K8s Logs"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>K8s Logs</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"f1aming007","id-2":"f1aming007"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
