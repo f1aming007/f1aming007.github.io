@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Kuberenetes Telepersence - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Kuberenetes Telepersence" />
+<meta property="og:description" content="用Telepresence 本地调试kubernetes中的微服务
+github地址：telepresence
+功能介绍：
+
+            Telepresence01
+        
+
+
+
+快速的本地开发循环，无需等待容器构建/推送/部署
+能够使用他们最喜欢的本地工具（IDE、调试器等）
+能够运行无法在本地运行的大型应用程序
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/kuberenetes-telepersence/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-12-14T10:58:50+08:00" />
+<meta property="article:modified_time" content="2023-12-14T10:58:50+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="Kuberenetes Telepersence"/>
+<meta name="twitter:description" content="用Telepresence 本地调试kubernetes中的微服务
+github地址：telepresence
+功能介绍：
+
+            Telepresence01
+        
+
+
+
+快速的本地开发循环，无需等待容器构建/推送/部署
+能够使用他们最喜欢的本地工具（IDE、调试器等）
+能够运行无法在本地运行的大型应用程序
+"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/kuberenetes-telepersence/" /><link rel="prev" href="https://f1aming007.github.io/kuberenetes-sidecar/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kuberenetes Telepersence",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/kuberenetes-telepersence\/"
+        },"genre": "posts","keywords": "k8s","wordcount":  2296 ,
+        "url": "https:\/\/f1aming007.github.io\/kuberenetes-telepersence\/","datePublished": "2023-12-14T10:58:50+08:00","dateModified": "2023-12-14T10:58:50+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kuberenetes Telepersence</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-14">2023-12-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2296 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#微服务开发的痛点">微服务开发的痛点</a></li>
+    <li><a href="#方法一-利用端口转发">方法一： 利用端口转发</a></li>
+    <li><a href="#方法二-利用-kubefwd-工具">方法二： 利用 kubefwd 工具</a></li>
+    <li><a href="#开发现状">开发现状</a>
+      <ul>
+        <li><a href="#local--remote">Local + Remote</a></li>
+        <li><a href="#remote">Remote</a></li>
+      </ul>
+    </li>
+    <li><a href="#telepresence">Telepresence</a>
+      <ul>
+        <li><a href="#安装方法">安装方法</a></li>
+        <li><a href="#本地环境">本地环境</a></li>
+      </ul>
+    </li>
+    <li><a href="#案例">案例</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="用telepresence-本地调试kubernetes中的微服务">用Telepresence 本地调试kubernetes中的微服务</h1>
+<p>github地址：<a href="https://github.com/telepresenceio/telepresence" target="_blank" rel="noopener noreffer ">telepresence</a>
+功能介绍：
+<figure><img src="/images/tele01.png"/><figcaption>
+            <h4>Telepresence01</h4>
+        </figcaption>
+</figure>
+</p>
+<ol>
+<li>快速的本地开发循环，无需等待容器构建/推送/部署</li>
+<li>能够使用他们最喜欢的本地工具（IDE、调试器等）</li>
+<li>能够运行无法在本地运行的大型应用程序</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17025228434831.jpg"
+        data-srcset="media/17025228434831.jpg, media/17025228434831.jpg 1.5x, media/17025228434831.jpg 2x"
+        data-sizes="auto"
+        alt="media/17025228434831.jpg"
+        title="media/17025228434831.jpg" /></p>
+<p>telepresence 主要是解决 Kubernetes  集群下开发微服务时遇到的日常问题，
+解决本地和集群内服务集成联调的问题。</p>
+<h2 id="微服务开发的痛点">微服务开发的痛点</h2>
+<p>一个平台如果微服务化后，至少也是几十个服务起步了吧，这还是在不包含基础设施服务的前提下。</p>
+<p>接到一个需求，在某个服务下增加一个功能或者是要修复一个 bug，那么你接下来准备怎么做呢？</p>
+<p>打算将几十个服务都在本机跑起来吗？且不说你不知道平台到底有多少个服务，光是想想配置这一整套环境都头大，再说你的机器是否有足够的资源能撑的起平台的运行，所以说 pure offline 的方式肯定不是一个可行的方向。</p>
+<h2 id="方法一-利用端口转发">方法一： 利用端口转发</h2>
+<p>利用  Kubernetes  原生的特性  port-forward，将远端集群的两个服务，转发到本地，通过 localhost 的方式来访问，完成了服务的验证</p>
+<p>Port forwarding k8s.Service.1</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">➜ kubectl port-forward svc/k8s-service-1 <span class="m">22222</span>
+</span></span><span class="line"><span class="cl">Forwarding from 127.0.0.1:22222 -&gt; <span class="m">22222</span>
+</span></span><span class="line"><span class="cl">Forwarding from <span class="o">[</span>::1<span class="o">]</span>:22222 -&gt; <span class="m">22222</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Port forwarding k8s.Service.2</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl port-forward svc/k8s-service-2 <span class="m">22223</span>
+</span></span><span class="line"><span class="cl">Forwarding from 127.0.0.1:22223 -&gt; <span class="m">22223</span>
+</span></span><span class="line"><span class="cl">Forwarding from <span class="o">[</span>::1<span class="o">]</span>:22223 -&gt; <span class="m">22223</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个方法存在问题：</p>
+<ol>
+<li>开发者需要明确清楚依赖的目标服务</li>
+<li>开发者需要清楚目标服务在  Kubernetes 集群內的 Pod Name 或者 Service Name 以及端口号</li>
+<li>如果依赖的服务增多，每个服务都要手动或写脚本做端口转发，非常的复杂且不方便</li>
+<li>本地配置和部署配置不一致（本地使用 localhost，线上使用 svc）</li>
+<li>端口转发因为网络问题容易中断</li>
+</ol>
+<h2 id="方法二-利用-kubefwd-工具">方法二： 利用 kubefwd 工具</h2>
+<p>Kubefwd，它是一个用于端口转发  Kubernetes 中指定 namespace 下全部或部分服务的命令行工具。
+使用  Kubefwd  后，本地环境也能使用  Kubernetes 集群內 svc + port 方式直接访问</p>
+<blockquote>
+<p>一个端口转发的工具<a href="https://github.com/txn2/kubefwd" target="_blank" rel="noopener noreffer ">kubewd</a></p>
+</blockquote>
+<p><figure><img src="/images/tele02.png"/><figcaption>
+            <h4>Telepresence02</h4>
+        </figcaption>
+</figure>
+
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17025239857914.jpg"
+        data-srcset="media/17025239857914.jpg, media/17025239857914.jpg 1.5x, media/17025239857914.jpg 2x"
+        data-sizes="auto"
+        alt="media/17025239857914.jpg"
+        title="media/17025239857914.jpg" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Examples:
+</span></span><span class="line"><span class="cl"> kubefwd services --help
+</span></span><span class="line"><span class="cl">  kubefwd svc -n the-project
+</span></span><span class="line"><span class="cl">  kubefwd svc -n the-project -l <span class="nv">env</span><span class="o">=</span>dev,component<span class="o">=</span>api
+</span></span><span class="line"><span class="cl">  kubefwd svc -n the-project -f metadata.name<span class="o">=</span>service-name
+</span></span><span class="line"><span class="cl">  kubefwd svc -n default -l <span class="s2">&#34;app in (ws, api)&#34;</span>
+</span></span><span class="line"><span class="cl">  kubefwd svc -n default -n the-project
+</span></span><span class="line"><span class="cl">  kubefwd svc -n the-project -m 80:8080 -m 443:1443
+</span></span><span class="line"><span class="cl">  kubefwd svc -n the-project -z path/to/conf.yml
+</span></span><span class="line"><span class="cl">  kubefwd svc -n the-project -r svc.ns:127.3.3.1
+</span></span><span class="line"><span class="cl">  kubefwd svc --all-namespaces
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Kubefwd将转发所有headlesss Service的Pod</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo kubefwd svc -n the-project
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>转发namespace the-project下所有的带有label为system: wx的service：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo kubefwd svc -l <span class="nv">system</span><span class="o">=</span>wx -n the-project
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>这种方法虽然方便，但是存在以下问题</strong></p>
+<ol>
+<li>跨多个 namespace 调试不方便</li>
+<li>单向调用（只能本地服务访问远程集群中的其他服务）</li>
+</ol>
+<h2 id="开发现状">开发现状</h2>
+<h3 id="local--remote">Local + Remote</h3>
+<p>利用 Kubernetes 原生的特性port-forward 命令或者 kubefwd 工具，将  Kubernetes 集群中的服务转发到本地，然后通过 local 的方式访问  Kubernetes 集群中的服务，这种方式可以解决开发过程中的一些联调问题。</p>
+<ol>
+<li>需要转发的服务配置不可控，且取决于团队成员是否都有 Kubernetes 基础，是否对平台的微服务架构都比较了解。</li>
+<li>不稳定，时不时需要重新做服务映射，特别是在远程用 VPN 连入公司内网情况下</li>
+<li>单向调用，只能从本地向集群发请求，集群内的流量请求无法劫持转发到本地</li>
+</ol>
+<h3 id="remote">Remote</h3>
+<p>利用内网自动化流水线的的方式，将代码发布到内网测试环境，即将服务持续的部署到内网  Kubernetes 测试环境中进行联调测试，以便提前发现问题。</p>
+<ol>
+<li>虽然该过程可以自动完成，但是每次调试至少需要经历以下步骤（Git commit -&gt; docker build -&gt; deploy to k8s cluster），耗时比较长，效率低下。</li>
+<li>一般每个团队都是共享内网开发测试环境的，这种 Remote Debug 方式会影响到团队内的其他成员的开发进度</li>
+</ol>
+<h2 id="telepresence">Telepresence</h2>
+<p>Telepresence 对基于 Kubernetes 的开发者来说是种非常强大的调试工具</p>
+<ol>
+<li>Telepresence 是一个面向<code>Kubernetes</code>用户的开发测试环境治理的辅助工具，用于本地轻松开发和调试服务， 同时将服务代理到远程  Kubernetes 集群，无需等待容器做 build/push/deploy</li>
+<li>使用 Telepresence 开发者可以使用本地熟悉的 IDE 和调试工具运行一个服务，并提供对 Configmap、Secrets 和远程集群上运行的服务的完全访问，无缝与 Kubernetes 集群中的其他服务进行联调，让微服务本地开发不再难。</li>
+<li>可以在不用修改代码的情况下，让本地应用程序无感知接入到 <code>Kubernetes</code> 集群中，简单来说就是可直接使用集群内的 <code>PodIP</code>， <code>ClusterIP</code> 以及 <code>DNS</code> 域名来访问集群中的其他服务。</li>
+<li>因为 Telepresence 在 <code>kubernetes</code> 集群中运行的Pod 中部署了 双向网络代理，所以不再是单向代理，本地服务可以完全访问远程集群中的其他服务，同时远程集群中运行的服务也可以完全访问本地服务</li>
+</ol>
+<h3 id="安装方法">安装方法</h3>
+<p>参考链接<a href="https://www.getambassador.io/docs/telepresence-oss/latest/quick-start?os=macos" target="_blank" rel="noopener noreffer ">telepresence</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Intel Macs</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 1. Download the latest binary (~105 MB):</span>
+</span></span><span class="line"><span class="cl">sudo curl -fL https://app.getambassador.io/download/tel2oss/releases/download/v2.16.1/telepresence-darwin-amd64 -o /usr/local/bin/telepresence
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. Make the binary executable:</span>
+</span></span><span class="line"><span class="cl">sudo chmod a+x /usr/local/bin/telepresence
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Apple silicon Macs</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 1. Download the latest binary (~101 MB):</span>
+</span></span><span class="line"><span class="cl">sudo curl -fL https://app.getambassador.io/download/tel2oss/releases/download/v2.16.1/telepresence-darwin-arm64 -o /usr/local/bin/telepresence
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. Make the binary executable:</span>
+</span></span><span class="line"><span class="cl">sudo chmod a+x /usr/local/bin/telepresence
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="本地环境">本地环境</h3>
+<p>当执行完 <code>telepresence connect</code> ， 可以想象成你的本地环境就是 <code>Kubernetes</code> 集群中的一个 <code>pod</code>， 能够无感知接入到 <code>Kubernetes</code> 集群， Telepresence 让你的本地环境成为 <code>集群中的一部分</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">telepresence connect
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>开发者每次修改代码后，重新编译，推送镜像，部署到 Kubernetes 集群，然后调试，如果出现错误，再重复这样的步骤，这个是以往大部分开发者的日常行为。</p>
+<p>大家也知道，下图中右侧虚框中的部分因为各种外部原因，常常是不可控的</p>
+<p><figure><img src="/images/tele03.png"/><figcaption>
+            <h4>Telepresence03</h4>
+        </figcaption>
+</figure>
+
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17025352313055.jpg"
+        data-srcset="media/17025352313055.jpg, media/17025352313055.jpg 1.5x, media/17025352313055.jpg 2x"
+        data-sizes="auto"
+        alt="media/17025352313055.jpg"
+        title="media/17025352313055.jpg" /></p>
+<p>Telepresence 是复杂的微服务架构原本只能从这种Remote 的验证方式得到解放
+调整为开发和联调测试行为都发生在本地，这样对开发者的效率明显提升很多。</p>
+<p><figure><img src="/images/tele04.png"/><figcaption>
+            <h4>Telepresence04</h4>
+        </figcaption>
+</figure>
+
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17025358170320.jpg"
+        data-srcset="media/17025358170320.jpg, media/17025358170320.jpg 1.5x, media/17025358170320.jpg 2x"
+        data-sizes="auto"
+        alt="media/17025358170320.jpg"
+        title="media/17025358170320.jpg" /></p>
+<p>安装 Telepresence(macOS)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install datawire/blackbird/telepresence
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="案例">案例</h2>
+<p>telepresence 默认会使用当前的 kubectl 的 current context 来进行请求。</p>
+<p>一、在 Kubernetes 集群运行一个 hello-world 服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl run hello-world <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--image<span class="o">=</span>datawire/hello-world <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--port<span class="o">=</span><span class="m">8000</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>--expose
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>二、 在本地启动 Telepresence，建立到集群的连接</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 将本地环境连接到远程 kubernetes 集群</span>
+</span></span><span class="line"><span class="cl">➜ telepresence connect
+</span></span><span class="line"><span class="cl">Launching Telepresence Root Daemon
+</span></span><span class="line"><span class="cl">Launching Telepresence User Daemon
+</span></span><span class="line"><span class="cl">Connected to context development-private@xdp-bee <span class="o">(</span>https://&lt;clusterip&gt;:6443<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>三、查看连接状态</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">telepresence status
+</span></span><span class="line"><span class="cl">User Daemon: Running
+</span></span><span class="line"><span class="cl">  Version           : v2.17.1
+</span></span><span class="line"><span class="cl">  Executable        : /opt/homebrew/bin/telepresence
+</span></span><span class="line"><span class="cl">  Install ID        : 834d6f44-05a1-4b63-82ff-8de25208e3ce
+</span></span><span class="line"><span class="cl">  Status            : Connected
+</span></span><span class="line"><span class="cl">  Kubernetes server : https://192.168.0.65:6443
+</span></span><span class="line"><span class="cl">  Kubernetes context: k8s-65
+</span></span><span class="line"><span class="cl">  Connection name   : k8s-65-default
+</span></span><span class="line"><span class="cl">  Namespace         : default
+</span></span><span class="line"><span class="cl">  Manager namespace : ambassador
+</span></span><span class="line"><span class="cl">  Intercepts        : <span class="m">0</span> total
+</span></span><span class="line"><span class="cl">Root Daemon: Running
+</span></span><span class="line"><span class="cl">  Version    : v2.17.1
+</span></span><span class="line"><span class="cl">  Version    : v2.17.1
+</span></span><span class="line"><span class="cl">  DNS        :
+</span></span><span class="line"><span class="cl">    Remote IP       : 127.0.0.1
+</span></span><span class="line"><span class="cl">    Exclude suffixes: <span class="o">[</span>.com .io .net .org .ru<span class="o">]</span>
+</span></span><span class="line"><span class="cl">    Include suffixes: <span class="o">[]</span>
+</span></span><span class="line"><span class="cl">    Timeout         : 8s
+</span></span><span class="line"><span class="cl">  Also Proxy : <span class="o">(</span><span class="m">0</span> subnets<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  Never Proxy: <span class="o">(</span><span class="m">1</span> subnets<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    - 192.168.0.65/32
+</span></span><span class="line"><span class="cl">Ambassador Cloud: Running
+</span></span><span class="line"><span class="cl">  Status      : Logged in
+</span></span><span class="line"><span class="cl">  User ID     : 8b474552-01e1-4c7c-8163-6c48141ffee1
+</span></span><span class="line"><span class="cl">  Account ID  : 6987f3d9-9f4e-4569-8045-1d563ef73f57
+</span></span><span class="line"><span class="cl">  User Name   : hongfeng liu
+</span></span><span class="line"><span class="cl">  Email       : fxqi1221@gmail.com
+</span></span><span class="line"><span class="cl">  Account Name: hongfeng
+</span></span><span class="line"><span class="cl">  Plan        : Free Trial
+</span></span><span class="line"><span class="cl">Traffic Manager: Connected
+</span></span><span class="line"><span class="cl">  Version : v2.17.1
+</span></span><span class="line"><span class="cl">Intercept Spec:
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>四、验证直接连接 hello-world 服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl http://hello-world.default:8000
+</span></span><span class="line"><span class="cl">Hello, world!
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>用浏览器访问该域名</p>
+<p><figure><img src="/images/tele05.png"/><figcaption>
+            <h4>Telepresence05</h4>
+        </figcaption>
+</figure>
+
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17025370475442.jpg"
+        data-srcset="media/17025370475442.jpg, media/17025370475442.jpg 1.5x, media/17025370475442.jpg 2x"
+        data-sizes="auto"
+        alt="media/17025370475442.jpg"
+        title="media/17025370475442.jpg" />
+Telepresence v2 通过 Kubernetes service 的 服务名称 + 命名空间 + 端口 访问服务</p>
+<p>五、 退出守护进程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">telepresence quit
+</span></span><span class="line"><span class="cl">Telepresence Root Daemon quitting... <span class="k">done</span>
+</span></span><span class="line"><span class="cl">Telepresence User Daemon is already stopped
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参考
+<a href="https://mp.weixin.qq.com/s/583aqGHcjYkBLStWrxiknA" target="_blank" rel="noopener noreffer ">https://mp.weixin.qq.com/s/583aqGHcjYkBLStWrxiknA</a></p>
+<p><a href="https://github.com/lqshow/telepresence-labs" target="_blank" rel="noopener noreffer ">https://github.com/lqshow/telepresence-labs</a></p>
+<p><a href="https://imti.co/kubernetes-port-forwarding/" target="_blank" rel="noopener noreffer ">https://imti.co/kubernetes-port-forwarding/</a></p>
+<p><a href="https://hackernoon.com/locally-developing-kubernetes-services-without-waiting-for-a-deploy-f63995de7b99" target="_blank" rel="noopener noreffer ">https://hackernoon.com/locally-developing-kubernetes-services-without-waiting-for-a-deploy-f63995de7b99</a></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-12-14</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/kuberenetes-telepersence/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/kuberenetes-telepersence/" data-title="Kuberenetes Telepersence" data-via="xxxx" data-hashtags="k8s"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/kuberenetes-telepersence/" data-hashtag="k8s"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/kuberenetes-telepersence/" data-title="Kuberenetes Telepersence"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/kuberenetes-telepersence/" data-title="Kuberenetes Telepersence"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/kuberenetes-telepersence/" data-title="Kuberenetes Telepersence"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/kuberenetes-sidecar/" class="prev" rel="prev" title="Kuberenetes Sidecar模式"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Kuberenetes Sidecar模式</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"f1aming007","id-2":"f1aming007"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

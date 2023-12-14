@@ -4,14 +4,34 @@
         <link>https://f1aming007.github.io/tags/k8s/</link>
         <description>k8s - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 14 Dec 2023 09:24:24 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 14 Dec 2023 10:58:50 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+    <title>Kuberenetes Telepersence</title>
+    <link>https://f1aming007.github.io/kuberenetes-telepersence/</link>
+    <pubDate>Thu, 14 Dec 2023 10:58:50 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/kuberenetes-telepersence/</guid>
+    <description><![CDATA[<h1 id="用telepresence-本地调试kubernetes中的微服务">用Telepresence 本地调试kubernetes中的微服务</h1>
+<p>github地址：<a href="https://github.com/telepresenceio/telepresence" target="_blank" rel="noopener noreffer ">telepresence</a>
+功能介绍：
+<figure><figcaption>
+            <h4>Telepresence01</h4>
+        </figcaption>
+</figure>
+</p>
+<ol>
+<li>快速的本地开发循环，无需等待容器构建/推送/部署</li>
+<li>能够使用他们最喜欢的本地工具（IDE、调试器等）</li>
+<li>能够运行无法在本地运行的大型应用程序</li>
+</ol>]]></description>
+</item>
+<item>
     <title>Kuberenetes Sidecar模式</title>
     <link>https://f1aming007.github.io/kuberenetes-sidecar/</link>
     <pubDate>Thu, 14 Dec 2023 09:24:24 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/kuberenetes-sidecar/</guid>
     <description><![CDATA[<h1 id="kubernetes-容器设计模式之边车模式">Kubernetes 容器设计模式之边车模式</h1>
-<p><a href="https://kubernetes.io/zh-cn/blog/2023/08/25/native-sidecar-containers/" target="_blank" rel="noopener noreffer ">sidecar</a>
+<p>github地址：<a href="https://kubernetes.io/zh-cn/blog/2023/08/25/native-sidecar-containers/" target="_blank" rel="noopener noreffer ">sidecar</a>
 <figure><figcaption>
             <h4>loki01</h4>
         </figcaption>
@@ -136,14 +156,6 @@ sidecar 边车模式 简单来说就是加装在摩托车旁边，用来拓展�
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/operator/</guid>
     <description><![CDATA[Operator 工作原理解读 operator的工作原理和编写方法 第一步，将这个 Operator 的代码 Clone 到本地： 1 git clone https://github.com/coreos/etcd-operator 第二步，将这个 Etcd Operator 部署在 Kubernetes 集群里 1 example/rbac/create_role.sh 这个脚本为 Etcd Operator]]></description>
-</item>
-<item>
-    <title>Kubernets-Rbac</title>
-    <link>https://f1aming007.github.io/rbac/</link>
-    <pubDate>Sat, 20 May 2023 11:28:38 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/rbac/</guid>
-    <description><![CDATA[基于角色的权限控制：RBAC 在kubernetes项目中 负责完成授权的（Authorization）工作的记住， 就是RBAC， 基于角色的访问]]></description>
 </item>
 </channel>
 </rss>

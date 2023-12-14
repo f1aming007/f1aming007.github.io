@@ -4,14 +4,34 @@
         <link>https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/</link>
         <description>文档 - Category - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 14 Dec 2023 09:24:24 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 14 Dec 2023 10:58:50 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+    <title>Kuberenetes Telepersence</title>
+    <link>https://f1aming007.github.io/kuberenetes-telepersence/</link>
+    <pubDate>Thu, 14 Dec 2023 10:58:50 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/kuberenetes-telepersence/</guid>
+    <description><![CDATA[<h1 id="用telepresence-本地调试kubernetes中的微服务">用Telepresence 本地调试kubernetes中的微服务</h1>
+<p>github地址：<a href="https://github.com/telepresenceio/telepresence" target="_blank" rel="noopener noreffer ">telepresence</a>
+功能介绍：
+<figure><figcaption>
+            <h4>Telepresence01</h4>
+        </figcaption>
+</figure>
+</p>
+<ol>
+<li>快速的本地开发循环，无需等待容器构建/推送/部署</li>
+<li>能够使用他们最喜欢的本地工具（IDE、调试器等）</li>
+<li>能够运行无法在本地运行的大型应用程序</li>
+</ol>]]></description>
+</item>
+<item>
     <title>Kuberenetes Sidecar模式</title>
     <link>https://f1aming007.github.io/kuberenetes-sidecar/</link>
     <pubDate>Thu, 14 Dec 2023 09:24:24 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/kuberenetes-sidecar/</guid>
     <description><![CDATA[<h1 id="kubernetes-容器设计模式之边车模式">Kubernetes 容器设计模式之边车模式</h1>
-<p><a href="https://kubernetes.io/zh-cn/blog/2023/08/25/native-sidecar-containers/" target="_blank" rel="noopener noreffer ">sidecar</a>
+<p>github地址：<a href="https://kubernetes.io/zh-cn/blog/2023/08/25/native-sidecar-containers/" target="_blank" rel="noopener noreffer ">sidecar</a>
 <figure><figcaption>
             <h4>loki01</h4>
         </figcaption>
@@ -133,22 +153,6 @@ sidecar 边车模式 简单来说就是加装在摩托车旁边，用来拓展�
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/redfish-api/</guid>
     <description><![CDATA[Redfish Api Redfish 利用常见的互联网和web 服务标准将信息直接提供给相关的工具链 IPMI 是一种较早的带外管理管理工具，仅限最小公共集命令集（开机/关机/重启/温]]></description>
-</item>
-<item>
-    <title>Golang Protobuf MessageMode</title>
-    <link>https://f1aming007.github.io/golang-protobuf-messagemode/</link>
-    <pubDate>Sat, 01 Jul 2023 11:02:39 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-protobuf-messagemode/</guid>
-    <description><![CDATA[<h1 id="minionhttpsimagesunsplashcomphoto-1661956603025-8310b2e3036dixlibrb-403ixidm3wxmja3fdf8mhxwag90by1wywdlfhx8fgvufdb8fhx8fa3d3dautoformatfitcropw1740q80"></h1>
-<h1 id="-grpc-教程--protobuf-通信模式">🔥 gRpc 教程- protobuf 通信模式</h1>
-<p><strong>四种通信模式</strong></p>
-<ol>
-<li>Simple RPC</li>
-<li>Server-Streaming RPC</li>
-<li>Client-Streaming RPC</li>
-<li>Bidirectionnal-Streaming RPC</li>
-</ol>]]></description>
 </item>
 </channel>
 </rss>

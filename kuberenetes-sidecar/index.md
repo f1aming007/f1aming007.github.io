@@ -2,7 +2,7 @@
 
 
 #  Kubernetes 容器设计模式之边车模式
-[sidecar](https://kubernetes.io/zh-cn/blog/2023/08/25/native-sidecar-containers/)
+github地址：[sidecar](https://kubernetes.io/zh-cn/blog/2023/08/25/native-sidecar-containers/)
 {{< figure src="/images/sidecar01.png" title="loki01" >}}
 sidecar 边车模式 简单来说就是加装在摩托车旁边，用来拓展现有功能的能力，可以坐上更多的人或者物， 边车模式 像软件工程的代理模式，对服务进行包装， 使其不改变原来的功能，拓展原来的服务
 
