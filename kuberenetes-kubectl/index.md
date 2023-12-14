@@ -2,6 +2,7 @@
 
 # kubernetes 常用运维 kubectl命令
 
+
 ## 环境上下文切换
 
 ### 切换集群
@@ -13,7 +14,7 @@ kubectl config get-contexts
 # 切换到指定的 context
 kubectl config use-context <CONTEXT-NAME>
 ```
-
+<!--more-->
 ### 设置默认的namespace
 ```bash
 

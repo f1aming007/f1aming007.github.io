@@ -4,13 +4,50 @@
         <link>https://f1aming007.github.io/tags/k8s/</link>
         <description>k8s - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Tue, 12 Dec 2023 13:39:10 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 14 Dec 2023 09:24:24 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+    <title>Kuberenetes Sidecar模式</title>
+    <link>https://f1aming007.github.io/kuberenetes-sidecar/</link>
+    <pubDate>Thu, 14 Dec 2023 09:24:24 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/kuberenetes-sidecar/</guid>
+    <description><![CDATA[<h1 id="kubernetes-容器设计模式之边车模式">Kubernetes 容器设计模式之边车模式</h1>
+<p><a href="https://kubernetes.io/zh-cn/blog/2023/08/25/native-sidecar-containers/" target="_blank" rel="noopener noreffer ">sidecar</a>
+<figure><figcaption>
+            <h4>loki01</h4>
+        </figcaption>
+</figure>
+
+sidecar 边车模式 简单来说就是加装在摩托车旁边，用来拓展现有功能的能力，可以坐上更多的人或者物， 边车模式 像软件工程的代理模式，对服务进行包装， 使其不改变原来的功能，拓展原来的服务</p>
+<p><code>sidecar</code> 模式 是用来解决微服务的服务治理问题</p>]]></description>
+</item>
+<item>
     <title>Kuberenetes Kubectl</title>
     <link>https://f1aming007.github.io/kuberenetes-kubectl/</link>
     <pubDate>Tue, 12 Dec 2023 13:39:10 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/kuberenetes-kubectl/</guid>
-    <description><![CDATA[kubernetes 常用运维 kubectl命令 环境上下文切换 切换集群 1 2 3 4 5 6 # 获取所有的 contexts kubectl config get-contexts # 切换到指定的 context kubectl config use-context &lt;CONTEXT-NAME&gt; 设置默认的namespace 1 2 3]]></description>
+    <description><![CDATA[<h1 id="kubernetes-常用运维-kubectl命令">kubernetes 常用运维 kubectl命令</h1>
+<h2 id="环境上下文切换">环境上下文切换</h2>
+<h3 id="切换集群">切换集群</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 获取所有的 contexts</span>
+</span></span><span class="line"><span class="cl">kubectl config get-contexts
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 切换到指定的 context</span>
+</span></span><span class="line"><span class="cl">kubectl config use-context &lt;CONTEXT-NAME&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div>]]></description>
 </item>
 <item>
     <title>Kubernetes Loki</title>
@@ -107,14 +144,6 @@
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/rbac/</guid>
     <description><![CDATA[基于角色的权限控制：RBAC 在kubernetes项目中 负责完成授权的（Authorization）工作的记住， 就是RBAC， 基于角色的访问]]></description>
-</item>
-<item>
-    <title>Kubernets-声明式API</title>
-    <link>https://f1aming007.github.io/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/</link>
-    <pubDate>Sat, 20 May 2023 11:27:18 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/</guid>
-    <description><![CDATA[声明式API与Kubernetes编码范式 kubectl create 再replace的操作， 称为命令式配置文件操作 声明式API https://hugbz2.51cg3.co/archives/25451 /https://hugbz2.51cg3.co/archives/4081/ kuberctl apply 命令就是 声明式API apply 与 re]]></description>
 </item>
 </channel>
 </rss>
