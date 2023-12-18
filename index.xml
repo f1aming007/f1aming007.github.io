@@ -7,17 +7,12 @@
             <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 18 Dec 2023 14:32:33 &#43;0800</lastBuildDate>
             <atom:link href="https://f1aming007.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>Kuberenetes Tcpdump</title>
+    <title>Kuberenetes  网络抓包  sniff</title>
     <link>https://f1aming007.github.io/kuberenetes-tcpdump/</link>
     <pubDate>Mon, 18 Dec 2023 14:32:33 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/kuberenetes-tcpdump/</guid>
-    <description><![CDATA[<h1 id="在kubernetes下实现网络抓包">在Kubernetes下实现网络抓包</h1>
-<figure><figcaption>
-            <h4>sniff01</h4>
-        </figcaption>
-</figure>
-
+    <description><![CDATA[<h1 id="在kubernetes下实现网络抓包sniff">在Kubernetes下实现网络抓包（sniff）</h1>
 <p>如果 kubernetes 线上服务出现问题， 通过网络抓包，排查网络来定位问题
 常见的抓包有几种方法</p>]]></description>
 </item>

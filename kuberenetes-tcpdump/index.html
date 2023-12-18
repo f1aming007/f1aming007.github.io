@@ -4,13 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>Kuberenetes Tcpdump - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Kuberenetes Tcpdump" />
-<meta property="og:description" content="在Kubernetes下实现网络抓包
-
-            sniff01
-        
-
-
+        <title>Kuberenetes  网络抓包  sniff - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Kuberenetes  网络抓包  sniff" />
+<meta property="og:description" content="在Kubernetes下实现网络抓包（sniff）
 如果 kubernetes 线上服务出现问题， 通过网络抓包，排查网络来定位问题
 常见的抓包有几种方法" />
 <meta property="og:type" content="article" />
@@ -20,13 +15,8 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
 
-<meta name="twitter:title" content="Kuberenetes Tcpdump"/>
-<meta name="twitter:description" content="在Kubernetes下实现网络抓包
-
-            sniff01
-        
-
-
+<meta name="twitter:title" content="Kuberenetes  网络抓包  sniff"/>
+<meta name="twitter:description" content="在Kubernetes下实现网络抓包（sniff）
 如果 kubernetes 线上服务出现问题， 通过网络抓包，排查网络来定位问题
 常见的抓包有几种方法"/>
 <meta name="application-name" content="我的网站">
@@ -38,12 +28,12 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Kuberenetes Tcpdump",
+        "headline": "Kuberenetes  网络抓包  sniff",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/f1aming007.github.io\/kuberenetes-tcpdump\/"
-        },"genre": "posts","keywords": "k8s","wordcount":  959 ,
+        },"genre": "posts","keywords": "k8s","wordcount":  965 ,
         "url": "https:\/\/f1aming007.github.io\/kuberenetes-tcpdump\/","datePublished": "2023-12-18T14:32:33+08:00","dateModified": "2023-12-18T14:32:33+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -129,9 +119,9 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kuberenetes Tcpdump</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kuberenetes  网络抓包  sniff</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-18">2023-12-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;959 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-18">2023-12-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;965 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -160,22 +150,9 @@
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h1 id="在kubernetes下实现网络抓包">在Kubernetes下实现网络抓包</h1>
-<figure><img src="/images/sniff01.png"/><figcaption>
-            <h4>sniff01</h4>
-        </figcaption>
-</figure>
-
+            </div><div class="content" id="content"><h1 id="在kubernetes下实现网络抓包sniff">在Kubernetes下实现网络抓包（sniff）</h1>
 <p>如果 kubernetes 线上服务出现问题， 通过网络抓包，排查网络来定位问题
 常见的抓包有几种方法</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="media/17028876390599.jpg"
-        data-srcset="media/17028876390599.jpg, media/17028876390599.jpg 1.5x, media/17028876390599.jpg 2x"
-        data-sizes="auto"
-        alt="media/17028876390599.jpg"
-        title="media/17028876390599.jpg" /></p>
 <h2 id="在宿主机上抓包">在宿主机上抓包</h2>
 <p>首先定位pod内的容器被调度到哪个Node 上， 在相应的Node里， 对容器进行抓包</p>
 <h3 id="定位pod-的containerid-以及它所运行的宿主机ip">定位Pod 的containerID 以及它所运行的宿主机IP</h3>
@@ -391,7 +368,7 @@ container ID = <code>78e91175699f.....</code></p>
                             <a class="link-to-markdown" href="/kuberenetes-tcpdump/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-title="Kuberenetes Tcpdump" data-via="xxxx" data-hashtags="k8s"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-hashtag="k8s"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-title="Kuberenetes Tcpdump"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-title="Kuberenetes Tcpdump"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-title="Kuberenetes Tcpdump"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-title="Kuberenetes  网络抓包  sniff" data-via="xxxx" data-hashtags="k8s"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-hashtag="k8s"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-title="Kuberenetes  网络抓包  sniff"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-title="Kuberenetes  网络抓包  sniff"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-title="Kuberenetes  网络抓包  sniff"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>

@@ -1,14 +1,11 @@
-# Kuberenetes Tcpdump
+# Kuberenetes  网络抓包  sniff
 
 
-# 在Kubernetes下实现网络抓包
-{{< figure src="/images/sniff01.png" title="sniff01" >}}
+# 在Kubernetes下实现网络抓包（sniff）
 
 如果 kubernetes 线上服务出现问题， 通过网络抓包，排查网络来定位问题
 常见的抓包有几种方法
 <!--more-->
-
-![](media/17028876390599.jpg)
 
 ## 在宿主机上抓包
 
