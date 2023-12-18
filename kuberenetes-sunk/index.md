@@ -8,6 +8,9 @@ SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容
 <!--more-->
 
 ![](media/17025443925846.jpg)
+
+[PDF 参考](https://slurm.schedmd.com/SLUG23/CoreWeave-SLUG23.pdf)
+
 本质上 `SUNK` 将 `Slurm` 集成为Kubernetes 调度程序， 并允许 Slurm 作业 在 Kubernetes 内运行。这创造了更加无缝的体验， 在同一中央平台上支持爆发式和批量工作负载，并允许开发人员利用 Kubernetes 上的 SLURM 资源管理。
 
 单独管理 Slurm 和 Kubernetes 可以降低整体复杂性， 但也大大降低了你选择在所有计算上运行的工作负载的灵活性，也就是说，最大限度地利用 GPU 资源变得更加困难。
