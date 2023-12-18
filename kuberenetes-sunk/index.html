@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Kuberenetes SUNK - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Kuberenetes SUNK" />
+<meta property="og:description" content="SUNK 简介（Slurm on Kubernetes）
+
+            sunk01
+        
+
+
+SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容器化部署和 GitOps 引入 Slurm，并将 Slurm 调度程序插件集成到 Kubernetes" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/kuberenetes-sunk/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-12-14T16:58:38+08:00" />
+<meta property="article:modified_time" content="2023-12-14T16:58:38+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="Kuberenetes SUNK"/>
+<meta name="twitter:description" content="SUNK 简介（Slurm on Kubernetes）
+
+            sunk01
+        
+
+
+SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容器化部署和 GitOps 引入 Slurm，并将 Slurm 调度程序插件集成到 Kubernetes"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/kuberenetes-sunk/" /><link rel="prev" href="https://f1aming007.github.io/kuberenetes-telepersence/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kuberenetes SUNK",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/kuberenetes-sunk\/"
+        },"genre": "posts","keywords": "k8s","wordcount":  2756 ,
+        "url": "https:\/\/f1aming007.github.io\/kuberenetes-sunk\/","datePublished": "2023-12-14T16:58:38+08:00","dateModified": "2023-12-14T16:58:38+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kuberenetes SUNK</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-14">2023-12-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2756 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#为什么创建sunk">为什么创建SUNK</a></li>
+      </ul>
+    </li>
+    <li><a href="#sunk-的特点">SUNK 的特点</a></li>
+    <li><a href="#sunk-的工作原理">SUNK 的工作原理</a></li>
+    <li><a href="#节点集-同步器和调度器">节点集、 同步器和调度器</a>
+      <ul>
+        <li><a href="#节点集">节点集</a></li>
+        <li><a href="#同步器">同步器</a></li>
+        <li><a href="#调度程序">调度程序</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考链接">参考链接</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="sunk-简介slurm-on-kubernetes">SUNK 简介（Slurm on Kubernetes）</h1>
+<figure><img src="/images/sunk01"/><figcaption>
+            <h4>sunk01</h4>
+        </figcaption>
+</figure>
+
+<p>SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容器化部署和 GitOps 引入 Slurm，并将 Slurm 调度程序插件集成到 Kubernetes</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17025443925846.jpg"
+        data-srcset="media/17025443925846.jpg, media/17025443925846.jpg 1.5x, media/17025443925846.jpg 2x"
+        data-sizes="auto"
+        alt="media/17025443925846.jpg"
+        title="media/17025443925846.jpg" />
+本质上 <code>SUNK</code> 将 <code>Slurm</code> 集成为Kubernetes 调度程序， 并允许 Slurm 作业 在 Kubernetes 内运行。这创造了更加无缝的体验， 在同一中央平台上支持爆发式和批量工作负载，并允许开发人员利用 Kubernetes 上的 SLURM 资源管理。</p>
+<p>单独管理 Slurm 和 Kubernetes 可以降低整体复杂性， 但也大大降低了你选择在所有计算上运行的工作负载的灵活性，也就是说，最大限度地利用 GPU 资源变得更加困难。</p>
+<p>通过在k8s 上部署 <code>Slurm</code>集群， 在同一计算池上， 可以灵活从 Kubernetes 或 Slurm 端无缝使用该计算。</p>
+<p>两种解决方案。 一个平台。 一个计算池， 一个编排层来统治他们
+<figure><img src="/images/sunk02"/><figcaption>
+            <h4>sunk02</h4>
+        </figcaption>
+</figure>
+</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17025458920211.jpg"
+        data-srcset="media/17025458920211.jpg, media/17025458920211.jpg 1.5x, media/17025458920211.jpg 2x"
+        data-sizes="auto"
+        alt="media/17025458920211.jpg"
+        title="media/17025458920211.jpg" />
+<figure><img src="/images/sunk03"/><figcaption>
+            <h4>sunk03</h4>
+        </figcaption>
+</figure>
+</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17025462266827.jpg"
+        data-srcset="media/17025462266827.jpg, media/17025462266827.jpg 1.5x, media/17025462266827.jpg 2x"
+        data-sizes="auto"
+        alt="media/17025462266827.jpg"
+        title="media/17025462266827.jpg" /></p>
+<h3 id="为什么创建sunk">为什么创建SUNK</h3>
+<p>客户效率，当你运行非常大且昂贵的HPC集群时， ，接近 100% 的利用率非常重要。任何时候，当你可能不使用你所付费的计算时，成本都可能非常高</p>
+<p>SUNK 完全构建在 Kubernetes 之上, 每个客户端都对其集群有一个单一的入口和管理点，但是，我们意识到许多喜欢 Slurm 的客户单独管理他， 或者询问我们是否有 Sulrm 集成</p>
+<p>SUNK 的核心是效率， 这就是专为 GPU 密集型用例而构建的原因</p>
+<p>客户能够利用 Slurm 的优势， 同时保持系统的完整性和易用性（也称为无需管理单独的集群）。由于该解决方案不存在，我们决定构建它。</p>
+<h2 id="sunk-的特点">SUNK 的特点</h2>
+<figure><img src="/images/sunk04"/><figcaption>
+            <h4>sunk04</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17026243079535.jpg"
+        data-srcset="media/17026243079535.jpg, media/17026243079535.jpg 1.5x, media/17026243079535.jpg 2x"
+        data-sizes="auto"
+        alt="media/17026243079535.jpg"
+        title="media/17026243079535.jpg" /></p>
+<p><strong>配置和部署</strong>： 通过将 Slurm 集群部署为 各种 Kubernetes 资源，我们能够使用高度可定制的 Helm Chart 来部署它， 解锁了基于  Kubernetes 的 GitOps 工作流程的大型生态系统及其附带的所有功能， 好处包括</p>
+<ul>
+<li>轻松追踪和配置prolog 和epilog 脚本</li>
+<li>快速部署测试机器</li>
+<li>支持s6脚本和服务</li>
+<li>可配置的身份验证方案，包括通过配套的 OpenLdap helm chart或第三方解决方案（Authentik、GAuth 等）</li>
+</ul>
+<p><strong>Kubernetes集成</strong>： 部署SUNK 后，你将获得在 Kubernetes 上运行的所有正常好处，例如：</p>
+<ul>
+<li>快速调度</li>
+<li>集装箱化</li>
+<li>控制平面服务的高可用性</li>
+<li>动态节点扩展</li>
+<li>具有请求和限制的资源管理</li>
+<li>通过 PersistentVolumeClaim 资源共享文件系统</li>
+</ul>
+<p>它还包括自定义 Slurm Kubernetes 调度程序 （用于通过 Slurm 调度程序本机 Kubernetes 工作负载）， 使你能够在 Slurm 作业（突发工作负载） 和 Kubernetes 工作负载（无服务器工作负载）之间动态转移单个计算池。</p>
+<p>状态管理： 通过在  Kubernetes 之上运行，你还可以更好地控制状态管理，包括：</p>
+<ul>
+<li>在 k8s 和 Slurm 之间具有双向状态同步的动态节点</li>
+<li>自动拓扑生成</li>
+<li>支持 Pyxis 容器执行</li>
+<li>GRES 支持和自动识别</li>
+</ul>
+<h2 id="sunk-的工作原理">SUNK 的工作原理</h2>
+<p>了解SUNK 如何有效集成 Slurm和Kubernetes， 了解一下底层结构</p>
+<p>展示了 SUNK的高层架构图
+<figure><img src="/images/sunk05"/><figcaption>
+            <h4>sunk05</h4>
+        </figcaption>
+</figure>
+</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17026288529216.jpg"
+        data-srcset="media/17026288529216.jpg, media/17026288529216.jpg 1.5x, media/17026288529216.jpg 2x"
+        data-sizes="auto"
+        alt="media/17026288529216.jpg"
+        title="media/17026288529216.jpg" /></p>
+<p>SUNK 的工作原理以及节点集</p>
+<p>首先要指出的是， <code>所有这些服务都是在 Kubernetes 中容器化</code>。 在顶部， 你拥有集群范围内部署的资源， 在底部， 你拥有耽搁 Slurm 集群部署的组件</p>
+<p><strong>A部分</strong>： 所有典型的Slurm <code>组件都部署在一个pod内</code>， 每个组件都有自己的可配置资源请求，包括了用户为了与 Slurm集群交互而链接的登陆节点，一旦连接到这些登陆节点， Kubernetes就会被抽象出来， 将获得正常 Slurm 集群的体验</p>
+<p><strong>B部分</strong>： 其中 <code>许多组件都需要 Slurm 配置</code> 通过将它们部署为<code>k8s ConfigMap</code> 和 <code>Secret</code> ， Slurm 配置文件可以在一个位置进行管理，并安装在 需要它们的任何地方，包括Slurm 配置、拓扑、prolog /epilog 脚本及数据库密码等敏感信息</p>
+<p><strong>C部分</strong>： HPC 集群最重要的方面是计算节点， 他们在中间显示为 裸机 Kubernetes 节点， slurmd 在上面以 1:1 映射现实的计算 pod中运行， 计算的部署由称为 NodeSet的CRD进行管理</p>
+<p><strong>D部分</strong>： 我们讨论的许多功能都要求 <code> Slurm 和 Kubernetes 端的计算状态保持同步</code>。 Slurm同步器充当两端的中间人。 通过Slurm 的REST API 发送和拉取信息</p>
+<p><strong>E部分</strong>：一旦同步器从 Slurm获取状态信息到 Kubernetes， 信息需要在许多不同的地方保持一致， <code>集群范围的Operator监视不同的资源并在适当的时候进行变更， 无论更改来自 Kubernetes 还是 Slurm。</code></p>
+<p>由于具有同步状态的能力，我们能够使用自定义 Kubernetes 调度程序，该调度程序允许你根据 Slurm 状态将工作负载调度到计算 Kubernetes 节点上。</p>
+<p>由于所有这些组件都是在Kuernetes 上运行， 我们可以通过 Prometheus 公开指标，这些指标可通过多种不同的方式使用。</p>
+<h2 id="节点集-同步器和调度器">节点集、 同步器和调度器</h2>
+<p>为了使这种集成称为可能， 必须定制SUNK 的三个方面： 节点集、 同步器和调度程序</p>
+<h3 id="节点集">节点集</h3>
+<figure><img src="/images/sunk06"/><figcaption>
+            <h4>sunk06</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17028645434435.jpg"
+        data-srcset="media/17028645434435.jpg, media/17028645434435.jpg 1.5x, media/17028645434435.jpg 2x"
+        data-sizes="auto"
+        alt="media/17028645434435.jpg"
+        title="media/17028645434435.jpg" /></p>
+<p>首先是 Nodeset （节点集）（如上图和第一个图表的 F 部分所示）。 这是我们开发的CRD， 它在Kubernetes 环境上下问中定义了Slurm 节点。它的定义与Statefulset或Deployment类似，但与节点的 一对一映射更类似于 Daemonset</p>
+<p><code>Nodeset 维护着一系列 Slurm中状态的状态字段。 着提供了基于 kubernetes 和 Slurm 中的状态来保护 Slurm 节点更新和扩展的机制</code></p>
+<p>Nodeset pod 运行 slurmd 和 munged， 安装在共享配置映射中， 用于Slurm配置、prolog 和epilog，以及作为 PVC 的共享文件系统卷。</p>
+<p>下图显示了大部分状态字段。正如你所看到的，Nodeset pod 可以主动了解有多少可能的节点与关联性匹配、其中有多少节点当前被分配为 Slurm 节点、跟踪准备情况、运行和Drain条件等</p>
+<h3 id="同步器">同步器</h3>
+<p>Nodeset 的许多功能都以来与  Kubernetes 端了解 Slurm 的状态，反之亦然。
+<code>Syncer 通过两部分完成此任务， Slurm 客户端和pod控制器</code></p>
+<p>Slurm 客户端与 Slurm REST API通信以推送和拉取信息， 随着Slurm 集群的规模增长到数百甚至千个节点。 这种通信将增长到大量流量。 客户端有效地缓存结构以处理大规模集群</p>
+<p>Pod 控制器接收来自客户端的事件， 并根据任何差异来协调 pod状态， 如果更改来自 Kubernetes 端。pod 控制器会将事件推送到客户端， 客户端会根据需要将该更改传递给 Slurm。</p>
+<p>因此，信息流有两个方向</p>
+<p>举例来说， Slurm 中的一个节点进入Drain状态， Syncer 将监测状态更改并在pod 上添加注释，此注释可以在 Kubernetes 端进行操作，例如仅当 Slurm 节点处于Drain状态时才开始更新。</p>
+<p>另一方面，改变可以从 Kubernetes 端开始。假设你检测到硬件问题并封锁 Kubernetes 内部的一个节点。Syncer 会将相应的 Slurm 节点放入Drain中，并添加一个很好的理由来解释为什么它被驱逐。
+<figure><img src="/images/sunk07"/><figcaption>
+            <h4>sunk07</h4>
+        </figcaption>
+</figure>
+</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17028685677882.jpg"
+        data-srcset="media/17028685677882.jpg, media/17028685677882.jpg 1.5x, media/17028685677882.jpg 2x"
+        data-sizes="auto"
+        alt="media/17028685677882.jpg"
+        title="media/17028685677882.jpg" /></p>
+<h3 id="调度程序">调度程序</h3>
+<p><code>调度程序 是在命名空间中运行的另一个服务， 它允许一些非常有趣的功能。</code></p>
+<p>假设你想要在 SUNK上获取一个预留实例池，并确保除了从按需池中使用的实例之外，你还能获得这些实例的最大利用率。又名：同时运行推理和训练。</p>
+<p>当在 k8s 中使用此 Scheduler 调度 pod 时，就像由 Knative 等无服务器解决方案驱动的推理 pod 一样，会创建一个 Slurm 作业，该作业能够抢占低优先级任务。当 Slurm 节点最终分配给 Slurm 中的作业时，调度程序会将 k8s pod 放置到该节点上并在那里运行</p>
+<p>简而言之，你可以无缝地使用 Kubernetes 中 Slurm 集群的计算，而无需主动维护两个独立的预留计算池（这些池不是动态分配的）。</p>
+<figure><img src="/images/sunk08"/><figcaption>
+            <h4>sunk08</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17028687610939.jpg"
+        data-srcset="media/17028687610939.jpg, media/17028687610939.jpg 1.5x, media/17028687610939.jpg 2x"
+        data-sizes="auto"
+        alt="media/17028687610939.jpg"
+        title="media/17028687610939.jpg" /></p>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li>Kubernetes 遇见高性能计算：https://kubernetes.io/blog/2017/08/kubernetes-meets-high-performance/</li>
+<li>SUNK 是 Kubernetes 上 Slurm 的实现：https://www.coreweave.com/blog/sunk-slurm-on-kubernetes-implementations?</li>
+</ol></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-12-14</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/kuberenetes-sunk/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/kuberenetes-sunk/" data-title="Kuberenetes SUNK" data-via="xxxx" data-hashtags="k8s"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/kuberenetes-sunk/" data-hashtag="k8s"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/kuberenetes-sunk/" data-title="Kuberenetes SUNK"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/kuberenetes-sunk/" data-title="Kuberenetes SUNK"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/kuberenetes-sunk/" data-title="Kuberenetes SUNK"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/kuberenetes-telepersence/" class="prev" rel="prev" title="Kuberenetes Telepersence"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Kuberenetes Telepersence</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"f1aming007","id-2":"f1aming007"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

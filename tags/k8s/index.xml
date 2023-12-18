@@ -4,7 +4,21 @@
         <link>https://f1aming007.github.io/tags/k8s/</link>
         <description>k8s - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 14 Dec 2023 10:58:50 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 14 Dec 2023 16:58:38 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+    <title>Kuberenetes SUNK</title>
+    <link>https://f1aming007.github.io/kuberenetes-sunk/</link>
+    <pubDate>Thu, 14 Dec 2023 16:58:38 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/kuberenetes-sunk/</guid>
+    <description><![CDATA[<h1 id="sunk-简介slurm-on-kubernetes">SUNK 简介（Slurm on Kubernetes）</h1>
+<figure><figcaption>
+            <h4>sunk01</h4>
+        </figcaption>
+</figure>
+
+<p>SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容器化部署和 GitOps 引入 Slurm，并将 Slurm 调度程序插件集成到 Kubernetes</p>]]></description>
+</item>
+<item>
     <title>Kuberenetes Telepersence</title>
     <link>https://f1aming007.github.io/kuberenetes-telepersence/</link>
     <pubDate>Thu, 14 Dec 2023 10:58:50 &#43;0800</pubDate>
@@ -148,14 +162,6 @@ sidecar 边车模式 简单来说就是加装在摩托车旁边，用来拓展�
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/sc-pv-pvc/</guid>
     <description><![CDATA[Lighthouse (figure) PV、PVC、StorageClass Kubernetes 处理容器持久化存储的核心原理 PV： 持久化存储数据卷 pv 一般有运维人员事先创建之后使用， 定义一个NF]]></description>
-</item>
-<item>
-    <title>Kubernets-Operator</title>
-    <link>https://f1aming007.github.io/operator/</link>
-    <pubDate>Sat, 20 May 2023 11:29:17 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/operator/</guid>
-    <description><![CDATA[Operator 工作原理解读 operator的工作原理和编写方法 第一步，将这个 Operator 的代码 Clone 到本地： 1 git clone https://github.com/coreos/etcd-operator 第二步，将这个 Etcd Operator 部署在 Kubernetes 集群里 1 example/rbac/create_role.sh 这个脚本为 Etcd Operator]]></description>
 </item>
 </channel>
 </rss>
