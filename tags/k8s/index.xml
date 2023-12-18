@@ -4,7 +4,22 @@
         <link>https://f1aming007.github.io/tags/k8s/</link>
         <description>k8s - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 14 Dec 2023 16:58:38 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 18 Dec 2023 14:32:33 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+    <title>Kuberenetes Tcpdump</title>
+    <link>https://f1aming007.github.io/kuberenetes-tcpdump/</link>
+    <pubDate>Mon, 18 Dec 2023 14:32:33 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/kuberenetes-tcpdump/</guid>
+    <description><![CDATA[<h1 id="在kubernetes下实现网络抓包">在Kubernetes下实现网络抓包</h1>
+<figure><figcaption>
+            <h4>sniff01</h4>
+        </figcaption>
+</figure>
+
+<p>如果 kubernetes 线上服务出现问题， 通过网络抓包，排查网络来定位问题
+常见的抓包有几种方法</p>]]></description>
+</item>
+<item>
     <title>Kuberenetes SUNK</title>
     <link>https://f1aming007.github.io/kuberenetes-sunk/</link>
     <pubDate>Thu, 14 Dec 2023 16:58:38 &#43;0800</pubDate>
@@ -154,14 +169,6 @@ sidecar 边车模式 简单来说就是加装在摩托车旁边，用来拓展�
 <li>获取应用的资源使用情况</li>
 <li>拿到应用的实时日志， 进行问题的诊断和分析</li>
 </ol>]]></description>
-</item>
-<item>
-    <title>Kubernets-Sc&amp;Pv&amp;Pvc</title>
-    <link>https://f1aming007.github.io/sc-pv-pvc/</link>
-    <pubDate>Sat, 20 May 2023 11:29:36 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/sc-pv-pvc/</guid>
-    <description><![CDATA[Lighthouse (figure) PV、PVC、StorageClass Kubernetes 处理容器持久化存储的核心原理 PV： 持久化存储数据卷 pv 一般有运维人员事先创建之后使用， 定义一个NF]]></description>
 </item>
 </channel>
 </rss>

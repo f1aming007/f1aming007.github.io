@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Kuberenetes Tcpdump - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Kuberenetes Tcpdump" />
+<meta property="og:description" content="在Kubernetes下实现网络抓包
+
+            sniff01
+        
+
+
+如果 kubernetes 线上服务出现问题， 通过网络抓包，排查网络来定位问题
+常见的抓包有几种方法" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/kuberenetes-tcpdump/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-12-18T14:32:33+08:00" />
+<meta property="article:modified_time" content="2023-12-18T14:32:33+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="Kuberenetes Tcpdump"/>
+<meta name="twitter:description" content="在Kubernetes下实现网络抓包
+
+            sniff01
+        
+
+
+如果 kubernetes 线上服务出现问题， 通过网络抓包，排查网络来定位问题
+常见的抓包有几种方法"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/kuberenetes-tcpdump/" /><link rel="prev" href="https://f1aming007.github.io/kuberenetes-sunk/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kuberenetes Tcpdump",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/kuberenetes-tcpdump\/"
+        },"genre": "posts","keywords": "k8s","wordcount":  959 ,
+        "url": "https:\/\/f1aming007.github.io\/kuberenetes-tcpdump\/","datePublished": "2023-12-18T14:32:33+08:00","dateModified": "2023-12-18T14:32:33+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kuberenetes Tcpdump</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-18">2023-12-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;959 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#在宿主机上抓包">在宿主机上抓包</a>
+      <ul>
+        <li><a href="#定位pod-的containerid-以及它所运行的宿主机ip">定位Pod 的containerID 以及它所运行的宿主机IP</a></li>
+        <li><a href="#查询网络接口索引">查询网络接口索引</a></li>
+        <li><a href="#查找网络接口信息">查找网络接口信息</a></li>
+        <li><a href="#在宿主机上抓包-1">在宿主机上抓包</a></li>
+      </ul>
+    </li>
+    <li><a href="#在pod-内抓包">在pod 内抓包</a></li>
+    <li><a href="#通过-ephemeral-containers-抓包">通过 ephemeral containers 抓包</a></li>
+    <li><a href="#通过-ksniff-抓包">通过 Ksniff 抓包</a>
+      <ul>
+        <li><a href="#安装-krew">安装 Krew</a></li>
+        <li><a href="#安装-sniff-插件">安装 sniff 插件</a></li>
+        <li><a href="#执行-kubectl-sniff-命令抓包">执行 kubectl sniff 命令抓包</a></li>
+        <li><a href="#保存抓包文件">保存抓包文件</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="在kubernetes下实现网络抓包">在Kubernetes下实现网络抓包</h1>
+<figure><img src="/images/sniff01.png"/><figcaption>
+            <h4>sniff01</h4>
+        </figcaption>
+</figure>
+
+<p>如果 kubernetes 线上服务出现问题， 通过网络抓包，排查网络来定位问题
+常见的抓包有几种方法</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17028876390599.jpg"
+        data-srcset="media/17028876390599.jpg, media/17028876390599.jpg 1.5x, media/17028876390599.jpg 2x"
+        data-sizes="auto"
+        alt="media/17028876390599.jpg"
+        title="media/17028876390599.jpg" /></p>
+<h2 id="在宿主机上抓包">在宿主机上抓包</h2>
+<p>首先定位pod内的容器被调度到哪个Node 上， 在相应的Node里， 对容器进行抓包</p>
+<h3 id="定位pod-的containerid-以及它所运行的宿主机ip">定位Pod 的containerID 以及它所运行的宿主机IP</h3>
+<p>在 Kubernetes 集群内执行下面这个指令，并从返回的结果中拿到两个信息</p>
+<p>宿主机 IP = <code>172.18.0.xxx</code>
+container ID = <code>78e91175699f.....</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 注: 需要替换 namespace 和 pod name</span>
+</span></span><span class="line"><span class="cl">➜ kubectl get pod <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -n <span class="si">${</span><span class="nv">NAMESPACE</span><span class="si">}</span> <span class="si">${</span><span class="nv">POD_NAME</span><span class="si">}</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -o json<span class="p">|</span>jq <span class="s1">&#39;.status|{hostIP: .hostIP, container: [.containerStatuses[]|{name: .name, containerID: .containerID}]}&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;hostIP&#34;</span>: <span class="s2">&#34;172.18.0.xxx&#34;</span>,
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;container&#34;</span>: <span class="o">[</span>
+</span></span><span class="line"><span class="cl">    <span class="o">{</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;linkerd-proxy&#34;</span>,
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;containerID&#34;</span>: <span class="s2">&#34;docker://78e91175699f8cc0a3b0ff87da97407c19c7a86706a5b74e2d86f4428a4de75a&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>,
+</span></span><span class="line"><span class="cl">    <span class="o">{</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;nginx&#34;</span>,
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;containerID&#34;</span>: <span class="s2">&#34;docker://7a6f7eabc2d5112437d30ee8ec1aa7ef963e97c3d09c3bc63613a70d106d7d01&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">  <span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="查询网络接口索引">查询网络接口索引</h3>
+<p>通过ssh 登陆到pod所在的宿主机上， 然后在容器内执行 <code>cat /sys/class/net/eth0/iflink</code> ， 查找容器中的网卡与宿主机的veth 网卡直接的对应关系</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 注: 需要替换 container id</span>
+</span></span><span class="line"><span class="cl">docker <span class="nb">exec</span> -it <span class="si">${</span><span class="nv">CONTAINER_ID</span><span class="si">}</span> /bin/bash -c <span class="s1">&#39;cat /sys/class/net/eth0/iflink&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="m">10227</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="查找网络接口信息">查找网络接口信息</h3>
+<p>在宿主机上做 ip link 操作</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ip link <span class="p">|</span>grep <span class="m">10227</span>
+</span></span><span class="line"><span class="cl">10227: calicf227ed888a@if4: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="m">1440</span> qdisc noqueue state UP mode DEFAULT group default
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="在宿主机上抓包-1">在宿主机上抓包</h3>
+<p>通过tcpdump指令， 将报文保存到文件中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tcpdump -i calicf227ed888a@if4 -w /root/tcpdump.pcap 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="在pod-内抓包">在pod 内抓包</h2>
+<p>在目标pod 内抓包</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 注: -c ${CONTAINER_NAME} 是可选择的。如果 Pod 中仅包含一个容器，就可以忽略它</span>
+</span></span><span class="line"><span class="cl">kubectl <span class="nb">exec</span> <span class="si">${</span><span class="nv">POD_NAME</span><span class="si">}</span> -c <span class="si">${</span><span class="nv">CONTAINER_NAME</span><span class="si">}</span> -- tcpdump -i eth0 -w - <span class="p">|</span> wireshark -k -i -
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="通过-ephemeral-containers-抓包">通过 ephemeral containers 抓包</h2>
+<p>值得一提的是 Kubernetes 在 v1.16 [Alpha] 开始支持 Ephemeral Containers[2]，它正好可以解决上面提的 2 个痛点，临时容器对于排除交互式故障非常有用，Kubernetes 在 v1.23 [beta] 已经默认开启该功能了。</p>
+<p>比如我使用 nicolaka/netshoot[3] 镜像用来调试，用法如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 注: 需要替换 pod name 和 container name</span>
+</span></span><span class="line"><span class="cl">kubectl debug -i <span class="si">${</span><span class="nv">POD_NAME</span><span class="si">}</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --image<span class="o">=</span>nicolaka/netshoot <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --target<span class="o">=</span><span class="si">${</span><span class="nv">CONTAINER_NAME</span><span class="si">}</span> -- tcpdump -i eth0 -w - <span class="p">|</span> wireshark -k -i -
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="通过-ksniff-抓包">通过 Ksniff 抓包</h2>
+<p>ksniff 是一个 kubectl 的插件，它利用 tcpdump 和 Wireshark 对 Kubernetes 集群中的任何 Pod 启动远程抓包</p>
+<p>ksniff 一般使用 krew 这个 kubectl 包管理器进行安装</p>
+<h3 id="安装-krew">安装 Krew</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">(</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">set</span> -x<span class="p">;</span> <span class="nb">cd</span> <span class="s2">&#34;</span><span class="k">$(</span>mktemp -d<span class="k">)</span><span class="s2">&#34;</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">  curl -fsSLO <span class="s2">&#34;https://github.com/kubernetes-sigs/krew/releases/download/v0.4.4/krew-linux_amd64.tar.gz&#34;</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">  tar zxvf krew.tar.gz <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">KREW</span><span class="o">=</span>./krew-<span class="s2">&#34;</span><span class="k">$(</span>uname <span class="p">|</span> tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span><span class="s2">_</span><span class="k">$(</span>uname -m <span class="p">|</span> sed -e <span class="s1">&#39;s/x86_64/amd64/&#39;</span> -e <span class="s1">&#39;s/arm.*$/arm/&#39;</span><span class="k">)</span><span class="s2">&#34;</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;</span><span class="nv">$KREW</span><span class="s2">&#34;</span> install krew
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">KREW_ROOT</span><span class="k">:-</span><span class="nv">$HOME</span><span class="p">/.krew</span><span class="si">}</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="安装-sniff-插件">安装 sniff 插件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl krew install sniff
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="执行-kubectl-sniff-命令抓包">执行 kubectl sniff 命令抓包</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl sniff <span class="si">${</span><span class="nv">POD_NAME</span><span class="si">}</span> -n <span class="si">${</span><span class="nv">NAMESPACE</span><span class="si">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行 sniff 命令后，本地会自动启动 Wireshark 进行抓包，如下图
+<figure><img src="/images/sniff02.png"/><figcaption>
+            <h4>sniff02</h4>
+        </figcaption>
+</figure>
+</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17028874913645.jpg"
+        data-srcset="media/17028874913645.jpg, media/17028874913645.jpg 1.5x, media/17028874913645.jpg 2x"
+        data-sizes="auto"
+        alt="media/17028874913645.jpg"
+        title="media/17028874913645.jpg" />
+以下是 sniff 运行的日志，我只提取了日志的关键部分</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">➜ kubectl sniff httpbin -n default
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">time</span><span class="o">=</span><span class="s2">&#34;2022-02-20T19:56:13+08:00&#34;</span> <span class="nv">level</span><span class="o">=</span>info <span class="nv">msg</span><span class="o">=</span><span class="s2">&#34;using tcpdump path at: &#39;/Users/linqiong/.krew/store/sniff/v1.6.1/static-tcpdump&#39;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">time</span><span class="o">=</span><span class="s2">&#34;2022-02-20T19:56:13+08:00&#34;</span> <span class="nv">level</span><span class="o">=</span>info <span class="nv">msg</span><span class="o">=</span><span class="s2">&#34;selected container: &#39;httpbin&#39;&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从运行的日志来看，sniff 是将本地的 static-tcpdump 文件上传到 Pod 的指定容器的 /tmp 目录下，然后在容器内，通过运行以下命令来达到抓包的目的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/tmp/static-tcpdump -i any -U -w -
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="保存抓包文件">保存抓包文件</h3>
+<p>有时在生产环境我们可能无法直接在本地执行 kubectl，需要经过跳板机，这个时候我们可以将抓到的包保存成文件，然后再拷到本地使用 wireshark 分析。</p>
+<p>只需加一个 -o 参数指定下保存的文件路径即可:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl -n <span class="nb">test</span> sniff website-7d7d96cdbf-6v4p6 -o test.pcap
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-12-18</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/kuberenetes-tcpdump/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-title="Kuberenetes Tcpdump" data-via="xxxx" data-hashtags="k8s"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-hashtag="k8s"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-title="Kuberenetes Tcpdump"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-title="Kuberenetes Tcpdump"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/kuberenetes-tcpdump/" data-title="Kuberenetes Tcpdump"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/kuberenetes-sunk/" class="prev" rel="prev" title="Kuberenetes SUNK"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Kuberenetes SUNK</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"f1aming007","id-2":"f1aming007"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
