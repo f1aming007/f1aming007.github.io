@@ -156,7 +156,7 @@ SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="sunk-简介slurm-on-kubernetes">SUNK 简介（Slurm on Kubernetes）</h1>
-<figure><img src="/images/sunk01"/><figcaption>
+<figure><img src="/images/sunk01.png"/><figcaption>
             <h4>sunk01</h4>
         </figcaption>
 </figure>
@@ -175,7 +175,7 @@ SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容
 <p>单独管理 Slurm 和 Kubernetes 可以降低整体复杂性， 但也大大降低了你选择在所有计算上运行的工作负载的灵活性，也就是说，最大限度地利用 GPU 资源变得更加困难。</p>
 <p>通过在k8s 上部署 <code>Slurm</code>集群， 在同一计算池上， 可以灵活从 Kubernetes 或 Slurm 端无缝使用该计算。</p>
 <p>两种解决方案。 一个平台。 一个计算池， 一个编排层来统治他们
-<figure><img src="/images/sunk02"/><figcaption>
+<figure><img src="/images/sunk02.png"/><figcaption>
             <h4>sunk02</h4>
         </figcaption>
 </figure>
@@ -188,7 +188,7 @@ SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容
         data-sizes="auto"
         alt="media/17025458920211.jpg"
         title="media/17025458920211.jpg" />
-<figure><img src="/images/sunk03"/><figcaption>
+<figure><img src="/images/sunk03.png"/><figcaption>
             <h4>sunk03</h4>
         </figcaption>
 </figure>
@@ -207,7 +207,7 @@ SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容
 <p>SUNK 的核心是效率， 这就是专为 GPU 密集型用例而构建的原因</p>
 <p>客户能够利用 Slurm 的优势， 同时保持系统的完整性和易用性（也称为无需管理单独的集群）。由于该解决方案不存在，我们决定构建它。</p>
 <h2 id="sunk-的特点">SUNK 的特点</h2>
-<figure><img src="/images/sunk04"/><figcaption>
+<figure><img src="/images/sunk04.png"/><figcaption>
             <h4>sunk04</h4>
         </figcaption>
 </figure>
@@ -247,7 +247,7 @@ SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容
 <h2 id="sunk-的工作原理">SUNK 的工作原理</h2>
 <p>了解SUNK 如何有效集成 Slurm和Kubernetes， 了解一下底层结构</p>
 <p>展示了 SUNK的高层架构图
-<figure><img src="/images/sunk05"/><figcaption>
+<figure><img src="/images/sunk05.png"/><figcaption>
             <h4>sunk05</h4>
         </figcaption>
 </figure>
@@ -272,7 +272,7 @@ SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容
 <h2 id="节点集-同步器和调度器">节点集、 同步器和调度器</h2>
 <p>为了使这种集成称为可能， 必须定制SUNK 的三个方面： 节点集、 同步器和调度程序</p>
 <h3 id="节点集">节点集</h3>
-<figure><img src="/images/sunk06"/><figcaption>
+<figure><img src="/images/sunk06.png"/><figcaption>
             <h4>sunk06</h4>
         </figcaption>
 </figure>
@@ -297,7 +297,7 @@ SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容
 <p>因此，信息流有两个方向</p>
 <p>举例来说， Slurm 中的一个节点进入Drain状态， Syncer 将监测状态更改并在pod 上添加注释，此注释可以在 Kubernetes 端进行操作，例如仅当 Slurm 节点处于Drain状态时才开始更新。</p>
 <p>另一方面，改变可以从 Kubernetes 端开始。假设你检测到硬件问题并封锁 Kubernetes 内部的一个节点。Syncer 会将相应的 Slurm 节点放入Drain中，并添加一个很好的理由来解释为什么它被驱逐。
-<figure><img src="/images/sunk07"/><figcaption>
+<figure><img src="/images/sunk07.png"/><figcaption>
             <h4>sunk07</h4>
         </figcaption>
 </figure>
@@ -315,7 +315,7 @@ SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容
 <p>假设你想要在 SUNK上获取一个预留实例池，并确保除了从按需池中使用的实例之外，你还能获得这些实例的最大利用率。又名：同时运行推理和训练。</p>
 <p>当在 k8s 中使用此 Scheduler 调度 pod 时，就像由 Knative 等无服务器解决方案驱动的推理 pod 一样，会创建一个 Slurm 作业，该作业能够抢占低优先级任务。当 Slurm 节点最终分配给 Slurm 中的作业时，调度程序会将 k8s pod 放置到该节点上并在那里运行</p>
 <p>简而言之，你可以无缝地使用 Kubernetes 中 Slurm 集群的计算，而无需主动维护两个独立的预留计算池（这些池不是动态分配的）。</p>
-<figure><img src="/images/sunk08"/><figcaption>
+<figure><img src="/images/sunk08.png"/><figcaption>
             <h4>sunk08</h4>
         </figcaption>
 </figure>

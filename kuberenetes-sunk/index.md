@@ -2,7 +2,7 @@
 
 
 # SUNK 简介（Slurm on Kubernetes）
-{{< figure src="/images/sunk01" title="sunk01" >}}
+{{< figure src="/images/sunk01.png" title="sunk01" >}}
 
 SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容器化部署和 GitOps 引入 Slurm，并将 Slurm 调度程序插件集成到 Kubernetes
 <!--more-->
@@ -18,10 +18,10 @@ SUNK 是一个开源项目（将于 2024 年初发布），它将 Kubernetes 容
 通过在k8s 上部署 `Slurm`集群， 在同一计算池上， 可以灵活从 Kubernetes 或 Slurm 端无缝使用该计算。
 
 两种解决方案。 一个平台。 一个计算池， 一个编排层来统治他们
-{{< figure src="/images/sunk02" title="sunk02" >}}
+{{< figure src="/images/sunk02.png" title="sunk02" >}}
 
 ![](media/17025458920211.jpg)
-{{< figure src="/images/sunk03" title="sunk03" >}}
+{{< figure src="/images/sunk03.png" title="sunk03" >}}
 
 ![](media/17025462266827.jpg)
 
@@ -38,7 +38,7 @@ SUNK 的核心是效率， 这就是专为 GPU 密集型用例而构建的原因
 客户能够利用 Slurm 的优势， 同时保持系统的完整性和易用性（也称为无需管理单独的集群）。由于该解决方案不存在，我们决定构建它。
 
 ## SUNK 的特点
-{{< figure src="/images/sunk04" title="sunk04" >}}
+{{< figure src="/images/sunk04.png" title="sunk04" >}}
 
 ![](media/17026243079535.jpg)
 
@@ -70,7 +70,7 @@ SUNK 的核心是效率， 这就是专为 GPU 密集型用例而构建的原因
 了解SUNK 如何有效集成 Slurm和Kubernetes， 了解一下底层结构
 
 展示了 SUNK的高层架构图
-{{< figure src="/images/sunk05" title="sunk05" >}}
+{{< figure src="/images/sunk05.png" title="sunk05" >}}
 
 ![](media/17026288529216.jpg)
 
@@ -97,7 +97,7 @@ SUNK 的工作原理以及节点集
 为了使这种集成称为可能， 必须定制SUNK 的三个方面： 节点集、 同步器和调度程序
 
 ### 节点集
-{{< figure src="/images/sunk06" title="sunk06" >}}
+{{< figure src="/images/sunk06.png" title="sunk06" >}}
 
 ![](media/17028645434435.jpg)
 
@@ -124,7 +124,7 @@ Pod 控制器接收来自客户端的事件， 并根据任何差异来协调 po
 举例来说， Slurm 中的一个节点进入Drain状态， Syncer 将监测状态更改并在pod 上添加注释，此注释可以在 Kubernetes 端进行操作，例如仅当 Slurm 节点处于Drain状态时才开始更新。
 
 另一方面，改变可以从 Kubernetes 端开始。假设你检测到硬件问题并封锁 Kubernetes 内部的一个节点。Syncer 会将相应的 Slurm 节点放入Drain中，并添加一个很好的理由来解释为什么它被驱逐。
-{{< figure src="/images/sunk07" title="sunk07" >}}
+{{< figure src="/images/sunk07.png" title="sunk07" >}}
 
 ![](media/17028685677882.jpg)
 
@@ -139,7 +139,7 @@ Pod 控制器接收来自客户端的事件， 并根据任何差异来协调 po
 
 简而言之，你可以无缝地使用 Kubernetes 中 Slurm 集群的计算，而无需主动维护两个独立的预留计算池（这些池不是动态分配的）。
 
-{{< figure src="/images/sunk08" title="sunk08" >}}
+{{< figure src="/images/sunk08.png" title="sunk08" >}}
 
 ![](media/17028687610939.jpg)
 
