@@ -4,7 +4,15 @@
         <link>https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/</link>
         <description>文档 - Category - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 18 Dec 2023 14:32:33 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 18 Dec 2023 16:47:30 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+    <title>Kuberenetes SharedMemory</title>
+    <link>https://f1aming007.github.io/kuberenetes-sharedmemory/</link>
+    <pubDate>Mon, 18 Dec 2023 16:47:30 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/kuberenetes-sharedmemory/</guid>
+    <description><![CDATA[什么是 Shared Memory 共享内存是 Unix 下的多进程之间的通信方式之一，它使得多进程可以访问同一块内存空间， 不通进程可以及时看到对方进程中共享内存中数据的更新 由]]></description>
+</item>
+<item>
     <title>Kuberenetes  网络抓包  sniff</title>
     <link>https://f1aming007.github.io/kuberenetes-tcpdump/</link>
     <pubDate>Mon, 18 Dec 2023 14:32:33 &#43;0800</pubDate>
@@ -143,20 +151,6 @@ sidecar 边车模式 简单来说就是加装在摩托车旁边，用来拓展�
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/golang-jsonparser/</guid>
     <description><![CDATA[Jsonparser 开源的JSON包 号称比JSON包性能高10倍，内存分配优化到0，提高JSON操作的性能 jsonparser 的性能在很大程度上取决于使用情况，当不需要处理完成]]></description>
-</item>
-<item>
-    <title>Golang 设计模式 单例模式</title>
-    <link>https://f1aming007.github.io/golang-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
-    <pubDate>Sat, 05 Aug 2023 11:10:22 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
-    <description><![CDATA[<h1 id="单例模式">单例模式</h1>
-<ul>
-<li>单例模式宏观介绍</li>
-<li>饿汉式单例模式实现思路</li>
-<li>懒汉式单例模式实现推演</li>
-<li>Golang 单例工具 sync.Once 源码解析</li>
-</ul>]]></description>
 </item>
 </channel>
 </rss>

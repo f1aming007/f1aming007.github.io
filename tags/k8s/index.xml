@@ -4,7 +4,15 @@
         <link>https://f1aming007.github.io/tags/k8s/</link>
         <description>k8s - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 18 Dec 2023 14:32:33 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 18 Dec 2023 16:47:30 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+    <title>Kuberenetes SharedMemory</title>
+    <link>https://f1aming007.github.io/kuberenetes-sharedmemory/</link>
+    <pubDate>Mon, 18 Dec 2023 16:47:30 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/kuberenetes-sharedmemory/</guid>
+    <description><![CDATA[什么是 Shared Memory 共享内存是 Unix 下的多进程之间的通信方式之一，它使得多进程可以访问同一块内存空间， 不通进程可以及时看到对方进程中共享内存中数据的更新 由]]></description>
+</item>
+<item>
     <title>Kuberenetes  网络抓包  sniff</title>
     <link>https://f1aming007.github.io/kuberenetes-tcpdump/</link>
     <pubDate>Mon, 18 Dec 2023 14:32:33 &#43;0800</pubDate>
@@ -149,21 +157,6 @@ sidecar 边车模式 简单来说就是加装在摩托车旁边，用来拓展�
 <li>GVK —— group 、version、 kind</li>
 <li>GVR —— group 、version 、resource</li>
 </ul>]]></description>
-</item>
-<item>
-    <title>K8s Liveness_Readines</title>
-    <link>https://f1aming007.github.io/k8s-liveness_readines/</link>
-    <pubDate>Wed, 24 May 2023 16:28:31 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/k8s-liveness_readines/</guid>
-    <description><![CDATA[<p></p>
-<h1 id="livenessreadines">Liveness&amp;Readines</h1>
-<h2 id="需求来源">需求来源</h2>
-<ol>
-<li>实时观察应用的健康状态</li>
-<li>获取应用的资源使用情况</li>
-<li>拿到应用的实时日志， 进行问题的诊断和分析</li>
-</ol>]]></description>
 </item>
 </channel>
 </rss>

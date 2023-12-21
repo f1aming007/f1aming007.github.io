@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Kuberenetes SharedMemory - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Kuberenetes SharedMemory" />
+<meta property="og:description" content="什么是 Shared Memory 共享内存是 Unix 下的多进程之间的通信方式之一，它使得多进程可以访问同一块内存空间， 不通进程可以及时看到对方进程中共享内存中数据的更新 由" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/kuberenetes-sharedmemory/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-12-18T16:47:30+08:00" />
+<meta property="article:modified_time" content="2023-12-18T16:47:30+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="Kuberenetes SharedMemory"/>
+<meta name="twitter:description" content="什么是 Shared Memory 共享内存是 Unix 下的多进程之间的通信方式之一，它使得多进程可以访问同一块内存空间， 不通进程可以及时看到对方进程中共享内存中数据的更新 由"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/kuberenetes-sharedmemory/" /><link rel="prev" href="https://f1aming007.github.io/kuberenetes-tcpdump/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kuberenetes SharedMemory",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/kuberenetes-sharedmemory\/"
+        },"genre": "posts","keywords": "k8s","wordcount":  1545 ,
+        "url": "https:\/\/f1aming007.github.io\/kuberenetes-sharedmemory\/","datePublished": "2023-12-18T16:47:30+08:00","dateModified": "2023-12-18T16:47:30+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kuberenetes SharedMemory</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-18">2023-12-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1545 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#docker">Docker</a></li>
+    <li><a href="#kubernetes">Kubernetes</a></li>
+    <li><a href="#解决方案">解决方案</a></li>
+    <li><a href="#1-只设置介质类型">1、 只设置介质类型</a></li>
+    <li><a href="#2-设置介质类型-同时配置-sizelimit">2、 设置介质类型， 同时配置 sizeLimit</a></li>
+    <li><a href="#升级-kubernetes-集群版本">升级 Kubernetes 集群版本</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="什么是-shared-memory">什么是 Shared Memory</h1>
+<p>共享内存是 <code>Unix</code> 下的多进程之间的通信方式之一，它使得多进程可以访问同一块内存空间， 不通进程可以及时看到对方进程中共享内存中数据的更新</p>
+<p>由于多个进程共享一段内存，这种方式需要依靠某种同步操作， 如互斥锁和信号量等来达到进程间的同步及互斥， 可以说 <code>Shared Memory</code> 是最有用的进程间通信方式。</p>
+<blockquote>
+<p>以上对 Shared Memory 的解说摘自 进<code>程间通信 IPC (InterProcess Communication)</code> 这篇文章</p>
+</blockquote>
+<h2 id="docker">Docker</h2>
+<p>查看docker 容器内存的共享内存</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">➜ docker run -it --rm  lqshow/busybox-curl:1.28 sh
+</span></span><span class="line"><span class="cl">/data <span class="c1"># df -h /dev/shm</span>
+</span></span><span class="line"><span class="cl">Filesystem                Size      Used Available Use% Mounted on
+</span></span><span class="line"><span class="cl">shm                      64.0M         <span class="m">0</span>     64.0M   0% /dev/shm
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Docker 默认分配的共享内存大小就是 64MB</p>
+<p>可以通过设置参数 <code>--shm-size</code> 来调整默认的共享内存大小</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker run -it --rm --shm-size 256M lqshow/busybox-curl:1.28 sh
+</span></span><span class="line"><span class="cl">/data <span class="c1"># df -h /dev/shm</span>
+</span></span><span class="line"><span class="cl">Filesystem                Size      Used Available Use% Mounted on
+</span></span><span class="line"><span class="cl">shm                     256.0M         <span class="m">0</span>    256.0M   0% /dev/shm
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="kubernetes">Kubernetes</h2>
+<p>k8s 内 Pod 內的实际运行情况</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat <span class="s">&lt;&lt;EOF | kubectl create -f -
+</span></span></span><span class="line"><span class="cl"><span class="s">apiVersion: v1
+</span></span></span><span class="line"><span class="cl"><span class="s">kind: Pod
+</span></span></span><span class="line"><span class="cl"><span class="s">metadata:
+</span></span></span><span class="line"><span class="cl"><span class="s">  name: hello-world
+</span></span></span><span class="line"><span class="cl"><span class="s">  labels:
+</span></span></span><span class="line"><span class="cl"><span class="s">    name: hello-world
+</span></span></span><span class="line"><span class="cl"><span class="s">spec:
+</span></span></span><span class="line"><span class="cl"><span class="s">  containers:
+</span></span></span><span class="line"><span class="cl"><span class="s">  - image: lqshow/busybox-curl:1.28
+</span></span></span><span class="line"><span class="cl"><span class="s">    name: hello-world
+</span></span></span><span class="line"><span class="cl"><span class="s">    command: [&#39;sh&#39;, &#39;-c&#39;]
+</span></span></span><span class="line"><span class="cl"><span class="s">    args:
+</span></span></span><span class="line"><span class="cl"><span class="s">      - while true; do
+</span></span></span><span class="line"><span class="cl"><span class="s">          echo hello-world;
+</span></span></span><span class="line"><span class="cl"><span class="s">          sleep 1;
+</span></span></span><span class="line"><span class="cl"><span class="s">        done
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们在<code>Kubernetes</code> 创建的 <code>Pod</code>内， 发现其共享内存默认也是 <code>64MB</code>， <code>Docker</code> 容器內默认的共享内存大小是一样的。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl <span class="nb">exec</span> -it hello-world -- df -h /dev/shm
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Filesystem                Size      Used Available Use% Mounted on
+</span></span><span class="line"><span class="cl">shm                      64.0M         <span class="m">0</span>     64.0M   0% /dev/shm
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们尝试用 dd 命令去写 100M 的内容， 系统无法完整的写入，提示<code> No space left on device</code> 错误</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl <span class="nb">exec</span> -it hello-world sh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/data <span class="c1"># dd if=/dev/zero of=/dev/shm/output bs=1M count=100</span>
+</span></span><span class="line"><span class="cl">dd: writing <span class="s1">&#39;/dev/shm/output&#39;</span>: No space left on device
+</span></span><span class="line"><span class="cl">65+0 records in
+</span></span><span class="line"><span class="cl">64+0 records out
+</span></span><span class="line"><span class="cl"><span class="m">67108864</span> bytes <span class="o">(</span>64.0MB<span class="o">)</span> copied, 0.060007 seconds, 1.0GB/s
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>再次做下确认，发现共享内存其实已经被 dd 写满 64MB 了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/data <span class="c1"># df -h /dev/shm</span>
+</span></span><span class="line"><span class="cl">Filesystem                Size      Used Available Use% Mounted on
+</span></span><span class="line"><span class="cl">shm                      64.0M     64.0M         <span class="m">0</span> 100% /dev/shm
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>pod 里缺失无法使用超过 <code>64MB</code> 的 <code>Shared Memory</code>，</p>
+<h2 id="解决方案">解决方案</h2>
+<p><code>Kubernetes</code> 的资源模型中， 可以将 <code>pod</code> 中 <code>Memory</code> 资源在 <code>limits</code> 中做配置（ <code>spec.containers[].resources.limits.memory</code> ），但是它只对<code>Cgroups </code>中的 <code>memory.limit_in_bytes</code> 起作用，并不会作用到 <code>Shared Memory </code>中。</p>
+<blockquote>
+<p>官方文档有提到，可以通过将 emptyDir 挂载到 /dev/shm，并将介质类型设置为Memory 来解决这个问题。</p>
+</blockquote>
+<h2 id="1-只设置介质类型">1、 只设置介质类型</h2>
+<p>脚本放在 Kubernetes 集群內执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat <span class="s">&lt;&lt;EOF | kubectl create -f -
+</span></span></span><span class="line"><span class="cl"><span class="s">apiVersion: v1
+</span></span></span><span class="line"><span class="cl"><span class="s">kind: Pod
+</span></span></span><span class="line"><span class="cl"><span class="s">metadata:
+</span></span></span><span class="line"><span class="cl"><span class="s">  name: hello-world
+</span></span></span><span class="line"><span class="cl"><span class="s">  labels:
+</span></span></span><span class="line"><span class="cl"><span class="s">    name: hello-world
+</span></span></span><span class="line"><span class="cl"><span class="s">spec:
+</span></span></span><span class="line"><span class="cl"><span class="s">  volumes:
+</span></span></span><span class="line"><span class="cl"><span class="s">  - name: dshm
+</span></span></span><span class="line"><span class="cl"><span class="s">    emptyDir:
+</span></span></span><span class="line"><span class="cl"><span class="s">      # 只设置介质类型
+</span></span></span><span class="line"><span class="cl"><span class="s">      medium: Memory
+</span></span></span><span class="line"><span class="cl"><span class="s">  containers:
+</span></span></span><span class="line"><span class="cl"><span class="s">  - image: lqshow/busybox-curl:1.28
+</span></span></span><span class="line"><span class="cl"><span class="s">    name: hello-world
+</span></span></span><span class="line"><span class="cl"><span class="s">    command: [&#39;sh&#39;, &#39;-c&#39;]
+</span></span></span><span class="line"><span class="cl"><span class="s">    args:
+</span></span></span><span class="line"><span class="cl"><span class="s">      - while true; do
+</span></span></span><span class="line"><span class="cl"><span class="s">          echo hello-world;
+</span></span></span><span class="line"><span class="cl"><span class="s">          sleep 1;
+</span></span></span><span class="line"><span class="cl"><span class="s">        done
+</span></span></span><span class="line"><span class="cl"><span class="s">    volumeMounts:
+</span></span></span><span class="line"><span class="cl"><span class="s">    - mountPath: /dev/shm
+</span></span></span><span class="line"><span class="cl"><span class="s">      name: dshm
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看 <code>pod</code> 的情况</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl <span class="nb">exec</span> -it hello-world -c hello-world -- df -h /dev/shm
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Filesystem                Size      Used Available Use% Mounted on
+</span></span><span class="line"><span class="cl">tmpfs                    14.7G         <span class="m">0</span>     14.7G   0% /dev/shm
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看 <code>pod</code> 所在节点的内存情况</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh <span class="m">138</span> <span class="s1">&#39;free -h&#39;</span>
+</span></span><span class="line"><span class="cl">              total        used        free      shared  buff/cache   available
+</span></span><span class="line"><span class="cl">Mem:            29G         23G        2.6G        1.4G        3.6G         20G
+</span></span><span class="line"><span class="cl">Swap:            0B          0B          0B
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>虽然未设置 <code>sizeLimit</code>，但是显示分配了 <code>HOST</code> 主机上将近一半的内存。</p>
+<p><code>HOST</code> 主机上提示 可用的内存其实只有 <code>2.6G</code> 了，但是 Pod 內提示<code>Available</code> 的还有 <code>14.7G</code>，</p>
+<h2 id="2-设置介质类型-同时配置-sizelimit">2、 设置介质类型， 同时配置 sizeLimit</h2>
+<p><code>Deployment</code> 资源，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat <span class="s">&lt;&lt;EOF | kubectl create -f -
+</span></span></span><span class="line"><span class="cl"><span class="s">apiVersion: apps/v1
+</span></span></span><span class="line"><span class="cl"><span class="s">kind: Deployment
+</span></span></span><span class="line"><span class="cl"><span class="s">metadata:
+</span></span></span><span class="line"><span class="cl"><span class="s">  name: hello-world
+</span></span></span><span class="line"><span class="cl"><span class="s">  labels:
+</span></span></span><span class="line"><span class="cl"><span class="s">    app: hello-world
+</span></span></span><span class="line"><span class="cl"><span class="s">spec:
+</span></span></span><span class="line"><span class="cl"><span class="s">  replicas: 1
+</span></span></span><span class="line"><span class="cl"><span class="s">  selector:
+</span></span></span><span class="line"><span class="cl"><span class="s">    matchLabels:
+</span></span></span><span class="line"><span class="cl"><span class="s">      app: hello-world
+</span></span></span><span class="line"><span class="cl"><span class="s">  template:
+</span></span></span><span class="line"><span class="cl"><span class="s">    metadata:
+</span></span></span><span class="line"><span class="cl"><span class="s">      labels:
+</span></span></span><span class="line"><span class="cl"><span class="s">        app: hello-world
+</span></span></span><span class="line"><span class="cl"><span class="s">    spec:
+</span></span></span><span class="line"><span class="cl"><span class="s">      volumes:
+</span></span></span><span class="line"><span class="cl"><span class="s">      - name: dshm
+</span></span></span><span class="line"><span class="cl"><span class="s">        emptyDir:
+</span></span></span><span class="line"><span class="cl"><span class="s">          # 设置介质类型，且配置 sizeLimit
+</span></span></span><span class="line"><span class="cl"><span class="s">          medium: Memory
+</span></span></span><span class="line"><span class="cl"><span class="s">          sizeLimit: 256Mi
+</span></span></span><span class="line"><span class="cl"><span class="s">      containers:
+</span></span></span><span class="line"><span class="cl"><span class="s">      - name: hello-world
+</span></span></span><span class="line"><span class="cl"><span class="s">        image: lqshow/busybox-curl:1.28
+</span></span></span><span class="line"><span class="cl"><span class="s">        command: [&#39;sh&#39;, &#39;-c&#39;]
+</span></span></span><span class="line"><span class="cl"><span class="s">        args:
+</span></span></span><span class="line"><span class="cl"><span class="s">        - while true; do
+</span></span></span><span class="line"><span class="cl"><span class="s">            echo hello-world;
+</span></span></span><span class="line"><span class="cl"><span class="s">            sleep 1;
+</span></span></span><span class="line"><span class="cl"><span class="s">          done
+</span></span></span><span class="line"><span class="cl"><span class="s">        volumeMounts:
+</span></span></span><span class="line"><span class="cl"><span class="s">        - mountPath: /dev/shm
+</span></span></span><span class="line"><span class="cl"><span class="s">          name: dshm
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们通过实际运行的情况，发现即便设置了 sizelimt 限制，但是实际显示仍然分配了 HOST 主机上将近一半的内存，和第一个测试结果是一模一样的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl <span class="nb">exec</span> -it <span class="k">$(</span>kubectl get pod -l <span class="nv">app</span><span class="o">=</span>hello-world --no-headers<span class="p">|</span>grep -v <span class="s2">&#34;Evicted&#34;</span><span class="p">|</span>awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span> -c hello-world -- df -h /dev/shm
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Filesystem                Size      Used Available Use% Mounted on
+</span></span><span class="line"><span class="cl">tmpfs                    14.7G         <span class="m">0</span>     14.7G   0% /dev/shm
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用<code>dd</code> 尝试去做验证</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl <span class="nb">exec</span> -it <span class="k">$(</span>kubectl get pod -l <span class="nv">app</span><span class="o">=</span>hello-world --no-headers<span class="p">|</span>grep -v <span class="s2">&#34;Evicted&#34;</span><span class="p">|</span>awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span> -c hello-world sh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 1. 先尝试直接写满 256 M</span>
+</span></span><span class="line"><span class="cl">/data <span class="c1"># dd if=/dev/zero of=/dev/shm/output bs=1M count=256</span>
+</span></span><span class="line"><span class="cl">256+0 records in
+</span></span><span class="line"><span class="cl">256+0 records out
+</span></span><span class="line"><span class="cl"><span class="m">268435456</span> bytes <span class="o">(</span>256.0MB<span class="o">)</span> copied, 0.520999 seconds, 491.4MB/s
+</span></span><span class="line"><span class="cl">/data <span class="c1">#</span>
+</span></span><span class="line"><span class="cl">/data <span class="c1"># df -h /dev/shm</span>
+</span></span><span class="line"><span class="cl">Filesystem                Size      Used Available Use% Mounted on
+</span></span><span class="line"><span class="cl">tmpfs                    14.7G    256.0M     14.4G   2% /dev/shm
+</span></span><span class="line"><span class="cl">/data <span class="c1">#</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. 再尝试写入 100 M，并没有看到出现 `No space left on device` 的提示</span>
+</span></span><span class="line"><span class="cl">/data <span class="c1"># dd if=/dev/zero of=/dev/shm/output2 bs=1M count=100</span>
+</span></span><span class="line"><span class="cl">100+0 records in
+</span></span><span class="line"><span class="cl">100+0 records out
+</span></span><span class="line"><span class="cl"><span class="m">104857600</span> bytes <span class="o">(</span>100.0MB<span class="o">)</span> copied, 0.227946 seconds, 438.7MB/s
+</span></span><span class="line"><span class="cl">/data <span class="c1">#</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. 发现成功的写入了 100 M</span>
+</span></span><span class="line"><span class="cl">/data <span class="c1"># df -h /dev/shm</span>
+</span></span><span class="line"><span class="cl">Filesystem                Size      Used Available Use% Mounted on
+</span></span><span class="line"><span class="cl">tmpfs                    14.7G    356.0M     14.4G   2% /dev/shm
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 4. 在一定时间间隔內，Pod 会因为异常被驱逐</span>
+</span></span><span class="line"><span class="cl">/data <span class="c1"># command terminated with exit code 137</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>sizeLimit</code> 实际上是起了作用的，<code>Pod</code> 最后是以 137 CODE 退出了</p>
+<p>被驱逐 Pod 的 Event 信息，只保留了重要的提示</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">Events:
+</span></span><span class="line"><span class="cl">  Type     Reason     Age        From               Message
+</span></span><span class="line"><span class="cl">  ----     ------     ----       ----               -------
+</span></span><span class="line"><span class="cl">  ...
+</span></span><span class="line"><span class="cl">  Warning  Evicted    20m        kubelet, kind-dev4  Usage of EmptyDir volume <span class="s2">&#34;dshm&#34;</span> exceeds the limit <span class="s2">&#34;256Mi&#34;</span>.
+</span></span><span class="line"><span class="cl">  ...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>当宿主机资源紧张的情况下，kubelet 会主动地结束 Pod 以回收短缺的资源。具体驱逐 Pod</p>
+</blockquote>
+<h2 id="升级-kubernetes-集群版本">升级 Kubernetes 集群版本</h2>
+<p>从官方文档给出的提示可以看出，SizeMemoryBackedVolumes 这个特性在我们的集群內并没有生</p>
+<p>SizeMemoryBackedVolumes 是从 1.20 版本才开始支持</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-12-18</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/kuberenetes-sharedmemory/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/kuberenetes-sharedmemory/" data-title="Kuberenetes SharedMemory" data-via="xxxx" data-hashtags="k8s"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/kuberenetes-sharedmemory/" data-hashtag="k8s"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/kuberenetes-sharedmemory/" data-title="Kuberenetes SharedMemory"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/kuberenetes-sharedmemory/" data-title="Kuberenetes SharedMemory"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/kuberenetes-sharedmemory/" data-title="Kuberenetes SharedMemory"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/kuberenetes-tcpdump/" class="prev" rel="prev" title="Kuberenetes  网络抓包  sniff"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Kuberenetes  网络抓包  sniff</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"f1aming007","id-2":"f1aming007"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
