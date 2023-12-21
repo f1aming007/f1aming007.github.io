@@ -12,7 +12,8 @@
     <pubDate>Mon, 18 Dec 2023 16:47:30 &#43;0800</pubDate>
     <author>flamingo</author>
     <guid>https://f1aming007.github.io/kuberenetes-sharedmemory/</guid>
-    <description><![CDATA[什么是 Shared Memory 共享内存是 Unix 下的多进程之间的通信方式之一，它使得多进程可以访问同一块内存空间， 不通进程可以及时看到对方进程中共享内存中数据的更新 由]]></description>
+    <description><![CDATA[<h1 id="什么是-shared-memory">什么是 Shared Memory</h1>
+<p>共享内存是 <code>Unix</code> 下的多进程之间的通信方式之一，它使得多进程可以访问同一块内存空间， 不通进程可以及时看到对方进程中共享内存中数据的更新</p>]]></description>
 </item>
 <item>
     <title>Kuberenetes  网络抓包  sniff</title>
