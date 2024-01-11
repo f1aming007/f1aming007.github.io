@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>serverless - Tag - flamingo</title>
+        <link>https://f1aming007.github.io/tags/serverless/</link>
+        <description>serverless - Tag - flamingo</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 25 Dec 2023 09:56:40 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/serverless/" rel="self" type="application/rss+xml" /><item>
+    <title>Serverless Openfaas</title>
+    <link>https://f1aming007.github.io/serverless-openfaas/</link>
+    <pubDate>Mon, 25 Dec 2023 09:56:40 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/serverless-openfaas/</guid>
+    <description><![CDATA[<h1 id="serverless-介绍">Serverless 介绍</h1>
+<p>serverless 指的是由开发者实现的服务端逻辑运行在无状态的计算容器中, 它由事件触发，完全由第三方管理，其业务层面的状态则被开发者使用的数据库和存储资源所记录</p>]]></description>
+</item>
+</channel>
+</rss>

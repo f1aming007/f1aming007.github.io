@@ -113,6 +113,21 @@
         alt="/avatar.png"
         title="/avatar.png" /></a></div><h1 class="home-title">f1aming007</h1><div class="home-subtitle"><div id="id-3" class="typeit"></div></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/">Kubernets-声明式API</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-20">2023-05-20</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div><div class="content">声明式API与Kubernetes编码范式 kubectl create 再replace的操作， 称为命令式配置文件操作 声明式API https://hugbz2.51cg3.co/archives/25451 /https://hugbz2.51cg3.co/archives/4081/ kuberctl apply 命令就是 声明式API apply 与 re</div><div class="post-footer">
+        <a href="/%E5%A3%B0%E6%98%8E%E5%BC%8Fapi/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/job_cronjob/">Kubernets-Job_Cronjob</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-20">2023-05-20</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div><div class="content">Job 与 CronJob Job API 1 2 3 4 5 6 7 8 9 10 11 12 13 apiVersion: batch/v1 kind: Job metadata: name: pi spec: template: spec: containers: - name: pi image: resouer/ubuntu-bc command: [&#34;sh&#34;, &#34;-c&#34;, &#34;echo &#39;scale=10000; 4*a(1)&#39; | bc -l &#34;] restartPolicy: Never backoffLimit: 4 计算π值的容器。而通过 scale=10000</div><div class="post-footer">
+        <a href="/job_cronjob/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/stateful/">Kubernets-StatefulSet</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-20">2023-05-20</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div><div class="content">StatefulSet 概念 StatefulSet 的设计其实非常容器理解， 它把真实世界里的应用状态， 抽象为两个情况 拓扑状态：这种情况意味着， 应用的多个实例之间不是完全对等的关系， 这些</div><div class="post-footer">
+        <a href="/stateful/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/daemonset/">Kubernets-DaemonSet</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-05-20">2023-05-20</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div><div class="content">DaemonSet 主要作用 在kubernetes集群里， 运行一个Daemon Pod， 所以， 这个Pod有如下三个特征 这个Pod运载kubernetes集群里的</div><div class="post-footer">
         <a href="/daemonset/">Read More</a><div class="post-tags">
@@ -148,7 +163,7 @@
                 </li></ul></div></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 

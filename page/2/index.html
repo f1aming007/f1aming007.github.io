@@ -113,6 +113,62 @@
         alt="/avatar.png"
         title="/avatar.png" /></a></div><h1 class="home-title">f1aming007</h1><div class="home-subtitle"><div id="id-3" class="typeit"></div></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/kuberenetes-telepersence/">Kuberenetes Telepersence</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-12-14">2023-12-14</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div><div class="content"><h1 id="用telepresence-本地调试kubernetes中的微服务">用Telepresence 本地调试kubernetes中的微服务</h1>
+<p>github地址：<a href="https://github.com/telepresenceio/telepresence" target="_blank" rel="noopener noreffer ">telepresence</a>
+功能介绍：
+<figure><img src="/images/tele01.png"/><figcaption>
+            <h4>Telepresence01</h4>
+        </figcaption>
+</figure>
+</p>
+<ol>
+<li>快速的本地开发循环，无需等待容器构建/推送/部署</li>
+<li>能够使用他们最喜欢的本地工具（IDE、调试器等）</li>
+<li>能够运行无法在本地运行的大型应用程序</li>
+</ol></div><div class="post-footer">
+        <a href="/kuberenetes-telepersence/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/kuberenetes-sidecar/">Kuberenetes Sidecar模式</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-12-14">2023-12-14</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div><div class="content"><h1 id="kubernetes-容器设计模式之边车模式">Kubernetes 容器设计模式之边车模式</h1>
+<p>github地址：<a href="https://kubernetes.io/zh-cn/blog/2023/08/25/native-sidecar-containers/" target="_blank" rel="noopener noreffer ">sidecar</a>
+<figure><img src="/images/sidecar01.png"/><figcaption>
+            <h4>loki01</h4>
+        </figcaption>
+</figure>
+
+sidecar 边车模式 简单来说就是加装在摩托车旁边，用来拓展现有功能的能力，可以坐上更多的人或者物， 边车模式 像软件工程的代理模式，对服务进行包装， 使其不改变原来的功能，拓展原来的服务</p>
+<p><code>sidecar</code> 模式 是用来解决微服务的服务治理问题</p></div><div class="post-footer">
+        <a href="/kuberenetes-sidecar/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/kuberenetes-kubectl/">Kuberenetes Kubectl</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-12-12">2023-12-12</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div><div class="content"><h1 id="kubernetes-常用运维-kubectl命令">kubernetes 常用运维 kubectl命令</h1>
+<h2 id="环境上下文切换">环境上下文切换</h2>
+<h3 id="切换集群">切换集群</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 获取所有的 contexts</span>
+</span></span><span class="line"><span class="cl">kubectl config get-contexts
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 切换到指定的 context</span>
+</span></span><span class="line"><span class="cl">kubectl config use-context &lt;CONTEXT-NAME&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer">
+        <a href="/kuberenetes-kubectl/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/kuberenetes-loki/">Kubernetes Loki</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-12-09">2023-12-09</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div><div class="content"><h1 id="日志聚合分析系统-loki">日志聚合分析系统-Loki</h1>
 <p>loki 是Grafana的开源项目，是一个水平可扩展，高可用性，多租户的日志聚合系统，
@@ -153,31 +209,6 @@
 </ul></div><div class="post-footer">
         <a href="/k8s_limit_quests/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/golang-jsonparser/">Golang Jsonparser</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-08-11">2023-08-11</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div><div class="content">Jsonparser 开源的JSON包 号称比JSON包性能高10倍，内存分配优化到0，提高JSON操作的性能 jsonparser 的性能在很大程度上取决于使用情况，当不需要处理完成</div><div class="post-footer">
-        <a href="/golang-jsonparser/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/golang/">golang</a>,&nbsp;<a href="/tags/go%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">go第三方库</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/golang-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Golang 设计模式 单例模式</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-08-05">2023-08-05</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div><div class="content"><h1 id="单例模式">单例模式</h1>
-<ul>
-<li>单例模式宏观介绍</li>
-<li>饿汉式单例模式实现思路</li>
-<li>懒汉式单例模式实现推演</li>
-<li>Golang 单例工具 sync.Once 源码解析</li>
-</ul></div><div class="post-footer">
-        <a href="/golang-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/golang/">golang</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/golang-iota/">Golang Iota</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-publish">published on <time datetime="2023-08-05">2023-08-05</time></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div><div class="content"><h1 id="iota-介绍">Iota 介绍</h1>
-<ul>
-<li>在常量声明中，预先声明的标识符<code>iota</code>代表连续的无类型的整数常量， 他的值是该常量声明中对应<code>ConstSpec</code>的索引，从零开始计数。</li>
-<li>iota： 可以在常量声明中自动创建一系列连续的整数值，值从零开始， 不需要手动指定每个常量的值</li>
-</ul></div><div class="post-footer">
-        <a href="/golang-iota/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/golang/">golang</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -203,7 +234,7 @@
                 </li></ul></div></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 

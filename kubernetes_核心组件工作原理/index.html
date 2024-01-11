@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Kubernetes_核心组件工作原理 - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Kubernetes_核心组件工作原理" />
+<meta property="og:description" content="图解 Kubernetes 核心组件工作原理 问题1: Master节点和Worker节点如何通信？ 首先， 当Master节点启动时， 会运行一个 Kube-apiserv" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-01-08T17:06:25+08:00" />
+<meta property="article:modified_time" content="2024-01-08T17:06:25+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="Kubernetes_核心组件工作原理"/>
+<meta name="twitter:description" content="图解 Kubernetes 核心组件工作原理 问题1: Master节点和Worker节点如何通信？ 首先， 当Master节点启动时， 会运行一个 Kube-apiserv"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" /><link rel="prev" href="https://f1aming007.github.io/vxlan/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Kubernetes_核心组件工作原理",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86\/"
+        },"genre": "posts","keywords": "k8s","wordcount":  1663 ,
+        "url": "https:\/\/f1aming007.github.io\/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86\/","datePublished": "2024-01-08T17:06:25+08:00","dateModified": "2024-01-08T17:06:25+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Kubernetes_核心组件工作原理</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-08">2024-01-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1663 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#问题1-master节点和worker节点如何通信">问题1: Master节点和Worker节点如何通信？</a></li>
+    <li><a href="#问题2-master-如何将pod调度到指定的node上">问题2: Master 如何将Pod调度到指定的Node上？</a></li>
+    <li><a href="#问题3-各个节点和pod的信息统一在哪里维护谁来维护">问题3: 各个节点和Pod的信息统一在哪里维护，谁来维护？</a></li>
+    <li><a href="#问题4-外部用户如何访问集群中的运行的pod">问题4: 外部用户如何访问集群中的运行的pod？</a></li>
+    <li><a href="#问题5-pod-如何动态扩容和伸缩">问题5: Pod 如何动态扩容和伸缩？</a></li>
+    <li><a href="#问题6各个组件如何协同工作">问题6:各个组件如何协同工作？</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="图解-kubernetes-核心组件工作原理">图解 Kubernetes 核心组件工作原理</h1>
+<h2 id="问题1-master节点和worker节点如何通信">问题1: Master节点和Worker节点如何通信？</h2>
+<p>首先， 当Master节点启动时， 会运行一个 Kube-apiserver进程，它提供了集群管理的API接口，是集群中各个功能模块之间进行数据交互和通信的中心枢纽， 同时也提供了一个完善的机器安全机制。</p>
+<p>在Node 节点上， 利用Kubernetes中的kubelet组件，每个Node节点上都会运行一个kubelet进程，负责向Master 汇报本节点的运行状态， 如 Node节点注册、终止、定期健康报告等等，并接收来自Master 的命令并创建相应的Pod。</p>
+<p>在<code>Kubernetes中， Pod是最基本的运行单元</code>，它与Docker容器略有不同， 因为pod中可能包好一个或者多个容器， 这些容器内部共享网络资源，即可以通过localhost 相互访问</p>
+<p>关于如何在Pod中实现网络共享，每个pod启动，内部都会启动一个pause容器，它使用默认的网络模式，其他容器的网络设置完成网络共享问题</p>
+<p><figure><img src="/images/k8s01.png"/><figcaption>
+            <h4>k8s01</h4>
+        </figcaption>
+</figure>
+
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17048741105220.jpg"
+        data-srcset="media/17048741105220.jpg, media/17048741105220.jpg 1.5x, media/17048741105220.jpg 2x"
+        data-sizes="auto"
+        alt="media/17048741105220.jpg"
+        title="media/17048741105220.jpg" /></p>
+<h2 id="问题2-master-如何将pod调度到指定的node上">问题2: Master 如何将Pod调度到指定的Node上？</h2>
+<p>这项工作由 Kube-scheduler完成，整个调度过程通过执行一系列复杂的算法，最终为每个pod计算出一个最优的目标Node， 这是由Kube-scheduler进程自动完成的</p>
+<p><code>最常见的是循环调度（RR）</code>。当然也有可能需要将Pod调度到指定的Node上，我们可以通过将节点的标签（Label）与Pod的节点选择器进行匹配来达到指定的效果</p>
+<figure><img src="/images/k8s02.png"/><figcaption>
+            <h4>k8s02</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17048754948493.jpg"
+        data-srcset="media/17048754948493.jpg, media/17048754948493.jpg 1.5x, media/17048754948493.jpg 2x"
+        data-sizes="auto"
+        alt="media/17048754948493.jpg"
+        title="media/17048754948493.jpg" /></p>
+<h2 id="问题3-各个节点和pod的信息统一在哪里维护谁来维护">问题3: 各个节点和Pod的信息统一在哪里维护，谁来维护？</h2>
+<p>从上面的Pod调度来看， 我们必须有一个存储中心来存储每个节点的每个Pod的资源使用情况、监控状态和基本情况， 这样Pod调度才能正常进行</p>
+<p><code>在Kubernetes中，etcd组件被用作高可用和一致的存储库</code> 该组件可以内置在Kubernets中， 也可以外部构建提供Kubernetes使用。</p>
+<p><code>集群上的所有配置信息都存储在etcd中</code>， 考虑到各个组件的相对应的独立性和整体的可维护性，这些存储的数据的增删改查都是统一由 Kube-apiserver来调用的，并且apiserver还提供了REST支持， 不仅为各个内部组件提供服务单也想集群外部的用户公开服务</p>
+<p>外部用户可以通过REST接口或kubectl命令行工具管理集群，该工具内部与apiserver通信</p>
+<figure><img src="/images/k8s03.png"/><figcaption>
+            <h4>k8s03</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17048776415289.jpg"
+        data-srcset="media/17048776415289.jpg, media/17048776415289.jpg 1.5x, media/17048776415289.jpg 2x"
+        data-sizes="auto"
+        alt="media/17048776415289.jpg"
+        title="media/17048776415289.jpg" /></p>
+<h2 id="问题4-外部用户如何访问集群中的运行的pod">问题4: 外部用户如何访问集群中的运行的pod？</h2>
+<p><code>在分布式集群中， 服务往往由多个应用提供，以分担访问压力，而这些应用可能分布在多个节点上， 这就设计到跨主机通信</code></p>
+<p>这里Kubernetes引入了Service的概念，将多个相同的Pod包装成一个完整的服务，对外提供服务。至于获取这些相同的Pod，每个Pod在启动时都会设置labels为attribute。</p>
+<p>在服务中， 我们传递选择器Selectort， 选择与整体服务具有相同Name标签属性的Pod， 将服务信息通过Apiserver存储到etcd中， 由Service Controller完成，同时在每个节点上启动一个kube-proxy进程， 负责从服务地址到Pod地址的代理和负载均衡</p>
+<figure><img src="/images/k8s04.png"/><figcaption>
+            <h4>k8s04</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17049408905683.jpg"
+        data-srcset="media/17049408905683.jpg, media/17049408905683.jpg 1.5x, media/17049408905683.jpg 2x"
+        data-sizes="auto"
+        alt="media/17049408905683.jpg"
+        title="media/17049408905683.jpg" /></p>
+<h2 id="问题5-pod-如何动态扩容和伸缩">问题5: Pod 如何动态扩容和伸缩？</h2>
+<p>在Kubernetes 中，使用Replication Controller进行管理，为每个Pod设置一个预期的副本数，当实际副本数量不符合预期时，动态调整数量以达到预期值，所需值可以由我们手动更新，也可以由自动缩放代理更新</p>
+<figure><img src="/images/k8s05.png"/><figcaption>
+            <h4>k8s05</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17049425021996.jpg"
+        data-srcset="media/17049425021996.jpg, media/17049425021996.jpg 1.5x, media/17049425021996.jpg 2x"
+        data-sizes="auto"
+        alt="media/17049425021996.jpg"
+        title="media/17049425021996.jpg" /></p>
+<h2 id="问题6各个组件如何协同工作">问题6:各个组件如何协同工作？</h2>
+<p>Kube-controller-manager进程的作用。我们知道ectd是作为集群数据的存储中心，而apiserver是用来管理数据中心，充当其他进程与数据中心通信的桥梁。</p>
+<p>Service Controller 和 Replication Controller由Kube-controller-manager管理。<code>作为一个守护进程，每个Controller都是一个控制回路， 通过apiserver监控集群的共享状态，并尝试改变 将实际状态中不合符预期的变化</code>
+关于 Controller，管理器还包含 Node Controller、 ResourceQuota Controller、Namespace Controller 等</p>
+<figure><img src="/images/k8s06.png"/><figcaption>
+            <h4>k8s06</h4>
+        </figcaption>
+</figure>
+
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="media/17049428233678.jpg"
+        data-srcset="media/17049428233678.jpg, media/17049428233678.jpg 1.5x, media/17049428233678.jpg 2x"
+        data-sizes="auto"
+        alt="media/17049428233678.jpg"
+        title="media/17049428233678.jpg" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-01-08</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" data-title="Kubernetes_核心组件工作原理" data-via="xxxx" data-hashtags="k8s"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" data-hashtag="k8s"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" data-title="Kubernetes_核心组件工作原理"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" data-title="Kubernetes_核心组件工作原理"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" data-title="Kubernetes_核心组件工作原理"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/k8s/">k8s</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/vxlan/" class="prev" rel="prev" title="Vxlan"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vxlan</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"f1aming007","id-2":"f1aming007"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

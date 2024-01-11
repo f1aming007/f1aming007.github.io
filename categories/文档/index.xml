@@ -4,7 +4,32 @@
         <link>https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/</link>
         <description>文档 - Category - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 18 Dec 2023 16:47:30 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 08 Jan 2024 17:06:25 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/categories/%E6%96%87%E6%A1%A3/" rel="self" type="application/rss+xml" /><item>
+    <title>Kubernetes_核心组件工作原理</title>
+    <link>https://f1aming007.github.io/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</link>
+    <pubDate>Mon, 08 Jan 2024 17:06:25 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</guid>
+    <description><![CDATA[图解 Kubernetes 核心组件工作原理 问题1: Master节点和Worker节点如何通信？ 首先， 当Master节点启动时， 会运行一个 Kube-apiserv]]></description>
+</item>
+<item>
+    <title>Vxlan</title>
+    <link>https://f1aming007.github.io/vxlan/</link>
+    <pubDate>Mon, 08 Jan 2024 10:48:37 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/vxlan/</guid>
+    <description><![CDATA[VXLAN介绍 VXLAN（Virtual eXtensible LAN，可拓展虚拟局域网络） VXLAN 可以基于已有的服务提供商或企业IP网络， 为离散的物理站点提供二层互联]]></description>
+</item>
+<item>
+    <title>Serverless Openfaas</title>
+    <link>https://f1aming007.github.io/serverless-openfaas/</link>
+    <pubDate>Mon, 25 Dec 2023 09:56:40 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/serverless-openfaas/</guid>
+    <description><![CDATA[<h1 id="serverless-介绍">Serverless 介绍</h1>
+<p>serverless 指的是由开发者实现的服务端逻辑运行在无状态的计算容器中, 它由事件触发，完全由第三方管理，其业务层面的状态则被开发者使用的数据库和存储资源所记录</p>]]></description>
+</item>
+<item>
     <title>Kuberenetes SharedMemory</title>
     <link>https://f1aming007.github.io/kuberenetes-sharedmemory/</link>
     <pubDate>Mon, 18 Dec 2023 16:47:30 &#43;0800</pubDate>
@@ -111,47 +136,6 @@ sidecar 边车模式 简单来说就是加装在摩托车旁边，用来拓展�
     <description><![CDATA[<h1 id="日志聚合分析系统-loki">日志聚合分析系统-Loki</h1>
 <p>loki 是Grafana的开源项目，是一个水平可扩展，高可用性，多租户的日志聚合系统，
 为每个日志流编制一组标签，专门为 Prometheus 和 Kubernetes 用户做了相关优化</p>]]></description>
-</item>
-<item>
-    <title>K8s Logs</title>
-    <link>https://f1aming007.github.io/k8s-logs/</link>
-    <pubDate>Thu, 07 Dec 2023 09:55:17 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/k8s-logs/</guid>
-    <description><![CDATA[<h1 id="kubernetes-日志查看工具">kubernetes 日志查看工具</h1>
-<h2 id="kubetail">kubetail</h2>
-<p><a href="https://github.com/johanhaleby/kubetail" target="_blank" rel="noopener noreffer ">kubetail</a></p>
-<p>kubetail是一个bash脚本， 可以将多个pod的日志聚合到一个输出流中，并且支持彩色输出和条件过滤</p>]]></description>
-</item>
-<item>
-    <title>K8s_limit_quests</title>
-    <link>https://f1aming007.github.io/k8s_limit_quests/</link>
-    <pubDate>Tue, 24 Oct 2023 10:50:47 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/k8s_limit_quests/</guid>
-    <description><![CDATA[<p></p>
-<h1 id="kubernetes-的-limits-和-requests">Kubernetes 的 Limits 和 Requests</h1>
-<p>在k8s适应容器时， 要知道所涉及的资源时什么以及如何需要他们，有些进程比其他进程需要更多的CPU和内存
-知道这些之后， 才能正确的配置我们的容器和pod</p>
-<ul>
-<li>Kubernetes 的Limits和Requests介绍</li>
-<li>实践案例</li>
-<li>Kubernetes Requests</li>
-<li>Kubernetes Limits</li>
-<li>CPU的特殊性</li>
-<li>内存的特殊性</li>
-<li>Namespace ResourceQuta</li>
-<li>Namespace LimitRange</li>
-<li>总结</li>
-</ul>]]></description>
-</item>
-<item>
-    <title>Golang Jsonparser</title>
-    <link>https://f1aming007.github.io/golang-jsonparser/</link>
-    <pubDate>Fri, 11 Aug 2023 09:01:37 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/golang-jsonparser/</guid>
-    <description><![CDATA[Jsonparser 开源的JSON包 号称比JSON包性能高10倍，内存分配优化到0，提高JSON操作的性能 jsonparser 的性能在很大程度上取决于使用情况，当不需要处理完成]]></description>
 </item>
 </channel>
 </rss>

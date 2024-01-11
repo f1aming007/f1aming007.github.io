@@ -4,7 +4,15 @@
         <link>https://f1aming007.github.io/tags/k8s/</link>
         <description>k8s - Tag - flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 18 Dec 2023 16:47:30 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 08 Jan 2024 17:06:25 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/k8s/" rel="self" type="application/rss+xml" /><item>
+    <title>Kubernetes_核心组件工作原理</title>
+    <link>https://f1aming007.github.io/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</link>
+    <pubDate>Mon, 08 Jan 2024 17:06:25 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</guid>
+    <description><![CDATA[图解 Kubernetes 核心组件工作原理 问题1: Master节点和Worker节点如何通信？ 首先， 当Master节点启动时， 会运行一个 Kube-apiserv]]></description>
+</item>
+<item>
     <title>Kuberenetes SharedMemory</title>
     <link>https://f1aming007.github.io/kuberenetes-sharedmemory/</link>
     <pubDate>Mon, 18 Dec 2023 16:47:30 &#43;0800</pubDate>
@@ -143,20 +151,6 @@ sidecar 边车模式 简单来说就是加装在摩托车旁边，用来拓展�
 <li>Namespace ResourceQuta</li>
 <li>Namespace LimitRange</li>
 <li>总结</li>
-</ul>]]></description>
-</item>
-<item>
-    <title>K8s GVK_GVR</title>
-    <link>https://f1aming007.github.io/k8s-gvk_gvr/</link>
-    <pubDate>Fri, 26 May 2023 09:44:00 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/k8s-gvk_gvr/</guid>
-    <description><![CDATA[<p></p>
-<h1 id="k8s-gvkfvr">K8s-GVK&amp;FVR</h1>
-<h2 id="gvk--gvr-介绍">GVK &amp; GVR 介绍</h2>
-<ul>
-<li>GVK —— group 、version、 kind</li>
-<li>GVR —— group 、version 、resource</li>
 </ul>]]></description>
 </item>
 </channel>
