@@ -4,7 +4,19 @@
         <link>https://f1aming007.github.io/posts/</link>
         <description>All Posts | flamingo</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
-            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Mon, 08 Jan 2024 17:06:25 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 01 Feb 2024 14:58:53 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Linux文件系统btrfs</title>
+    <link>https://f1aming007.github.io/btrfs/</link>
+    <pubDate>Thu, 01 Feb 2024 14:58:53 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/btrfs/</guid>
+    <description><![CDATA[<h1 id="使用btrfs-快照备份">使用Btrfs 快照备份</h1>
+<p><a href="https://wiki.archlinux.org/title/Btrfs" target="_blank" rel="noopener noreffer ">btrfs</a>
+<a href="https://wiki.archlinux.org/title/Btrfs" target="_blank" rel="noopener noreffer ">https://wiki.archlinux.org/title/Btrfs</a></p>
+<h2 id="介绍">介绍</h2>
+<p>Btrfs 是 Linux 的现代写入复制 （COW） 文件系统，实现快照功能，可以瞬间创建快照，刚传家时几乎不占用任何空间，</p>]]></description>
+</item>
+<item>
     <title>Kubernetes_核心组件工作原理</title>
     <link>https://f1aming007.github.io/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</link>
     <pubDate>Mon, 08 Jan 2024 17:06:25 &#43;0800</pubDate>
@@ -126,16 +138,6 @@ sidecar 边车模式 简单来说就是加装在摩托车旁边，用来拓展�
 </span></span></code></pre></td></tr></table>
 </div>
 </div>]]></description>
-</item>
-<item>
-    <title>Kubernetes Loki</title>
-    <link>https://f1aming007.github.io/kuberenetes-loki/</link>
-    <pubDate>Sat, 09 Dec 2023 15:30:21 &#43;0800</pubDate>
-    <author>flamingo</author>
-    <guid>https://f1aming007.github.io/kuberenetes-loki/</guid>
-    <description><![CDATA[<h1 id="日志聚合分析系统-loki">日志聚合分析系统-Loki</h1>
-<p>loki 是Grafana的开源项目，是一个水平可扩展，高可用性，多租户的日志聚合系统，
-为每个日志流编制一组标签，专门为 Prometheus 和 Kubernetes 用户做了相关优化</p>]]></description>
 </item>
 </channel>
 </rss>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Linux文件系统btrfs - flamingo</title><meta name="Description" content="flamingo Hugo"><meta property="og:title" content="Linux文件系统btrfs" />
+<meta property="og:description" content="使用Btrfs 快照备份
+btrfs
+https://wiki.archlinux.org/title/Btrfs
+介绍
+Btrfs 是 Linux 的现代写入复制 （COW） 文件系统，实现快照功能，可以瞬间创建快照，刚传家时几乎不占用任何空间，" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://f1aming007.github.io/btrfs/" /><meta property="og:image" content="https://f1aming007.github.io/avatar.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-02-01T14:58:53+08:00" />
+<meta property="article:modified_time" content="2024-02-01T14:58:53+08:00" /><meta property="og:site_name" content="flamingo" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://f1aming007.github.io/avatar.png"/>
+
+<meta name="twitter:title" content="Linux文件系统btrfs"/>
+<meta name="twitter:description" content="使用Btrfs 快照备份
+btrfs
+https://wiki.archlinux.org/title/Btrfs
+介绍
+Btrfs 是 Linux 的现代写入复制 （COW） 文件系统，实现快照功能，可以瞬间创建快照，刚传家时几乎不占用任何空间，"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://f1aming007.github.io/btrfs/" /><link rel="prev" href="https://f1aming007.github.io/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Linux文件系统btrfs",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/f1aming007.github.io\/btrfs\/"
+        },"genre": "posts","keywords": "btrfs","wordcount":  1460 ,
+        "url": "https:\/\/f1aming007.github.io\/btrfs\/","datePublished": "2024-02-01T14:58:53+08:00","dateModified": "2024-02-01T14:58:53+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "flamingo"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="flamingo"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://f1aming007.github.io/avatar.png"
+        data-srcset="https://f1aming007.github.io/avatar.png, https://f1aming007.github.io/avatar.png 1.5x, https://f1aming007.github.io/avatar.png 2x"
+        data-sizes="auto"
+        alt="https://f1aming007.github.io/avatar.png"
+        title="https://f1aming007.github.io/avatar.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Linux文件系统btrfs</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://f1aming007.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>flamingo</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E6%96%87%E6%A1%A3/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>文档</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-02-01">2024-02-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1460 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#介绍">介绍</a></li>
+    <li><a href="#btrfs-的工具">btrfs 的工具</a></li>
+    <li><a href="#快照操作">快照操作</a></li>
+    <li><a href="#发送到外部存储">发送到外部存储</a></li>
+    <li><a href="#列出子卷">列出子卷</a></li>
+    <li><a href="#创建存储快照的子卷">创建存储快照的子卷</a></li>
+    <li><a href="#建立相应的文件夹">建立相应的文件夹</a></li>
+    <li><a href="#把子卷挂载到相应的文件夹">把子卷挂载到相应的文件夹</a></li>
+    <li><a href="#自动快照">自动快照</a></li>
+    <li><a href="#手动快照">手动快照</a></li>
+    <li><a href="#备份到外部存储">备份到外部存储</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="使用btrfs-快照备份">使用Btrfs 快照备份</h1>
+<p><a href="https://wiki.archlinux.org/title/Btrfs" target="_blank" rel="noopener noreffer ">btrfs</a>
+<a href="https://wiki.archlinux.org/title/Btrfs" target="_blank" rel="noopener noreffer ">https://wiki.archlinux.org/title/Btrfs</a></p>
+<h2 id="介绍">介绍</h2>
+<p>Btrfs 是 Linux 的现代写入复制 （COW） 文件系统，实现快照功能，可以瞬间创建快照，刚传家时几乎不占用任何空间，</p>
+<h2 id="btrfs-的工具">btrfs 的工具</h2>
+<p>首先 Linux 下已经有了很多支持 btrfs 快照的备份工具了，比如 <a href="https://github.com/teejee2008/timeshift" target="_blank" rel="noopener noreffer ">Timeshift</a>, <a href="https://backintime.readthedocs.io/en/latest/" target="_blank" rel="noopener noreffer ">Back In Time</a> 以及 <a href="https://wiki.archlinux.org/title/Snapper" target="_blank" rel="noopener noreffer ">Snapper</a></p>
+<h2 id="快照操作">快照操作</h2>
+<ul>
+<li><code>btrfs subvol snapshot source destination</code>
+<ul>
+<li>比如使用 <code>btrfs subvol snapshot / /snapshots/example</code>， 即可在/snapshots 创建一个为名为example 的快照， 除了不包含 / 里的子卷以外内容会与 / 相同， 快照的创建及户可以瞬间完成， 而且刚创建时几乎不占用任何空间，</li>
+<li>使用<code>btrfs subvol snapshot -l ...</code> 可以创建一个只读快照</li>
+</ul>
+</li>
+<li><code>mv</code>
+<ul>
+<li>没错，就是 mv 命令，当需要移动一个快照的位置时，只需要像对待文件夹一样使用 mv 命令。</li>
+</ul>
+</li>
+<li><code>btrfs subvol delete</code>
+<ul>
+<li>例如 btrfs subvol delete /snapshots/example 可以删除前面建立的快照，如果直接用 Delete 删除则相应的硬盘空间无法得到释放。</li>
+</ul>
+</li>
+</ul>
+<h2 id="发送到外部存储">发送到外部存储</h2>
+<p>将快照发送到外部存储</p>
+<ul>
+<li><code>btrfs send</code></li>
+<li><code>btrfs receive</code></li>
+<li>这两条组合使用 <code>btrfs send /snapshots/example | btrfs receive /destination/</code> 会将 /snapshots/example 发送到 /destination/ 下</li>
+<li>用 <code>btrfs send -p</code> 和 <code>btrfs receive</code> 来进行增量备份</li>
+<li><code>btrfs send</code> 只支持只读快照</li>
+</ul>
+<h2 id="列出子卷">列出子卷</h2>
+<p>使用 <code>btrfs subvol list /</code> 可以列出 / 所在的 btrfs 分区的所有子卷（包括快照）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ID <span class="m">270</span> gen <span class="m">33666</span> top level <span class="m">5</span> path snapshots
+</span></span><span class="line"><span class="cl">ID <span class="m">317</span> gen <span class="m">33718</span> top level <span class="m">5</span> path @
+</span></span><span class="line"><span class="cl">ID <span class="m">505</span> gen <span class="m">27199</span> top level <span class="m">270</span> path snapshots/auto-2018-07-27 01:00:00
+</span></span><span class="line"><span class="cl">ID <span class="m">506</span> gen <span class="m">27250</span> top level <span class="m">270</span> path snapshots/auto-2018-07-27 02:00:00
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="创建存储快照的子卷">创建存储快照的子卷</h2>
+<p>由于byrfs 的快照没办法分区创建，所以需要在每个需要备份的btrfs 分区建立一个用于存储快照的子卷</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mount -o <span class="nv">subvol</span><span class="o">=</span>/ -U 71c631b0-e53f-40e4-aaac-22ae6fddbb96 /mnt
+</span></span><span class="line"><span class="cl">btrfs subvol create /mnt/snapshots
+</span></span><span class="line"><span class="cl">umount /mnt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>分区的 UUID 可以通过 lsbk -f 查看</p>
+</blockquote>
+<h2 id="建立相应的文件夹">建立相应的文件夹</h2>
+<p>创建相应的文件夹， 比如我们需要分布备份root 和 home 两个btrfs 分区</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p /.snapshot/root
+</span></span><span class="line"><span class="cl">mkdir -p /.snapshot/home
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="把子卷挂载到相应的文件夹">把子卷挂载到相应的文件夹</h2>
+<p>最后把新建的子卷挂载到相应的文件夹，然后修改 /etc/fstab 添加相应的条目，之后重启或使用 mount -a 加载</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">UUID</span><span class="o">=</span>71c631b0-e53f-40e4-aaac-22ae6fddbb96  /.snapshot/root/  btrfs <span class="nv">subvol</span><span class="o">=</span>snapshots,rw,noatime,compress<span class="o">=</span>lzo,space_cache,commit<span class="o">=</span>120,trim
+</span></span><span class="line"><span class="cl"><span class="nv">UUID</span><span class="o">=</span>3e80685a-cce5-425e-b478-3b1a008b9a48  /.snapshot/home/  btrfs <span class="nv">subvol</span><span class="o">=</span>snapshots,rw,noatime,compress<span class="o">=</span>lzo,space_cache,commit<span class="o">=</span>120,trim
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="自动快照">自动快照</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -Eeo pipefail
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> <span class="nv">$EUID</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;This script must be run as root&#34;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">SUB_0</span><span class="o">=(</span><span class="s2">&#34;/&#34;</span> <span class="s2">&#34;/.snapshots/root&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">SUB_1</span><span class="o">=(</span><span class="s2">&#34;/home&#34;</span> <span class="s2">&#34;/.snapshots/home&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">snapshots_config</span><span class="o">=(</span>
+</span></span><span class="line"><span class="cl">  SUB_0<span class="o">[</span>@<span class="o">]</span>
+</span></span><span class="line"><span class="cl">  SUB_1<span class="o">[</span>@<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">dt</span><span class="o">=</span><span class="k">$(</span>date <span class="s1">&#39;+%Y-%m-%d %H:%M:%S&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">dt_now</span><span class="o">=</span><span class="k">$(</span>date --date<span class="o">=</span><span class="s2">&#34;</span><span class="nv">$dt</span><span class="s2">&#34;</span> +%s<span class="k">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Delete snapshots that older than 10 days</span>
+</span></span><span class="line"><span class="cl">find <span class="s2">&#34;/.snapshots/&#34;</span> -maxdepth <span class="m">2</span> -iname <span class="s2">&#34;auto-*&#34;</span> <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> file<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">timestamp</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$file</span><span class="s2">&#34;</span> <span class="p">|</span> grep -Eo <span class="s2">&#34;[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2} [[:digit:]]{2}:[[:digit:]]{2}:[[:digit:]]{2}&#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">dt_file</span><span class="o">=</span><span class="k">$(</span>date --date<span class="o">=</span><span class="s2">&#34;</span><span class="nv">$timestamp</span><span class="s2">&#34;</span> +%s<span class="k">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">let</span> <span class="s2">&#34;tDiff=</span><span class="nv">$dt_now</span><span class="s2">-</span><span class="nv">$dt_file</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$tDiff</span><span class="s2">&#34;</span> -ge <span class="m">864000</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    btrfs subvol delete <span class="s2">&#34;</span><span class="nv">$file</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">snapshot_name</span><span class="o">=</span><span class="s2">&#34;auto-</span><span class="nv">$dt</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">COUNT</span><span class="o">=</span><span class="si">${#</span><span class="nv">snapshots_config</span><span class="p">[@]</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;<span class="nv">$COUNT</span><span class="p">;</span> i++<span class="o">))</span>
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">src</span><span class="o">=</span><span class="si">${</span><span class="p">!snapshots_config[i]:</span><span class="nv">0</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">dst</span><span class="o">=</span><span class="si">${</span><span class="p">!snapshots_config[i]:</span><span class="nv">1</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># Create new snapshot</span>
+</span></span><span class="line"><span class="cl">  btrfs subvol snapshot <span class="s2">&#34;</span><span class="si">${</span><span class="nv">src</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">dst</span><span class="si">}</span><span class="s2">/</span><span class="nv">$snapshot_name</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每次执行时会在 /.snapshots/root/ 和 /.snapshots/home/ 下分别创建两个格式为 auto-yyyy-mm-dd hh:mm:ss 的快照，同时删除 10 天以前的快照。
+一个成熟的脚本应该学会自己按需触发，最简单的方式是修改 cronjob，缺点是很难进行检测和记录。因为脚本需要 sudo 权限，所以这里需要修改 root 的 cronjob，运行 sudo crontab -e 然后添加</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 每次启动时</span>
+</span></span><span class="line"><span class="cl">@reboot /bin/bash /root/snapshot.sh
+</span></span><span class="line"><span class="cl"><span class="c1"># 每隔一小时</span>
+</span></span><span class="line"><span class="cl">@hourly /bin/bash /root/snapshot.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>或者如果希望用 systemd 管理：
+首先添加一个 systemd service，新建 /etc/systemd/system/snapshot.service:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>Unit<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Description</span><span class="o">=</span>Create btrfs snapshot
+</span></span><span class="line"><span class="cl"><span class="nv">After</span><span class="o">=</span>syslog.target
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Service<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Type</span><span class="o">=</span>oneshot
+</span></span><span class="line"><span class="cl"><span class="nv">ExecStart</span><span class="o">=</span>/bin/bash /root/snapshot.sh
+</span></span><span class="line"><span class="cl"><span class="nv">StandardOutput</span><span class="o">=</span>syslog
+</span></span><span class="line"><span class="cl"><span class="nv">StandardError</span><span class="o">=</span>syslog
+</span></span><span class="line"><span class="cl"><span class="nv">SyslogIdentifier</span><span class="o">=</span>snapshot
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Install<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后通过设置 systemd timer 来设置定时任务，新建 /etc/systemd/system/snapshot.timer:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>Unit<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Description</span><span class="o">=</span>Create btrfs snapshot
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Timer<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 开机启动 1 分钟后</span>
+</span></span><span class="line"><span class="cl"><span class="nv">OnBootSec</span><span class="o">=</span>1min
+</span></span><span class="line"><span class="cl"><span class="c1"># 每隔 1 小时</span>
+</span></span><span class="line"><span class="cl"><span class="nv">OnUnitActiveSec</span><span class="o">=</span>1h
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Install<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">WantedBy</span><span class="o">=</span>timers.target
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后开启 timer 即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl <span class="nb">enable</span> --now snapshot.timer
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="手动快照">手动快照</h2>
+<p>可以手动使用 btrfs subvol snapshot 来创建快照</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -Eeo pipefail
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> <span class="nv">$EUID</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;This script must be run as root&#34;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">SUB_0</span><span class="o">=(</span><span class="s2">&#34;/&#34;</span> <span class="s2">&#34;/.snapshots/root&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">SUB_1</span><span class="o">=(</span><span class="s2">&#34;/home&#34;</span> <span class="s2">&#34;/.snapshots/home&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">snapshots_config</span><span class="o">=(</span>
+</span></span><span class="line"><span class="cl">  SUB_0<span class="o">[</span>@<span class="o">]</span>
+</span></span><span class="line"><span class="cl">  SUB_1<span class="o">[</span>@<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">dt</span><span class="o">=</span><span class="k">$(</span>date <span class="s1">&#39;+%Y-%m-%d %H:%M:%S&#39;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">dt_now</span><span class="o">=</span><span class="k">$(</span>date --date<span class="o">=</span><span class="s2">&#34;</span><span class="nv">$dt</span><span class="s2">&#34;</span> +%s<span class="k">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">snapshot_name</span><span class="o">=</span><span class="s2">&#34;manual-</span><span class="nv">$dt</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">COUNT</span><span class="o">=</span><span class="si">${#</span><span class="nv">snapshots_config</span><span class="p">[@]</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span> i&lt;<span class="nv">$COUNT</span><span class="p">;</span> i++<span class="o">))</span>
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">src</span><span class="o">=</span><span class="si">${</span><span class="p">!snapshots_config[i]:</span><span class="nv">0</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">dst</span><span class="o">=</span><span class="si">${</span><span class="p">!snapshots_config[i]:</span><span class="nv">1</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># Create new snapshot</span>
+</span></span><span class="line"><span class="cl">  btrfs subvol snapshot <span class="s2">&#34;</span><span class="si">${</span><span class="nv">src</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">dst</span><span class="si">}</span><span class="s2">/</span><span class="nv">$snapshot_name</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="备份到外部存储">备份到外部存储</h2>
+<p>本地快照的主要作用是及时进行备份以防止意外操作，而长久可靠的备份还是需要保存到外部存储。使用 btrfs send 和 btrfs receive 可以将快照增量备份到外部存储，既节省了时间又节省了空间。
+由于 btrfs send 只支持只读 (read-only) 子卷，所以我们需要用到 btrfs subvol snapshot -r &hellip; 创建只读快照。
+第一次创建只读快照</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">btrfs subvol snapshot -r /home /.snapshots/home/readonly <span class="o">&amp;&amp;</span> sync
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后发送到外部存储（第一次花费时间与用 cp 花费的时间相当）</p>
+<p>btrfs send /.snapshots/home/readonly | btrfs receive /dev/sda/backup
+以后只需要进行增量备份即可（仅仅需要复制更改过的文件）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">btrfs subvol snapshot -r /home /.snapshots/home/readonly-new <span class="o">&amp;&amp;</span> sync
+</span></span><span class="line"><span class="cl">btrfs send -p /.snapshots/home/readonly /.snapshots/home/readonly-new <span class="p">|</span> btrfs receive /dev/sda/backup
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>旧的只读快照可以删除</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">btrfs subvol delete /.snapshots/home/readonly
+</span></span><span class="line"><span class="cl">mv /.snapshots/home/readonly-new /.snapshots/home/readonly
+</span></span><span class="line"><span class="cl">btrfs subvol delete /dev/sda/backup/readonly
+</span></span><span class="line"><span class="cl">mv /dev/sda/backup/readonly-new /dev/sda/backup/readonly
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然建议是每次都把旧的本地只读快照删除，而外部存储的只读快照按照时间重命名，空间不够时再删除</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-02-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/btrfs/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://f1aming007.github.io/btrfs/" data-title="Linux文件系统btrfs" data-via="xxxx" data-hashtags="btrfs"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://f1aming007.github.io/btrfs/" data-hashtag="btrfs"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://f1aming007.github.io/btrfs/" data-title="Linux文件系统btrfs"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://f1aming007.github.io/btrfs/" data-title="Linux文件系统btrfs"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://f1aming007.github.io/btrfs/" data-title="Linux文件系统btrfs"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/btrfs/">btrfs</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/kubernetes_%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" class="prev" rel="prev" title="Kubernetes_核心组件工作原理"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Kubernetes_核心组件工作原理</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://f1aming007.github.io" target="_blank">flamingo</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"f1aming007","id-2":"f1aming007"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

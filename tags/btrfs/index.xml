@@ -1,0 +1,20 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>btrfs - Tag - flamingo</title>
+        <link>https://f1aming007.github.io/tags/btrfs/</link>
+        <description>btrfs - Tag - flamingo</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>fxqi1221@gmail.com (flamingo)</managingEditor>
+            <webMaster>fxqi1221@gmail.com (flamingo)</webMaster><lastBuildDate>Thu, 01 Feb 2024 14:58:53 &#43;0800</lastBuildDate><atom:link href="https://f1aming007.github.io/tags/btrfs/" rel="self" type="application/rss+xml" /><item>
+    <title>Linux文件系统btrfs</title>
+    <link>https://f1aming007.github.io/btrfs/</link>
+    <pubDate>Thu, 01 Feb 2024 14:58:53 &#43;0800</pubDate>
+    <author>flamingo</author>
+    <guid>https://f1aming007.github.io/btrfs/</guid>
+    <description><![CDATA[<h1 id="使用btrfs-快照备份">使用Btrfs 快照备份</h1>
+<p><a href="https://wiki.archlinux.org/title/Btrfs" target="_blank" rel="noopener noreffer ">btrfs</a>
+<a href="https://wiki.archlinux.org/title/Btrfs" target="_blank" rel="noopener noreffer ">https://wiki.archlinux.org/title/Btrfs</a></p>
+<h2 id="介绍">介绍</h2>
+<p>Btrfs 是 Linux 的现代写入复制 （COW） 文件系统，实现快照功能，可以瞬间创建快照，刚传家时几乎不占用任何空间，</p>]]></description>
+</item>
+</channel>
+</rss>
